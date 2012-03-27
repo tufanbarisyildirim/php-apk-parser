@@ -1,5 +1,6 @@
 <?php
     include_once dirname(__FILE__). '/ApkXml.php';
+    include_once dirname(__FILE__). '/ApkManifestXmlElement.php';
 
     /**
     * ApkManifest
@@ -27,12 +28,21 @@
         }
 
         /**
+        * Get Application Permissions
+        * @return array
+        */
+        public function getPermissions()
+        {
+            return $this->getXmlObject()->getPermissions();
+        }
+
+        /**
         * get SimleXmlElement created from AndroidManifest.xml
         * 
         * @param mixed $className
-        * @return SimpleXMLElement
+        * @return ApkManifestXmlElement
         */
-        public function getXmlObject($className = 'stdClass')
+        public function getXmlObject($className = 'ApkManifestXmlElement')
         {
             return $this->xmlParser->getXmlObject($className);
         }
@@ -52,7 +62,7 @@
         * @todo: Move to {lang}_perms.php file, for easly translations.
         * @var mixed
         */
-        private $permissions =     array(
+        public static $permissions =     array(
             'ACCESS_CHECKIN_PROPERTIES'     =>   'Allows read/write access to the "properties" table in the checkin database, to change values that get uploaded.',
             'ACCESS_COARSE_LOCATION'        =>   'Allows an application to access coarse (e.g., Cell-ID, WiFi) location',
             'ACCESS_FINE_LOCATION'          =>   'Allows an application to access fine (e.g., GPS) location',
