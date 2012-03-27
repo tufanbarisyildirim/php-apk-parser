@@ -1,6 +1,6 @@
 <?php
     include_once dirname(__FILE__). '/ApkXml.php';
-    
+
     /**
     * ApkManifest
     * -- description is coming.
@@ -24,6 +24,17 @@
         public function getXmlString()
         {
             return $this->xmlParser->getXmlString();
+        }
+
+        /**
+        * get SimleXmlElement created from AndroidManifest.xml
+        * 
+        * @param mixed $className
+        * @return SimpleXMLElement
+        */
+        public function getXmlObject($className = 'stdClass')
+        {
+            return $this->xmlParser->getXmlObject($className);
         }
 
         /**
@@ -167,4 +178,4 @@
             'WRITE_SOCIAL_STREAM'  =>   'Allows an application to write (but not read) the user\'s social stream data.',
             'WRITE_SYNC_SETTINGS'  =>   'Allows applications to write the sync settings'
         );
-    }
+}
