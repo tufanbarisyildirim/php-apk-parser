@@ -157,7 +157,7 @@
             return $this->xml;
         }
 
-        public function getXmlObject($className = 'stdClass')
+        public function getXmlObject($className = 'SimpleXmlElement')
         {   
             return simplexml_load_string($this->getXmlString(),$className);
         }
