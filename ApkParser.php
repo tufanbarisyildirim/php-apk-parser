@@ -49,6 +49,12 @@
         }
 
         /**
+        * Get the apk. Zip handler. 
+        * - Extract all(or sp. entries) files,
+        * - add file,
+        * - recompress
+        * - and other ZipArchive features.
+        * 
         * @return ApkArchive
         */
         public function getApkArchive()
