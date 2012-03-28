@@ -30,7 +30,26 @@
             else
                 throw new Exception($file . " not a regular file");
 
-        }                 
+        } 
+
+        /**
+        * Get a file from apk Archive by name.
+        * 
+        * @param string $name
+        * @param int $length
+        * @param int $flags
+        * @return mixed
+        */
+        public function getFromName($name,$length = NULL,$flags = NULL)
+        {
+            if(strtolower(substr($name,-4)) == '.xml')
+            {
+                $xmlParser = new ApkXmlParser(new ApkStream($this->getStream($name)));
+                return $xmlParser->getXmlString();
+            }
+            else 
+                return parent::getFromName($name,$length,$flags);
+        }                
 
         /**
         * Returns an ApkStream whick contains AndroidManifest.xml
