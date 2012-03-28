@@ -54,5 +54,17 @@
         public function getApkArchive()
         {
             return $this->apk;
+        }  
+
+        /**
+        * Extract apk content directly
+        * 
+        * @param mixed $destination
+        * @param array $entries
+        * @return bool
+        */
+        public function extractTo($destination,$entries = false)
+        {
+            return  $this->apk->extractTo($destination,$entries);
         }
-    }    
+}    
