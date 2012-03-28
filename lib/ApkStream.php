@@ -36,14 +36,13 @@
             return ord($this->read());
         }
 
-        public function getByteArray()
+        public function getByteArray($count = null)
         {
             $bytes = array();
 
-            while(!$this->feof())
+            while(!$this->feof() && ($count === null || count($bytes) < $count))
                 $bytes[] = $this->readByte();
 
             return $bytes;
         }
     }
-
