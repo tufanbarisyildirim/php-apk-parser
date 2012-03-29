@@ -11,19 +11,13 @@
 
             public function assertTrue($exp)
             {
-                if(assert($exp))
-                {
-                    echo "<span style=\"color:green\">Passed ... </span>\r\n";
-                }   
-                else
-                {
-                    echo "<span style=\"color:red\">Failed ... </span>\r\n";
-                }
+                
+                return assert($exp);
             }
 
-            public function assertHasIndex(array $array, $index)
+            public function assertArrayHasKey($key, array $array,$message = '')
             {
-                return  $this->assertTrue(isset($array[$index]));
+                  $this->assertTrue(isset($array[$key]));
             } 
         }
     }
@@ -48,10 +42,10 @@
             $apk = new ApkParser('../examples/EBHS.apk');
             $permissionArray = $apk->getManifest()->getPermissions();
             $this->assertEquals(count($permissionArray),4);
-            $this->assertHasIndex($permissionArray,'INTERNET');
-            $this->assertHasIndex($permissionArray,'CAMERA');
-            $this->assertHasIndex($permissionArray,'BLUETOOTH');
-            $this->assertHasIndex($permissionArray,'BLUETOOTH_ADMIN');
+            $this->assertArrayHasKey('INTERNET',$permissionArray,"INTERNET permission not found!");
+            $this->assertArrayHasKey('CAMERA',$permissionArray,"CAMERA permission not found!");
+            $this->assertArrayHasKey('BLUETOOTH',$permissionArray,"BLUETOOTH permission not found!");
+            $this->assertArrayHasKey('BLUETOOTH_ADMIN',$permissionArray,"BLUETOOTH_ADMIN permission not found!");
         }
     }
 
