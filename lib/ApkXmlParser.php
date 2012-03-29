@@ -41,7 +41,7 @@
 
             while ($off < count($this->bytes)) 
             {
-                $currentTag    = $this->littleEndianWord($this->bytes, $off);
+                $currentTag     = $this->littleEndianWord($this->bytes, $off);
                 $lineNo         = $this->littleEndianWord($this->bytes, $off + 2*4);
                 $nameNsSi       = $this->littleEndianWord($this->bytes, $off + 4*4);
                 $nameSi         = $this->littleEndianWord($this->bytes, $off + 5*4); 
@@ -51,7 +51,7 @@
                 {
                     case self::START_TAG:
                     {
-                        $tagSix           = $this->littleEndianWord($this->bytes, $off + 6*4);
+                        $tagSix         = $this->littleEndianWord($this->bytes, $off + 6*4);
                         $numbAttrs      = $this->littleEndianWord($this->bytes, $off + 7*4); 
                         $off           += 9*4;
                         $tagName       = $this->compXmlString($this->bytes, $sitOff, $stOff, $nameSi);
@@ -104,9 +104,7 @@
                 }
 
 
-            }
-
-
+            }  
 
         }
 
