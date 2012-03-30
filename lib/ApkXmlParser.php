@@ -1,6 +1,6 @@
 <?php
     include_once dirname(__FILE__) . "/ApkStream.php";
-    
+
     class ApkXmlParser 
     {    
         const END_DOC_TAG    = 0x00100101;
@@ -17,6 +17,16 @@
         public function __construct(ApkStream $apkStream)
         {
             $this->bytes = $apkStream->getByteArray();
+        }
+
+        public static function decompressFile($file)
+        {
+            if(!is_file($file))
+                throw new Exception("{$file} is not a regular file");
+
+            $parser = new self(new ApkStream(fopen($file,'rd')));
+            //TODO : write a method in this class, ->saveToFile();
+            file_put_contents($file,$parser->getXmlString());
         }
 
         public function decompress() 
