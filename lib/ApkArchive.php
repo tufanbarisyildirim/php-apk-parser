@@ -78,4 +78,39 @@
             return $this->fileName;
         }
 
+
+        public function extractTo($destination,$entries = NULL)
+        {
+            if($extResult = parent::extractTo($destination,$entries))
+            {
+                
+                //TODO: ApxXmlParser can not parse the main.xml and others! only AndroidManifest.xml
+                return $extResult;
+                
+                $xmlFiles = $this->glob_recursive($destination . '/*.xml');
+
+
+                foreach($xmlFiles as $xmlFile)
+                {
+                    ApkXmlParser::decompressFile($xmlFile);
+                }
+            }
+
+            return $extResult;
+
+        }
+
+        // Can Move to the Utils(???) class.
+        private function glob_recursive($pattern, $flags = 0)
+        {
+            $files = glob($pattern, $flags);
+
+            foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir)
+            {
+                $files = array_merge($files, $this->glob_recursive($dir.'/'.basename($pattern), $flags));
+            }
+
+            return $files;
+        }
+
     }
