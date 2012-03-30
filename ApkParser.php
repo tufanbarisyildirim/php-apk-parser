@@ -69,8 +69,8 @@
         * @param array $entries
         * @return bool
         */
-        public function extractTo($destination,$entries = false)
+        public function extractTo($destination,$entries = NULL)
         {
-            return  $this->apk->extractTo($destination,$entries);
+             return $this->apk->extractTo($destination,$entries);
         }
 }    
