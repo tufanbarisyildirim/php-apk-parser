@@ -83,16 +83,17 @@
         {
             if($extResult = parent::extractTo($destination,$entries))
             {
-                
-                //TODO: ApxXmlParser can not parse the main.xml and others! only AndroidManifest.xml
-                return $extResult;
-                
+                //TODO: ApkXmlParser can not parse the main.xml and others! only AndroidManifest.xml
+                //return $extResult;
+
                 $xmlFiles = $this->glob_recursive($destination . '/*.xml');
 
 
                 foreach($xmlFiles as $xmlFile)
                 {
-                    ApkXmlParser::decompressFile($xmlFile);
+                    // TODO : Remove this ifcheck , if ApkXml can parse! amk!
+                    if($xmlFile == "AndroidManifest.xml")
+                        ApkXmlParser::decompressFile($xmlFile);
                 }
             }
 
