@@ -19,14 +19,14 @@
             $this->bytes = $apkStream->getByteArray();
         }
 
-        public static function decompressFile($file)
+        public static function decompressFile($file,$destination = NULL)
         {
             if(!is_file($file))
                 throw new Exception("{$file} is not a regular file");
 
             $parser = new self(new ApkStream(fopen($file,'rd')));
             //TODO : write a method in this class, ->saveToFile();
-            file_put_contents($file,$parser->getXmlString());
+            file_put_contents($destination === NULL ?  $file : $destination,$parser->getXmlString());
         }
 
         public function decompress() 
