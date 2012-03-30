@@ -3,9 +3,7 @@
     $apk = new ApkParser('EBHS.apk');
 
     $manifest = $apk->getManifest();
-    $xmlObj = $manifest->getXmlObject();
-
-    $permissions = $xmlObj->getPermissions();
+    $permissions = $manifest->getPermissions();
 
     echo '<pre>';
     foreach($permissions as $perm => $description)
