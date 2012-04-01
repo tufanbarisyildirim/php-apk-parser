@@ -13,6 +13,12 @@
 
         public static $indent_spaces  = "                                             ";
 
+        /**
+        * Store the SimpleXmlElement object
+        * @var SimpleXmlElement
+        */
+        private $xmlObject = NULL;
+
 
         public function __construct(ApkStream $apkStream)
         {
@@ -166,8 +172,11 @@
         }
 
         public function getXmlObject($className = 'SimpleXmlElement')
-        {   
-            return simplexml_load_string($this->getXmlString(),$className);
+        {  
+            if($this->xmlObject === NULL || !$this->xmlObject instanceof $className)
+                $this->xmlObject = simplexml_load_string($this->getXmlString(),$className);
+
+            return $this->xmlObject;                       
         }
     }
 
