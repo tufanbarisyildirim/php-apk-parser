@@ -8,7 +8,6 @@
             */
             $permsArray = $this->{'uses-permission'};
             
-            $a = $permsArray->attributes();
             $perms = array();
             foreach($permsArray as $perm)
             {
