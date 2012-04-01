@@ -1,6 +1,7 @@
 <?php
     include_once dirname(__FILE__). '/ApkXml.php';
     include_once dirname(__FILE__). '/ApkManifestXmlElement.php';
+    include_once dirname(__FILE__). '/ApkAndroidPlatform.php';
 
     /**
     * ApkManifest
