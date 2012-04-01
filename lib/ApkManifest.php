@@ -5,6 +5,11 @@
     /**
     * ApkManifest
     * -- description is coming.
+    * 
+    * @todo  Add getPackageName();
+    * @todo  Add getVersion();
+    * @todo  Add getUsesSdk();
+    * @todo  Add getMinSdk();
     */
     class ApkManifest extends ApkXml
     {
@@ -34,6 +39,60 @@
         public function getPermissions()
         {
             return $this->getXmlObject()->getPermissions();
+        }
+
+        /**
+        * Android Package Name
+        * @return string
+        */
+        public function getPackageName()
+        {
+            $xmlObj     = $this->getXmlObject();
+            $attrs      = get_object_vars($xmlObj->attributes());
+            return $attrs['@attributes']['package'];
+
+        }
+
+        /**
+        * Application Version
+        * @return string
+        */
+        public function getVersion()
+        {
+            $xmlObj     = $this->getXmlObject();
+            $attrs      = get_object_vars($xmlObj->attributes());
+            return $attrs['@attributes']['versionName'];
+        }
+
+        /**
+        * @return bool
+        */
+        public function isDebuggable()
+        {
+            $xmlObj     = $this->getXmlObject();
+            $attrs      = get_object_vars($xmlObj->attributes());
+            return (bool)$attrs['@attributes']['debuggable'];
+        }
+
+        /**
+        * The minimum API Level required for the application to run.
+        * @return int
+        */
+        public function getMinSdkLevel()
+        {
+            $xmlObj     = $this->getXmlObject();
+            $usesSdk    = get_object_vars($xmlObj->{'uses-sdk'});
+
+            return hexdec($usesSdk['@attributes']['minSdkVersion']);
+        }
+        
+        /**
+        * More Information About The minimum API Level required for the application to run.
+        * @return ApkAndroidPlatform
+        */
+        public function getMinSdk()
+        {
+           return new ApkAndroidPlatform($this->getMinSdkLevel()); 
         }
 
         /**
