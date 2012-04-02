@@ -92,7 +92,7 @@
                 foreach($xmlFiles as $xmlFile)
                 {
                     // TODO : Remove this ifcheck , if ApkXml can parse! amk!
-                    if($xmlFile == "AndroidManifest.xml")
+                   if($xmlFile == "AndroidManifest.xml")
                         ApkXmlParser::decompressFile($xmlFile);
                 }
             }
