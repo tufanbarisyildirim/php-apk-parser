@@ -53,16 +53,27 @@
             return $attrs['@attributes']['package'];
 
         }
-
+        
         /**
-        * Application Version
+        * Application Version Name
         * @return string
         */
-        public function getVersion()
+        public function getVersionName()
         {
             $xmlObj     = $this->getXmlObject();
             $attrs      = get_object_vars($xmlObj->attributes());
             return $attrs['@attributes']['versionName'];
+        }
+        
+        /**
+        * Application Version Code
+        * @return mixed
+        */
+        public function getVersionCode()
+        {
+             $xmlObj     = $this->getXmlObject();
+             $attrs      = get_object_vars($xmlObj->attributes());
+             return hexdec($attrs['@attributes']['versionCode']); 
         }
 
         /**
