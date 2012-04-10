@@ -179,4 +179,3 @@
             return $this->xmlObject;                       
         }
     }
-
