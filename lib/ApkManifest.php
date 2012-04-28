@@ -19,6 +19,8 @@
         */
         private $xmlParser;
 
+        private $attrs = null;
+
         public function __construct(ApkXmlParser $xmlParser)
         {
             $this->xmlParser = $xmlParser;    
@@ -47,43 +49,34 @@
         * @return string
         */
         public function getPackageName()
-        {
-            $xmlObj     = $this->getXmlObject();
-            $attrs      = get_object_vars($xmlObj->attributes());
-            return $attrs['@attributes']['package'];
-
+        {                                       
+            return $this->getAttribute('package');
         }
-        
+
         /**
         * Application Version Name
         * @return string
         */
         public function getVersionName()
-        {
-            $xmlObj     = $this->getXmlObject();
-            $attrs      = get_object_vars($xmlObj->attributes());
-            return $attrs['@attributes']['versionName'];
+        {                                                        
+            return $this->getAttribute('versionName');
         }
-        
+
         /**
         * Application Version Code
         * @return mixed
         */
         public function getVersionCode()
-        {
-             $xmlObj     = $this->getXmlObject();
-             $attrs      = get_object_vars($xmlObj->attributes());
-             return hexdec($attrs['@attributes']['versionCode']); 
+        {   
+            return hexdec( $this->getAttribute('versionCode') ); 
         }
 
         /**
         * @return bool
         */
         public function isDebuggable()
-        {
-            $xmlObj     = $this->getXmlObject();
-            $attrs      = get_object_vars($xmlObj->attributes());
-            return (bool)$attrs['@attributes']['debuggable'];
+        {                                                        
+            return (bool)$this->getAttribute('debuggable');
         }
 
         /**
@@ -91,20 +84,34 @@
         * @return int
         */
         public function getMinSdkLevel()
-        {
+        {  
             $xmlObj     = $this->getXmlObject();
             $usesSdk    = get_object_vars($xmlObj->{'uses-sdk'});
-
-            return hexdec($usesSdk['@attributes']['minSdkVersion']);
+            return hexdec($usesSdk['@attributes']['minSdkVersion']); 
         }
-        
+
+        private function getAttribute($attributeName)
+        {
+            if($this->attrs === NULL)
+            {
+                $xmlObj     = $this->getXmlObject();
+                $vars = get_object_vars($xmlObj->attributes());
+                $this->attrs =  $vars['@attributes'];
+            }
+
+            if(!isset($this->attrs[$attributeName]))
+                throw new Exception("Attribute not found : " . $attributeName);
+
+            return $this->attrs[$attributeName];
+        }
+
         /**
         * More Information About The minimum API Level required for the application to run.
         * @return ApkAndroidPlatform
         */
         public function getMinSdk()
         {
-           return new ApkAndroidPlatform($this->getMinSdkLevel()); 
+            return new ApkAndroidPlatform($this->getMinSdkLevel()); 
         }
 
         /**
