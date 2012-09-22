@@ -84,7 +84,7 @@
                             $off += 5*4;
 
                             $attrName = $this->compXmlString($this->bytes, $sitOff, $stOff, $attrNameSi);
-                            if($attrValueSi != -1)
+                            if($attrValueSi != 0xffffffff)
                                 $attrValue =  $this->compXmlString($this->bytes, $sitOff, $stOff, $attrValueSi);
                             else
                                 $attrValue  = "0x" . dechex($attrResId);
