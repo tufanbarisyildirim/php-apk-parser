@@ -1,7 +1,5 @@
 <?php
-    include_once dirname(__FILE__) . "/lib/ApkArchive.php";  
-    include_once dirname(__FILE__) . "/lib/ApkXmlParser.php";
-    include_once dirname(__FILE__) . "/lib/ApkManifest.php";
+   namespace ApkParser;
 
     /**
     * @author Tufan Baris YILDIRIM
@@ -14,34 +12,23 @@
     * - Get the Manifest object.
     * - Print the Manifest XML.
     * 
-    * @todo  Add getPackageName();
-    * @todo  Add getVersion();
-    * @todo  Add getUsesSdk();
-    * @todo  Add getMinSdk();
+    * @property $apk \ApkParser\Archive
+    * @property $manifest \ApkParser\Manifest
     */
-    class ApkParser
+    class Parser
     {
-        /**
-        * @var ApkArchive
-        */
         private $apk;
-
-        /**
-        * AndrodiManifest.xml
-        * 
-        * @var ApkManifest
-        */
         private $manifest;
 
         public function __construct($apkFile)
         {
-            $this->apk      = new ApkArchive($apkFile);
-            $this->manifest = new ApkManifest(new ApkXmlParser($this->apk->getManifestStream()));
+            $this->apk      = new \ApkParser\Archive($apkFile);
+            $this->manifest = new \ApkParser\Manifest(new \ApkParser\XmlParser($this->apk->getManifestStream()));
         }
 
         /**
         * Get Manifest Object
-        * @return ApkManifest 
+        * @return \ApkParser\Manifest 
         */
         public function getManifest()
         {
@@ -55,7 +42,7 @@
         * - recompress
         * - and other ZipArchive features.
         * 
-        * @return ApkArchive
+        * @return \ApkParser\Archive
         */
         public function getApkArchive()
         {

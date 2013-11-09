@@ -1,8 +1,5 @@
 <?php
-    include_once dirname(__FILE__). '/ApkXml.php';
-    include_once dirname(__FILE__). '/ApkManifestXmlElement.php';
-    include_once dirname(__FILE__). '/ApkAndroidPlatform.php';
-
+    namespace ApkParser;
     /**
     * ApkManifest
     * -- description is coming.
@@ -11,17 +8,16 @@
     * @todo  Add getVersion();
     * @todo  Add getUsesSdk();
     * @todo  Add getMinSdk();
+    * 
+    * @property $xmlParser \ApkParser\XmlParser
     */
-    class ApkManifest extends ApkXml
+    class Manifest extends \ApkParser\Xml
     {
-        /**
-        * @var ApkXmlParser
-        */
+   
         private $xmlParser;
-
         private $attrs = null;
 
-        public function __construct(ApkXmlParser $xmlParser)
+        public function __construct(\ApkParser\XmlParser $xmlParser)
         {
             $this->xmlParser = $xmlParser;    
         }
@@ -100,27 +96,27 @@
             }
 
             if(!isset($this->attrs[$attributeName]))
-                throw new Exception("Attribute not found : " . $attributeName);
+                throw new \Exception("Attribute not found : " . $attributeName);
 
             return $this->attrs[$attributeName];
         }
 
         /**
         * More Information About The minimum API Level required for the application to run.
-        * @return ApkAndroidPlatform
+        * @return \ApkParser\AndroidPlatform
         */
         public function getMinSdk()
         {
-            return new ApkAndroidPlatform($this->getMinSdkLevel()); 
+            return new \ApkParser\AndroidPlatform($this->getMinSdkLevel()); 
         }
 
         /**
         * get SimleXmlElement created from AndroidManifest.xml
         * 
         * @param mixed $className
-        * @return ApkManifestXmlElement
+        * @return \ApkParser\ManifestXmlElement
         */
-        public function getXmlObject($className = 'ApkManifestXmlElement')
+        public function getXmlObject($className = '\ApkParser\ManifestXmlElement')
         {
             return $this->xmlParser->getXmlObject($className);
         }

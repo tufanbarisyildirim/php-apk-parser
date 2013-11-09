@@ -24,7 +24,11 @@
 
 
 
-    include '../ApkParser.php';      
+    
+    spl_autoload_register(function($className){
+        include ( '..\\lib\\' . $className . ".php");
+    });
+         
     /**
     * @todo test! test! test! 
     */
@@ -39,7 +43,7 @@
         */
         public function TestPermissions()
         {
-            $apk = new ApkParser('../examples/EBHS.apk');
+            $apk = new \ApkParser\Parser('../examples/EBHS.apk');
             $permissionArray = $apk->getManifest()->getPermissions();
             $this->assertEquals(count($permissionArray),4);
             $this->assertArrayHasKey('INTERNET',$permissionArray,"INTERNET permission not found!");

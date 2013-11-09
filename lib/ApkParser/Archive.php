@@ -1,13 +1,12 @@
 <?php
-    include_once dirname(__FILE__) . "/ApkStream.php";
-
+    namespace ApkParser;
     /**
     * Customized ZipArchive for .apk files.
     * @author Tufan Baris YILDIRIM 
     * @TODO  Add ->getResource('file_name'), or getIcon() directly.
     * @todo Override the // extractTo() method. Rewrite all of XML files converted from Binary Xml to text based XML!
     */
-    class ApkArchive extends ZipArchive
+    class Archive extends \ZipArchive
     {
         /**
         * @var string
@@ -28,7 +27,7 @@
                 $this->fileName = basename($this->filePath = $file);
             }
             else
-                throw new Exception($file . " not a regular file");
+                throw new \Exception($file . " not a regular file");
 
         } 
 
@@ -44,7 +43,7 @@
         {
             if(strtolower(substr($name,-4)) == '.xml')
             {
-                $xmlParser = new ApkXmlParser(new ApkStream($this->getStream($name)));
+                $xmlParser = new \ApkParser\XmlParser(new Stream($this->getStream($name)));
                 return $xmlParser->getXmlString();
             }
             else 
@@ -57,7 +56,7 @@
         */
         public function getManifestStream()
         {
-            return new ApkStream($this->getStream('AndroidManifest.xml'));
+            return new Stream($this->getStream('AndroidManifest.xml'));
         }
 
         /**
@@ -93,7 +92,7 @@
                 {
                     // TODO : Remove this ifcheck , if ApkXml can parse! amk!
                    if($xmlFile == ($destination . "/AndroidManifest.xml"))
-                        ApkXmlParser::decompressFile($xmlFile);
+                        \ApkParser\XmlParser::decompressFile($xmlFile);
                 }
             }
 

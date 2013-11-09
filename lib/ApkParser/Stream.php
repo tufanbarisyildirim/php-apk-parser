@@ -1,9 +1,10 @@
 <?php
+    namespace ApkParser;
     /**
     * @author Tufan Baris YILDIRIM
     * -- descrtiption is coming.
     */
-    class ApkStream
+    class Stream
     {
         /**
         * file strem, like "fopen"
@@ -14,13 +15,13 @@
 
         /**                                   
         * @param resource $stream File stream.
-        * @return ApkStream
+        * @return \ApkParser\Stream
         */
         public function __construct($stream)
         {
             if(!is_resource($stream))
                 // TODO : the resource type must be a regular file stream resource.
-                throw new Exception( "Invalid stream" );
+                throw new \Exception( "Invalid stream" );
 
             $this->stream = $stream;
         }

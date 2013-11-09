@@ -1,7 +1,7 @@
 <?php
-    include '../ApkParser.php';
+    include 'autoload.php';
 
-    $apk = new ApkParser('EBHS.apk');
+    $apk = new \ApkParser\Parser('EBHS.apk');
     $extractFolder = 'extract_folder';
 
     if(is_dir($extractFolder) || mkdir($extractFolder))

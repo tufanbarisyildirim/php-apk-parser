@@ -1,8 +1,8 @@
 <?php
-    include_once dirname(__FILE__) . "/ApkStream.php";
+    namespace ApkParser;
 
-    class ApkXmlParser 
-    {    
+    class XmlParser 
+    {                                     
         const END_DOC_TAG    = 0x00100101;
         const START_TAG      = 0x00100102;
         const END_TAG        = 0x00100103;
@@ -15,12 +15,12 @@
 
         /**
         * Store the SimpleXmlElement object
-        * @var SimpleXmlElement
+        * @var \SimpleXmlElement
         */
         private $xmlObject = NULL;
 
 
-        public function __construct(ApkStream $apkStream)
+        public function __construct(\ApkParser\Stream $apkStream)
         {
             $this->bytes = $apkStream->getByteArray();
         }
@@ -28,9 +28,9 @@
         public static function decompressFile($file,$destination = NULL)
         {
             if(!is_file($file))
-                throw new Exception("{$file} is not a regular file");
+                throw new \Exception("{$file} is not a regular file");
 
-            $parser = new self(new ApkStream(fopen($file,'rd')));
+            $parser = new \ApkParser\XmlParser(new \ApkParser\Stream(fopen($file,'rd')));
             //TODO : write a method in this class, ->saveToFile();
             file_put_contents($destination === NULL ?  $file : $destination,$parser->getXmlString());
         }
@@ -42,12 +42,14 @@
             $stOff          = $sitOff + $numbStrings * 4;
             $this->bytesTagOff      = $this->littleEndianWord($this->bytes, 3*4);
 
-            for ($ii = $this->bytesTagOff; $ii < count($this->bytes) - 4; $ii += 4):
-                if ($this->littleEndianWord($this->bytes, $ii) == self::START_TAG) :
+            for ($ii = $this->bytesTagOff; $ii < count($this->bytes) - 4; $ii += 4)
+            {    
+                if ($this->littleEndianWord($this->bytes, $ii) == self::START_TAG) 
+                {
                     $this->bytesTagOff = $ii;  
                     break;
-                    endif;
-                endfor;
+                }
+            }
 
 
 
@@ -110,7 +112,7 @@
                         $tagName = $this->compXmlString($this->bytes, $sitOff, $stOff, $nameSi);
                         $this->appendXmlIndent($indentCount, "</" . $tagName . ">");
                     }
-                    break;
+                    break;      
 
                     case self::END_DOC_TAG:
                     {
@@ -176,7 +178,7 @@
             return $this->xml;
         }
 
-        public function getXmlObject($className = 'SimpleXmlElement')
+        public function getXmlObject($className = '\SimpleXmlElement')
         {  
             if($this->xmlObject === NULL || !$this->xmlObject instanceof $className)
                 $this->xmlObject = simplexml_load_string($this->getXmlString(),$className);
