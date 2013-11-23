@@ -122,7 +122,7 @@
         }
 
         /**
-        * Basicly string casting method.
+        * Basically string casting method.
         */
         public function __toString()
         {
