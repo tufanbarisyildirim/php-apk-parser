@@ -10,7 +10,7 @@
     echo "Package Name      : " . $manifest->getPackageName()  . "\r\n";
     echo "Vesrion           : " . $manifest->getVersionName()  . " (" . $manifest->getVersionCode() . ")\r\n";
     echo "Min Sdk Level     : " . $manifest->getMinSdkLevel()  . "\r\n";
-    echo "Min Sdk Platfrom  : " . $manifest->getMinSdk()->platform ."\r\n";
+    echo "Min Sdk Platform  : " . $manifest->getMinSdk()->platform ."\r\n";
 
     echo "------------- Permssions List -------------\r\n";
     
