@@ -133,7 +133,7 @@
         * Android Permissions list 
         * @see http://developer.android.com/reference/android/Manifest.permission.html
         * 
-        * @todo: Move to {lang}_perms.php file, for easly translations.
+        * @todo: Move to {lang}_perms.php file, for easy translations.
         * @var mixed
         */
         public static $permissions =     array(
