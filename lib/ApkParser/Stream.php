@@ -2,7 +2,7 @@
     namespace ApkParser;
     /**
     * @author Tufan Baris YILDIRIM
-    * -- descrtiption is coming.
+    * -- description is coming.
     */
     class Stream
     {
