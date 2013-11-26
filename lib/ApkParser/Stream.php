@@ -8,12 +8,12 @@
     {
         /**
         * file strem, like "fopen"
-        * 
+        *
         * @var resource
         */
         private $stream;
 
-        /**                                   
+        /**
         * @param resource $stream File stream.
         * @return \ApkParser\Stream
         */
@@ -28,7 +28,7 @@
 
         /**
         * Read the next character from stream.
-        * 
+        *
         * @param mixed $length
         */
         public function read($length = 1)
@@ -72,7 +72,7 @@
 
         /**
         * fetch the remaining byte into an array
-        * 
+        *
         * @param mixed $count Byte length.
         * @return array
         */
@@ -86,4 +86,3 @@
             return $bytes;
         }
     }
-    

@@ -13,10 +13,14 @@
             $perms = array();
             foreach($permsArray as $perm)
             {
-                $permAttr = get_object_vars($perm);  
+                $permAttr = get_object_vars($perm);
                 $objNotationArray = explode('.',$permAttr['@attributes']['name']);
                 $permName = trim(end($objNotationArray));
-                $perms[$permName] =  \ApkParser\Manifest::$permissions[$permName];
+								if(isset(\ApkParser\Manifest::$permissions[$permName])) {
+									$perms[$permName] =  \ApkParser\Manifest::$permissions[$permName];
+								} else {
+									$perms[$permName] = '';
+								}
             }
 
             return $perms;

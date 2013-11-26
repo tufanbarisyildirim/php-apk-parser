@@ -2,7 +2,7 @@
     namespace ApkParser;
     /**
     * Customized ZipArchive for .apk files.
-    * @author Tufan Baris YILDIRIM 
+    * @author Tufan Baris YILDIRIM
     * @TODO  Add ->getResource('file_name'), or getIcon() directly.
     * @todo Override the // extractTo() method. Rewrite all of XML files converted from Binary Xml to text based XML!
     */
@@ -29,11 +29,11 @@
             else
                 throw new \Exception($file . " not a regular file");
 
-        } 
+        }
 
         /**
         * Get a file from apk Archive by name.
-        * 
+        *
         * @param string $name
         * @param int $length
         * @param int $flags
@@ -46,9 +46,9 @@
                 $xmlParser = new \ApkParser\XmlParser(new Stream($this->getStream($name)));
                 return $xmlParser->getXmlString();
             }
-            else 
+            else
                 return parent::getFromName($name,$length,$flags);
-        }                
+        }
 
         /**
         * Returns an ApkStream whick contains AndroidManifest.xml
@@ -61,11 +61,11 @@
 
         /**
         * Apk file path.
-        * @return string  
+        * @return string
         */
         public function getApkPath()
         {
-            return $this->filePath; 
+            return $this->filePath;
         }
 
         /**

@@ -3,23 +3,23 @@
     /**
     * ApkManifest
     * -- description is coming.
-    * 
+    *
     * @todo  Add getPackageName();
     * @todo  Add getVersion();
     * @todo  Add getUsesSdk();
     * @todo  Add getMinSdk();
-    * 
+    *
     * @property $xmlParser \ApkParser\XmlParser
     */
     class Manifest extends \ApkParser\Xml
     {
-   
+
         private $xmlParser;
         private $attrs = null;
 
         public function __construct(\ApkParser\XmlParser $xmlParser)
         {
-            $this->xmlParser = $xmlParser;    
+            $this->xmlParser = $xmlParser;
         }
 
         /**
@@ -45,7 +45,7 @@
         * @return string
         */
         public function getPackageName()
-        {                                       
+        {
             return $this->getAttribute('package');
         }
 
@@ -54,7 +54,7 @@
         * @return string
         */
         public function getVersionName()
-        {                                                        
+        {
             return $this->getAttribute('versionName');
         }
 
@@ -63,15 +63,15 @@
         * @return mixed
         */
         public function getVersionCode()
-        {   
-            return hexdec( $this->getAttribute('versionCode') ); 
+        {
+            return hexdec( $this->getAttribute('versionCode') );
         }
 
         /**
         * @return bool
         */
         public function isDebuggable()
-        {                                                        
+        {
             return (bool)$this->getAttribute('debuggable');
         }
 
@@ -80,10 +80,10 @@
         * @return int
         */
         public function getMinSdkLevel()
-        {  
+        {
             $xmlObj     = $this->getXmlObject();
             $usesSdk    = get_object_vars($xmlObj->{'uses-sdk'});
-            return hexdec($usesSdk['@attributes']['minSdkVersion']); 
+            return hexdec($usesSdk['@attributes']['minSdkVersion']);
         }
 
         private function getAttribute($attributeName)
@@ -107,12 +107,12 @@
         */
         public function getMinSdk()
         {
-            return new \ApkParser\AndroidPlatform($this->getMinSdkLevel()); 
+            return new \ApkParser\AndroidPlatform($this->getMinSdkLevel());
         }
 
         /**
         * get SimleXmlElement created from AndroidManifest.xml
-        * 
+        *
         * @param mixed $className
         * @return \ApkParser\ManifestXmlElement
         */
@@ -130,9 +130,9 @@
         }
 
         /**
-        * Android Permissions list 
+        * Android Permissions list
         * @see http://developer.android.com/reference/android/Manifest.permission.html
-        * 
+        *
         * @todo: Move to {lang}_perms.php file, for easy translations.
         * @var mixed
         */

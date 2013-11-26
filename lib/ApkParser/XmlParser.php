@@ -1,8 +1,8 @@
 <?php
     namespace ApkParser;
 
-    class XmlParser 
-    {                                     
+    class XmlParser
+    {
         const END_DOC_TAG    = 0x00100101;
         const START_TAG      = 0x00100102;
         const END_TAG        = 0x00100103;
@@ -35,53 +35,51 @@
             file_put_contents($destination === NULL ?  $file : $destination,$parser->getXmlString());
         }
 
-        public function decompress() 
+        public function decompress()
         {
             $numbStrings    = $this->littleEndianWord($this->bytes, 4*4);
-            $sitOff         = 0x24; 
+            $sitOff         = 0x24;
             $stOff          = $sitOff + $numbStrings * 4;
             $this->bytesTagOff      = $this->littleEndianWord($this->bytes, 3*4);
 
             for ($ii = $this->bytesTagOff; $ii < count($this->bytes) - 4; $ii += 4)
-            {    
-                if ($this->littleEndianWord($this->bytes, $ii) == self::START_TAG) 
+            {
+                if ($this->littleEndianWord($this->bytes, $ii) == self::START_TAG)
                 {
-                    $this->bytesTagOff = $ii;  
+                    $this->bytesTagOff = $ii;
                     break;
                 }
             }
-
 
 
             $off            = $this->bytesTagOff;
             $indentCount   = 0;
             $startTagLineNo = -2;
 
-            while ($off < count($this->bytes)) 
+            while ($off < count($this->bytes))
             {
                 $currentTag     = $this->littleEndianWord($this->bytes, $off);
                 $lineNo         = $this->littleEndianWord($this->bytes, $off + 2*4);
                 $nameNsSi       = $this->littleEndianWord($this->bytes, $off + 4*4);
-                $nameSi         = $this->littleEndianWord($this->bytes, $off + 5*4); 
-
+                $nameSi         = $this->littleEndianWord($this->bytes, $off + 5*4);
 
                 switch($currentTag)
                 {
                     case self::START_TAG:
                     {
                         $tagSix         = $this->littleEndianWord($this->bytes, $off + 6*4);
-                        $numbAttrs      = $this->littleEndianWord($this->bytes, $off + 7*4); 
+                        $numbAttrs      = $this->littleEndianWord($this->bytes, $off + 7*4);
                         $off           += 9*4;
                         $tagName       = $this->compXmlString($this->bytes, $sitOff, $stOff, $nameSi);
                         $startTagLineNo = $lineNo;
-                        $attr_string    = ""; 
+                        $attr_string    = "";
 
-                        for ($ii=0; $ii < $numbAttrs; $ii++) 
+                        for ($ii=0; $ii < $numbAttrs; $ii++)
                         {
-                            $attrNameNsSi   = $this->littleEndianWord($this->bytes, $off);  
+                            $attrNameNsSi   = $this->littleEndianWord($this->bytes, $off);
                             $attrNameSi     = $this->littleEndianWord($this->bytes, $off + 1*4);
                             $attrValueSi    = $this->littleEndianWord($this->bytes, $off + 2*4);
-                            $attrFlags      = $this->littleEndianWord($this->bytes, $off + 3*4);  
+                            $attrFlags      = $this->littleEndianWord($this->bytes, $off + 3*4);
                             $attrResId      = $this->littleEndianWord($this->bytes, $off + 4*4);
                             $off += 5*4;
 
@@ -112,35 +110,32 @@
                         $tagName = $this->compXmlString($this->bytes, $sitOff, $stOff, $nameSi);
                         $this->appendXmlIndent($indentCount, "</" . $tagName . ">");
                     }
-                    break;      
+                    break;
 
                     case self::END_DOC_TAG:
                     {
-                        $this->ready = true; 
+                        $this->ready = true;
                         break 2;
                     }
-                    break; 
+                    break;
 
                     default:
                         throw new Exception("Unrecognized tag code '"  . dechex($currentTag) . "' at offset " . $off);
                         break;
                 }
-
-
-            }  
-
+            }
         }
 
-        public function compXmlString($xml, $sitOff, $stOff, $str_index) 
+        public function compXmlString($xml, $sitOff, $stOff, $str_index)
         {
-            if ($str_index < 0) 
+            if ($str_index < 0)
                 return null;
 
             $strOff = $stOff + $this->littleEndianWord($xml, $sitOff + $str_index * 4);
             return $this->compXmlStringAt($xml, $strOff);
         }
 
-        public function appendXmlIndent($indent, $str) 
+        public function appendXmlIndent($indent, $str)
         {
             $this->appendXml(substr(self::$indent_spaces,0, min($indent * 2, strlen(self::$indent_spaces)))  .  $str);
         }
@@ -150,26 +145,26 @@
             $this->xml .= $str ."\r\n";
         }
 
-        public function compXmlStringAt($arr, $string_offset) 
+        public function compXmlStringAt($arr, $string_offset)
         {
             $strlen = $arr[$string_offset + 1] << 8 & 0xff00 | $arr[$string_offset] & 0xff;
             $string = "";
 
-            for ($i=0; $i<$strlen; $i++) 
+            for ($i=0; $i<$strlen; $i++)
                 $string .= chr($arr[$string_offset + 2 + $i * 2]);
 
             return $string;
-        } 
+        }
 
-        public function littleEndianWord($arr, $off) 
+        public function littleEndianWord($arr, $off)
         {
             return $arr[$off+3] << 24&0xff000000 | $arr[$off+2] << 16&0xff0000 | $arr[$off+1]<<8&0xff00 | $arr[$off]&0xFF;
         }
 
         public function output()
-        {                              
+        {
             echo $this->getXmlString();
-        } 
+        }
 
         public function getXmlString()
         {
@@ -179,10 +174,10 @@
         }
 
         public function getXmlObject($className = '\SimpleXmlElement')
-        {  
+        {
             if($this->xmlObject === NULL || !$this->xmlObject instanceof $className)
                 $this->xmlObject = simplexml_load_string($this->getXmlString(),$className);
 
-            return $this->xmlObject;                       
+            return $this->xmlObject;
         }
     }
