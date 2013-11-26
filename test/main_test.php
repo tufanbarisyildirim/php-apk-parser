@@ -7,30 +7,27 @@
             public function assertEquals($a,$b)
             {
                 return $this->assertTrue($a === $b);
-            } 
+            }
 
             public function assertTrue($exp)
             {
-                
+
                 return assert($exp);
             }
 
             public function assertArrayHasKey($key, array $array,$message = '')
             {
                   $this->assertTrue(isset($array[$key]));
-            } 
+            }
         }
     }
 
-
-
-    
     spl_autoload_register(function($className){
         include ( '..\\lib\\' . $className . ".php");
     });
-         
+
     /**
-    * @todo test! test! test! 
+    * @todo test! test! test!
     */
     class Test_Apk_Main extends PHPUnit_Framework_TestCase
     {

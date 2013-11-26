@@ -1,6 +1,6 @@
 <?php
     namespace ApkParser;
-    
+
     // Android Api Version Codes
     define('ANRDOID_API_BASE',1);
     define('ANRDOID_API_BASE_1_1',2);
@@ -23,8 +23,8 @@
 
     /**
     * @todo : Write comments!
-    * 
-    * @property $level 
+    *
+    * @property $level
     * @property $versions array
     * @property $url string
     */
@@ -60,13 +60,13 @@
 
         /**
         * use a constant with ANDROID_API prefix like ANDROID_API_JELLY_BEAN
-        * 
+        *
         * @param mixed $apiLevel
         * @return \ApkParser\AndroidPlatform
         */
 
         public function __construct($apiLevel)
-        {       
+        {
             if(!isset(self::$platforms[$apiLevel]))
                 throw new \Exception("Unknown Api Level: " . $apiLevel);
 
@@ -75,18 +75,14 @@
 
         public function __get($var)
         {
-
-
             switch($var)
             {
                 case 'platform':
                     return 'Android ' . implode(',',self::$platforms[$this->level]['versions']);
                     break;
                 default:
-                    return self::$platforms[$this->level][$var]; 
-                    break;    
-            } 
-
+                    return self::$platforms[$this->level][$var];
+                    break;
+            }
         }
-
 }

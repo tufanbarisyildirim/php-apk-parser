@@ -6,12 +6,12 @@
     * @version v0.1
     * @since 27.03.2012
     * @link https://github.com/tufanbarisyildirim/php-apk-parser
-    * 
+    *
     * Main Class.
     * - Set the apk path on construction,
     * - Get the Manifest object.
     * - Print the Manifest XML.
-    * 
+    *
     * @property $apk \ApkParser\Archive
     * @property $manifest \ApkParser\Manifest
     */
@@ -28,7 +28,7 @@
 
         /**
         * Get Manifest Object
-        * @return \ApkParser\Manifest 
+        * @return \ApkParser\Manifest
         */
         public function getManifest()
         {
@@ -36,22 +36,22 @@
         }
 
         /**
-        * Get the apk. Zip handler. 
+        * Get the apk. Zip handler.
         * - Extract all(or sp. entries) files,
         * - add file,
         * - recompress
         * - and other ZipArchive features.
-        * 
+        *
         * @return \ApkParser\Archive
         */
         public function getApkArchive()
         {
             return $this->apk;
-        }  
+        }
 
         /**
         * Extract apk content directly
-        * 
+        *
         * @param mixed $destination
         * @param array $entries
         * @return bool
