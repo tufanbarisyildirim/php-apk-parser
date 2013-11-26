@@ -27,6 +27,7 @@
     * @property $level
     * @property $versions array
     * @property $url string
+    * @property $platform
     */
     class AndroidPlatform
     {
