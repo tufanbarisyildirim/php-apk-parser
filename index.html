@@ -1,60 +1,104 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Apk Parser by tufanbarisyildirim</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>Apk Parser by tufanbarisyildirim</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Apk Parser</h1>
-        <p>Read basic info about an application from .apk file.</p>
+        <link rel="stylesheet" href="stylesheets/styles.css">
+        <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>Apk Parser</h1>
+                <p>Read basic info about an application from .apk file.</p>
 
-        <p class="view"><a href="https://github.com/tufanbarisyildirim/php-apk-parser">View the Project on GitHub <small>tufanbarisyildirim/php-apk-parser</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/tufanbarisyildirim/php-apk-parser/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/tufanbarisyildirim/php-apk-parser/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/tufanbarisyildirim/php-apk-parser">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>Welcome to Apk Parser Page.</h3>
-
-<p>This package can extract application package files in APK format used by devices running on Android OS. It can open an APK file and extract the contained manifest file to parse it and retrieve the meta-information it contains like the application name, description, device feature access permission it requires, etc.. The class can also extract the whole files contained in the APK file to a given directory.</p>
-
-Examples:
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<h4>Do you want to buy me a cup of coffee?</h4>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="D6B4RQMVCEUGQ">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/tr_TR/i/scr/pixel.gif" width="1" height="1">
-</form>
+                <p class="view"><a href="https://github.com/tufanbarisyildirim/php-apk-parser">View the Project on GitHub <small>tufanbarisyildirim/php-apk-parser</small></a></p>
 
 
-<img alt="" border="0" src="https://www.paypalobjects.com/tr_TR/i/scr/pixel.gif" width="1" height="1">
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/tufanbarisyildirim">tufanbarisyildirim</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+                <ul>
+                    <li><a href="https://github.com/tufanbarisyildirim/php-apk-parser/zipball/master">Download <strong>ZIP File</strong></a></li>
+                    <li><a href="https://github.com/tufanbarisyildirim/php-apk-parser/tarball/master">Download <strong>TAR Ball</strong></a></li>
+                    <li><a href="https://github.com/tufanbarisyildirim/php-apk-parser">View On <strong>GitHub</strong></a></li>
+                </ul>
+            </header>
+            <section>
+                <h3>Welcome to Apk Parser Page.</h3>
+
+                <p>This package can extract application package files in APK format used by devices running on Android OS. It can open an APK file and extract the contained manifest file to parse it and retrieve the meta-information it contains like the application name, description, device feature access permission it requires, etc.. The class can also extract the whole files contained in the APK file to a given directory.</p>
+
+                Examples:
+                <h5>Extract All Files in .apk to a folder</h5>
+                <pre><code>
+$apk = new \ApkParser\Parser('EBHS.apk');
+$extractFolder = 'extract_folder';
+
+if(is_dir($extractFolder) || mkdir($extractFolder))
+{
+    $apk->extractTo($extractFolder);
+}
+                    </code></pre>
+                    
+                    
+                    <h5>Read Basics</h5>
+                <pre><code>
+$apk = new \ApkParser\Parser('EBHS.apk');
+
+$manifest = $apk-&gt;getManifest();
+$permissions = $manifest-&gt;getPermissions();
+
+echo '&lt;pre&gt;';
+echo "Package Name      : " . $manifest-&gt;getPackageName()  . "\r\n";
+echo "Version           : " . $manifest-&gt;getVersionName()  . " (" . $manifest-&gt;getVersionCode() . ")\r\n";
+echo "Min Sdk Level     : " . $manifest-&gt;getMinSdkLevel()  . "\r\n";
+echo "Min Sdk Platform  : " . $manifest-&gt;getMinSdk()-&gt;platform ."\r\n";
+
+echo "------------- Permssions List -------------\r\n";
+
+// find max length to print more pretty.
+$perm_keys = array_keys($permissions);
+$perm_key_lengths = array_map(function($perm){
+    return strlen($perm);
+},$perm_keys);
+$max_length = max($perm_key_lengths);
+
+foreach($permissions as $perm =&gt; $description)
+{
+    echo   str_pad($perm,$max_length + 4,' ') . "=&gt; " . $description ." \r\n";
+}
+                    </code></pre>
+                    
+                    <h5>Printout Manifest XML File.</h5>
+                <pre><code>
+$apk = new ApkParser\Parser('EBHS.apk');
+
+header("Content-Type:text/xml;Charset=UTF-8");
+echo $apk->getManifest()->getXmlString();
+                </code>
+                </pre>
+
+                <h4>Do you want to buy me a cup of coffee?</h4>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="D6B4RQMVCEUGQ">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/tr_TR/i/scr/pixel.gif" width="1" height="1">
+                </form>
+
+
+                <img alt="" border="0" src="https://www.paypalobjects.com/tr_TR/i/scr/pixel.gif" width="1" height="1">
+            </section>
+            <footer>
+                <p>This project is maintained by <a href="https://github.com/tufanbarisyildirim">tufanbarisyildirim</a></p>
+                <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="javascripts/scale.fix.js"></script>
+
+    </body>
 </html>
