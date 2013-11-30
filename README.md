@@ -1,4 +1,4 @@
-# PHP APk Parser
+# [Apk Parser](http://tufanbarisyildirim.github.io/php-apk-parser/)
 
 This package can extract application package files in APK format used by devices running on Android OS.
 It can open an APK file and extract the contained manifest file to parse it and retrieve the meta-information it contains like the application name, description, device feature access permission it requires, etc..
