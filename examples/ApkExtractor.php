@@ -7,4 +7,4 @@
     if(is_dir($extractFolder) || mkdir($extractFolder))
     {
         $apk->extractTo($extractFolder);
-}
+    }
