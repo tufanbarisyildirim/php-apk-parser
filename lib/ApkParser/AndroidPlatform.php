@@ -22,7 +22,6 @@
     define('ANRDOID_API_ICE_JELLY_BEAN_MR2',18);
 
     /**
-    * @todo : Write comments!
     *
     * @property $level
     * @property $versions array
