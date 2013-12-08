@@ -2,13 +2,6 @@
     namespace ApkParser;
     /**
     * ApkManifest
-    * -- description is coming.
-    *
-    * @todo  Add getPackageName();
-    * @todo  Add getVersion();
-    * @todo  Add getUsesSdk();
-    * @todo  Add getMinSdk();
-    *
     * @property $xmlParser \ApkParser\XmlParser
     */
     class Manifest extends \ApkParser\Xml
