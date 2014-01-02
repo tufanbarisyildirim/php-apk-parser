@@ -5,14 +5,14 @@ It can open an APK file and extract the contained manifest file to parse it and 
 The class can also extract the whole files contained in the APK file to a given directory.
 
 
+Requirements
+PHP 5.3+
 
-## PHPClasses.org
-----------
+if PHP < 5.2 
+see branch : [for-php-5.2](https://github.com/tufanbarisyildirim/php-apk-parser/tree/for-php-5.2)
+
 [Phpclasses.org Repo](http://www.phpclasses.org/apk-parser)
 
-Manuel Lemos Comment:
-----------
-"Useful solution to inspect Android application package files to extract its contents and the information of what the application does."
 
 
 
