@@ -1,5 +1,5 @@
 {
-    "name": "tufan/php-apk-parser",
+    "name": "tufanbarisyildirim/php-apk-parser",
     "type": "library",
     "description": "Read basic info about an application from .apk file.",
     "keywords": ["apk","parser"],
