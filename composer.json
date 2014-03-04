@@ -1,0 +1,24 @@
+{
+    "name": "tufan/php-apk-parser",
+    "type": "library",
+    "description": "Read basic info about an application from .apk file.",
+    "keywords": ["apk","parser"],
+    "homepage": "https://github.com/tufanbarisyildirim/php-apk-parser",
+    "license": "Free",
+    "authors": [
+        {
+            "name": "Tufan Baris YILDIRIM",
+            "email": "tufanbarisyildirim@gmail.com",
+            "homepage": "http://tufanbarisyildirim.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "ApParser": "lib/ApkParser"
+        }
+    }
+}
