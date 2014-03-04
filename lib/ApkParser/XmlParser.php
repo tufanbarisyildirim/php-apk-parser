@@ -120,7 +120,7 @@
                     break;
 
                     default:
-                        throw new Exception("Unrecognized tag code '"  . dechex($currentTag) . "' at offset " . $off);
+                        throw new \Exception("Unrecognized tag code '"  . dechex($currentTag) . "' at offset " . $off);
                         break;
                 }
             }
