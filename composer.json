@@ -2,7 +2,7 @@
     "name": "tufanbarisyildirim/php-apk-parser",
     "type": "library",
     "description": "Read basic info about an application from .apk file.",
-    "keywords": ["apk","parser"],
+    "keywords": ["apk","parser","android"],
     "homepage": "https://github.com/tufanbarisyildirim/php-apk-parser",
     "license": "Free",
     "authors": [
