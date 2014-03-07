@@ -51,7 +51,7 @@
         }
 
         /**
-        * Returns an ApkStream whick contains AndroidManifest.xml
+        * Returns an ApkStream which contains AndroidManifest.xml
         * @return ApkStream
         */
         public function getManifestStream()
