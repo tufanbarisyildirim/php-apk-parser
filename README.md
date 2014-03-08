@@ -8,11 +8,22 @@ The class can also extract the whole files contained in the APK file to a given 
 Requirements
 PHP 5.3+
 
-if PHP < 5.2 
-see branch : [for-php-5.2](https://github.com/tufanbarisyildirim/php-apk-parser/tree/for-php-5.2)
+if you want to run it on  5.2- see :  [for-php-5.2](https://github.com/tufanbarisyildirim/php-apk-parser/tree/for-php-5.2)
 
-[Phpclasses.org Repo](http://www.phpclasses.org/apk-parser)
+### Installation via composer
+- Install [composer](http://getcomposer.org/download/)
+- Create a composer.json into your project like the following sample:
 
+```json
+{
+    ...
+    "require": {
+        "tufanbarisyildirim/php-apk-parser":"dev-master"
+    }
+}
+```
+
+- Then from your `composer.json` folder: `php composer.phar install` or `composer install`
 
 
 
