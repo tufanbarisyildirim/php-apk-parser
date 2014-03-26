@@ -56,6 +56,14 @@
             ANRDOID_API_ICE_JELLY_BEAN_MR2 => array('versions' => array('4.3'),'url' => 'http://developer.android.com/about/versions/android-4.3.html'),
         );
 
+        public static $resolutions = array(
+            0 => 'ldpi',
+            'mdpi',
+            'hdpi',
+            'xhdpi',
+            'xxhdpi'
+        );
+
         public $level = null;
 
         /**
