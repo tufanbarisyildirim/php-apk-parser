@@ -35,6 +35,25 @@
             return $this->manifest;
         }
 
+        public function getIcon($wantedResolution = null) {
+            
+            $icon = null;
+
+            foreach(\ApkParser\AndroidPlatform::$resolutions as $id => $resolution) {
+                $stream = $this->apk->getFromName("res/drawable-{$resolution}/ic_launcher.png");
+
+                if($wantedResolution != null && $wantedResolution == $resolution) {
+                    return $stream;
+                }
+
+                if($stream !== false) {
+                    $icon = $stream;
+                }           
+            }
+
+            return $icon;
+        }
+
         /**
         * Get the apk. Zip handler.
         * - Extract all(or sp. entries) files,
