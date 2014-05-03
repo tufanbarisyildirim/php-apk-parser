@@ -27,18 +27,11 @@ if you want to run it on  5.2- see :  [for-php-5.2](https://github.com/tufanbari
 
 - Then from your `composer.json` folder: `php composer.phar install` or `composer install`
 
-## Development
-
-Install dependencies (requires [Composer](https://getcomposer.org/download))
-
-```bash
-    $ composer --dev install
-```
-
 ## Testing
 
-PHP Tests are powered by PHPUnit. You have several options.
+Tests are powered by PHPUnit. You have several options.
 
 - Run `phpunit` if PHPUnit is installed globally.
-- Run `bin/vendor/phpunit` to run version installed by Composer. This ensures
-  that you are running a version compatible with the test suite.
+- Install dependencies (requires [Composer](https://getcomposer.org/download)).
+  Run `php composer.phar --dev install` or `composer --dev install`. Then `bin/vendor/phpunit` to run version
+  installed by Composer. This ensures that you are running a version compatible with the test suite.
