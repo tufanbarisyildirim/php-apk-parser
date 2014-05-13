@@ -79,6 +79,14 @@
             return hexdec($usesSdk['@attributes']['minSdkVersion']);
         }
 
+        /**
+         * @return ApplicationXmlElement
+         */
+        public function getApplication()
+        {
+            return new ApplicationXmlElement($this->getXmlObject()->{'application'}[0]);
+        }
+
         private function getAttribute($attributeName)
         {
             if($this->attrs === NULL)
