@@ -52,11 +52,19 @@
 
         /**
         * Returns an ApkStream which contains AndroidManifest.xml
-        * @return ApkStream
+        * @return Stream
         */
         public function getManifestStream()
         {
             return new Stream($this->getStream('AndroidManifest.xml'));
+        }
+
+        /**
+        * @return SeekableStream
+        */
+        public function getResourcesStream()
+        {
+            return new SeekableStream($this->getStream('resources.arsc'));
         }
 
         /**

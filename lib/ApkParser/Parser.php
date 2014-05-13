@@ -14,16 +14,19 @@
     *
     * @property $apk \ApkParser\Archive
     * @property $manifest \ApkParser\Manifest
+    * @property $resources \ApkParser\ResourcesParser
     */
     class Parser
     {
         private $apk;
         private $manifest;
+        private $resources;
 
         public function __construct($apkFile)
         {
-            $this->apk      = new \ApkParser\Archive($apkFile);
-            $this->manifest = new \ApkParser\Manifest(new \ApkParser\XmlParser($this->apk->getManifestStream()));
+            $this->apk = new Archive($apkFile);
+            $this->manifest = new Manifest(new XmlParser($this->apk->getManifestStream()));
+            $this->resources = new ResourcesParser($this->apk->getResourcesStream());
         }
 
         /**
@@ -47,6 +50,16 @@
         public function getApkArchive()
         {
             return $this->apk;
+        }
+
+        public function getResources($key)
+        {
+            return $this->resources->getResources($key);
+        }
+
+        public function getStream($name)
+        {
+            return $this->apk->getStream($name);
         }
 
         /**
