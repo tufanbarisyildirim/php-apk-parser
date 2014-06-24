@@ -30,7 +30,7 @@ class ParserTest extends PHPUnit_Framework_TestCase {
     public function testApplication() {
         $application = $this->subject->getManifest()->getApplication();
 
-        $this->assertInstanceOf('ApkParser\ApplicationXmlElement', $application);
+        $this->assertInstanceOf('ApkParser\Application', $application);
         $this->assertEquals($application->getIcon(), '0x7f020001');
         $this->assertEquals($application->getLabel(), '0x7f050001');
     }

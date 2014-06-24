@@ -25,4 +25,9 @@
 
             return $perms;
         }
+
+        public function getApplication()
+        {
+            return new \ApkParser\Application($this->application);
+        }
     }

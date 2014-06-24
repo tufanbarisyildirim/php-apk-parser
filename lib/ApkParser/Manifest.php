@@ -15,6 +15,11 @@
             $this->xmlParser = $xmlParser;
         }
 
+        public function getApplication()
+        {
+            return $this->getXmlObject()->getApplication();
+        }
+
         /**
         * Returns ManifestXml as a String.
         * @return string
@@ -77,14 +82,6 @@
             $xmlObj     = $this->getXmlObject();
             $usesSdk    = get_object_vars($xmlObj->{'uses-sdk'});
             return hexdec($usesSdk['@attributes']['minSdkVersion']);
-        }
-
-        /**
-         * @return ApplicationXmlElement
-         */
-        public function getApplication()
-        {
-            return new ApplicationXmlElement($this->getXmlObject()->{'application'}[0]);
         }
 
         private function getAttribute($attributeName)

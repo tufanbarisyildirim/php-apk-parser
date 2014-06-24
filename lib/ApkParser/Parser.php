@@ -1,76 +1,115 @@
 <?php
-   namespace ApkParser;
+namespace ApkParser;
+
+/**
+ * @author Tufan Baris YILDIRIM
+ * @version v0.1
+ * @since 27.03.2012
+ * @link https://github.com/tufanbarisyildirim/php-apk-parser
+ *
+ * Main Class.
+ * - Set the apk path on construction,
+ * - Get the Manifest object.
+ * - Print the Manifest XML.
+ *
+ * @property $apk \ApkParser\Archive
+ * @property $manifest \ApkParser\Manifest
+ * @property $resources \ApkParser\ResourcesParser
+ */
+class Parser
+{
+    private $apk;
+    private $manifest;
+    private $resources;
+    private $config;
+
+    public function __construct($apkFile, array $config = null)
+    {
+        $this->apk = new Archive($apkFile);
+        $this->manifest = new Manifest(new XmlParser($this->apk->getManifestStream()));
+        $this->resources = new ResourcesParser($this->apk->getResourcesStream());
+        $this->config = new Config($config);
+    }
 
     /**
-    * @author Tufan Baris YILDIRIM
-    * @version v0.1
-    * @since 27.03.2012
-    * @link https://github.com/tufanbarisyildirim/php-apk-parser
-    *
-    * Main Class.
-    * - Set the apk path on construction,
-    * - Get the Manifest object.
-    * - Print the Manifest XML.
-    *
-    * @property $apk \ApkParser\Archive
-    * @property $manifest \ApkParser\Manifest
-    * @property $resources \ApkParser\ResourcesParser
-    */
-    class Parser
+     * Get Manifest Object
+     * @return \ApkParser\Manifest
+     */
+    public function getManifest()
     {
-        private $apk;
-        private $manifest;
-        private $resources;
+        return $this->manifest;
+    }
 
-        public function __construct($apkFile)
-        {
-            $this->apk = new Archive($apkFile);
-            $this->manifest = new Manifest(new XmlParser($this->apk->getManifestStream()));
-            $this->resources = new ResourcesParser($this->apk->getResourcesStream());
+    /**
+     * Get the apk. Zip handler.
+     * - Extract all(or sp. entries) files,
+     * - add file,
+     * - recompress
+     * - and other ZipArchive features.
+     *
+     * @return \ApkParser\Archive
+     */
+    public function getApkArchive()
+    {
+        return $this->apk;
+    }
+
+    public function getResources($key)
+    {
+        return $this->resources->getResources($key);
+    }
+
+    public function getStream($name)
+    {
+        return $this->apk->getStream($name);
+    }
+
+    /**
+     * Extract apk content directly
+     *
+     * @param mixed $destination
+     * @param array $entries
+     * @return bool
+     */
+    public function extractTo($destination, $entries = NULL)
+    {
+        return $this->apk->extractTo($destination, $entries);
+    }
+
+    public function getClasses()
+    {
+        $dexStream = $this->apk->getClassesDexStream();
+
+        $cache_folder = $this->config->get('tmp_path');
+        // No folder means no cached data.
+        if (!is_dir($cache_folder))
+            mkdir($cache_folder, 0755, true);
+
+        $dex_file = $cache_folder . '/classes.dex';
+        $dexStream->save($dex_file);
+
+        // run shell command to extract  dalvik compiled codes to the cache folder.
+        // Template : java -jar dedexer.jar -d {destination_folder} {source_dex_file}
+        $command = "java -jar {$this->config->get('jar_path')} -d {$cache_folder} {$dex_file}";
+        $returns = shell_exec($command);
+
+        if (!$returns) //TODO : check if it not contains any error. $returns will always contain some output.
+            throw new \Exception("Couldn't decompile .dex file");
+
+        $file_list = \ApkParser\Utils::globRecursive($cache_folder . '/*.ddx');
+
+        //Make classnames more readable.
+        foreach ($file_list as &$file) {
+            $file = str_replace($cache_folder, '', $file);
+            $file = str_replace('/', '.', $file);
+            $file = str_replace('.ddx', '', $file);
+            $file = trim($file, '.');
         }
 
-        /**
-        * Get Manifest Object
-        * @return \ApkParser\Manifest
-        */
-        public function getManifest()
-        {
-            return $this->manifest;
-        }
 
-        /**
-        * Get the apk. Zip handler.
-        * - Extract all(or sp. entries) files,
-        * - add file,
-        * - recompress
-        * - and other ZipArchive features.
-        *
-        * @return \ApkParser\Archive
-        */
-        public function getApkArchive()
-        {
-            return $this->apk;
-        }
+        return $file_list;
 
-        public function getResources($key)
-        {
-            return $this->resources->getResources($key);
-        }
+        //re assign $data with new class_list;
 
-        public function getStream($name)
-        {
-            return $this->apk->getStream($name);
-        }
-
-        /**
-        * Extract apk content directly
-        *
-        * @param mixed $destination
-        * @param array $entries
-        * @return bool
-        */
-        public function extractTo($destination,$entries = NULL)
-        {
-             return $this->apk->extractTo($destination,$entries);
-        }
+    }
 }
