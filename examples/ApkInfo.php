@@ -27,8 +27,8 @@ foreach ($permissions as $perm => $description) {
 
 echo PHP_EOL;
 echo "------------- Activities  -------------" . PHP_EOL;
-foreach ($apk->getManifest()->getApplication()->getActivityNameList() as $activityName) {
-    echo $activityName . PHP_EOL;
+foreach ($apk->getManifest()->getApplication()->activities as $activity) {
+    echo $activity->name . ($activity->isLauncher ? ' (Launcher)' : null) . PHP_EOL;
 }
 
 echo PHP_EOL;
