@@ -6,6 +6,7 @@
         const END_DOC_TAG    = 0x00100101;
         const START_TAG      = 0x00100102;
         const END_TAG        = 0x00100103;
+        const TEXT_TAG       = 0x00100104;
 
         private $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
         private $bytes = array();
@@ -116,6 +117,29 @@
                     {
                         $this->ready = true;
                         break 2;
+                    }
+                    break;
+
+                    case self::TEXT_TAG:
+                    {
+                        // The text tag appears to be used when Android references an id value that is not
+                        // a string literal
+                        // To skip it, read forward until finding the sentinal 0x00000000 after finding
+                        // the sentinal 0xffffffff
+                        $sentinal = "0xffffffff";
+                        while ($off < count($this->bytes)) {
+                            $curr = "0x".str_pad(dechex($this->littleEndianWord($this->bytes, $off)), 8, "0", STR_PAD_LEFT);
+
+                            $off += 4;
+                            if ($off > count($this->bytes)) {
+                                throw new \Exception("Sentinal not found before end of file");
+                            }
+                            if ($curr == $sentinal && $sentinal == "0xffffffff") {
+                                $sentinal = "0x00000000";
+                            } else if ($curr == $sentinal) {
+                                break;
+                            }
+                        }
                     }
                     break;
 
