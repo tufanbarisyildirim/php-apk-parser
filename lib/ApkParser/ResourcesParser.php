@@ -1,8 +1,17 @@
 <?php
-
 namespace ApkParser;
 
-class ResourcesParser {
+/**
+ * This file is part of the Apk Parser package.
+ *
+ * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+class ResourcesParser
+{
     const RES_STRING_POOL_TYPE = 0x0001;
     const RES_TABLE_TYPE = 0x0002;
     const RES_TABLE_PACKAGE_TYPE = 0x0200;
@@ -26,16 +35,19 @@ class ResourcesParser {
     private $packageId = 0;
     private $resources = array();
 
-    public function __construct(SeekableStream $stream) {
+    public function __construct(SeekableStream $stream)
+    {
         $this->stream = $stream;
         $this->decompress();
     }
 
-    public function getResources($key) {
+    public function getResources($key)
+    {
         return $this->resources[strtolower($key)];
     }
 
-    private function decompress() {
+    private function decompress()
+    {
         $type = $this->stream->readInt16LE();
         $this->stream->readInt16LE(); // headerSize
         $size = $this->stream->readInt32LE();
@@ -83,7 +95,8 @@ class ResourcesParser {
         }
     }
 
-    private function processPackage(SeekableStream $data) {
+    private function processPackage(SeekableStream $data)
+    {
         $data->readInt16LE(); // type
         $headerSize = $data->readInt16LE();
         $data->readInt32LE(); // size
@@ -137,7 +150,8 @@ class ResourcesParser {
         }
     }
 
-    private function processStringPool(SeekableStream $data) {
+    private function processStringPool(SeekableStream $data)
+    {
         $data->readInt16LE(); // type
         $data->readInt16LE(); // headerSize
         $data->readInt32LE(); // size
@@ -190,7 +204,8 @@ class ResourcesParser {
         return $strings;
     }
 
-    private function processTypeSpec(SeekableStream $data) {
+    private function processTypeSpec(SeekableStream $data)
+    {
         $data->readInt16LE(); // type
         $data->readInt16LE(); // headerSize
         $data->readInt32LE(); // size
@@ -206,7 +221,8 @@ class ResourcesParser {
         }
     }
 
-    private function processType(SeekableStream $data) {
+    private function processType(SeekableStream $data)
+    {
         $data->readInt16LE(); // type
         $headerSize = $data->readInt16LE();
         $data->readInt32LE(); // size
@@ -283,7 +299,8 @@ class ResourcesParser {
         }
     }
 
-    private function putResource($resourceId, $value) {
+    private function putResource($resourceId, $value)
+    {
         $key = strtolower($resourceId);
         if (array_key_exists($key, $this->resources) === false) {
             $this->resources[$key] = array();
@@ -291,7 +308,8 @@ class ResourcesParser {
         $this->resources[$key][] = $value;
     }
 
-    private function putReferenceResource($resourceId, $valueData) {
+    private function putReferenceResource($resourceId, $valueData)
+    {
         $key = strtolower($resourceId);
         if (array_key_exists($key, $this->resources)) {
             $values = $this->resources[$key];

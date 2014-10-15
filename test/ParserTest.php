@@ -1,23 +1,35 @@
 <?php
+/**
+ * This file is part of the Apk Parser package.
+ *
+ * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 use ApkParser\Parser;
 
-class ParserTest extends PHPUnit_Framework_TestCase {
+class ParserTest extends PHPUnit_Framework_TestCase
+{
     /**
      * @var ApkParser\Parser
      */
     private $subject;
 
-    public function setUp() {
+    public function setUp()
+    {
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'EBHS.apk';
         $this->subject = new Parser($file);
     }
 
-    public function testSanity() {
+    public function testSanity()
+    {
         $this->assertTrue(true);
     }
 
-    public function testPermissions() {
+    public function testPermissions()
+    {
         $permissions = $this->subject->getManifest()->getPermissions();
 
         $this->assertEquals(count($permissions), 4);
@@ -27,7 +39,8 @@ class ParserTest extends PHPUnit_Framework_TestCase {
         $this->assertArrayHasKey('BLUETOOTH_ADMIN', $permissions, "BLUETOOTH_ADMIN permission not found!");
     }
 
-    public function testApplication() {
+    public function testApplication()
+    {
         $application = $this->subject->getManifest()->getApplication();
 
         $this->assertInstanceOf('ApkParser\Application', $application);
@@ -35,7 +48,8 @@ class ParserTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($application->getLabel(), '0x7f050001');
     }
 
-    public function testIconResources() {
+    public function testIconResources()
+    {
         $application = $this->subject->getManifest()->getApplication();
         $resources = $this->subject->getResources($application->getIcon());
 
@@ -43,7 +57,8 @@ class ParserTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($resources, $expected);
     }
 
-    public function testIconStream() {
+    public function testIconStream()
+    {
         $stream = $this->subject->getStream('res/drawable-hdpi/ebhs.png');
         $icon = stream_get_contents($stream);
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'ebhs.png';
@@ -53,7 +68,8 @@ class ParserTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(base64_encode($icon), base64_encode($expected));
     }
 
-    public function testLabelResources() {
+    public function testLabelResources()
+    {
         $application = $this->subject->getManifest()->getApplication();
         $resources = $this->subject->getResources($application->getLabel());
 

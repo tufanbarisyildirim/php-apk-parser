@@ -2,20 +2,14 @@
 namespace ApkParser;
 
 /**
- * @author Tufan Baris YILDIRIM
- * @version v0.1
- * @since 27.03.2012
- * @link https://github.com/tufanbarisyildirim/php-apk-parser
+ * This file is part of the Apk Parser package.
  *
- * Main Class.
- * - Set the apk path on construction,
- * - Get the Manifest object.
- * - Print the Manifest XML.
+ * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
  *
- * @property $apk \ApkParser\Archive
- * @property $manifest \ApkParser\Manifest
- * @property $resources \ApkParser\ResourcesParser
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 class Parser
 {
     private $apk;

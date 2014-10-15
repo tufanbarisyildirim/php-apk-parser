@@ -4,7 +4,7 @@
     "description": "Read basic info about an application from .apk file.",
     "keywords": ["apk", "parser", "android"],
     "homepage": "https://github.com/tufanbarisyildirim/php-apk-parser",
-    "license": "Free",
+    "license": "MIT",
     "authors": [
         {
             "name": "Tufan Baris YILDIRIM",

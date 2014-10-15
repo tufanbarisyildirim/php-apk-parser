@@ -9,8 +9,6 @@ The class can also extract the whole files contained in the APK file to a given 
 
 PHP 5.3+
 
-if you want to run it on  5.2- see :  [for-php-5.2](https://github.com/tufanbarisyildirim/php-apk-parser/tree/for-php-5.2)
-
 ### Installation
 
 - Install [composer](http://getcomposer.org/download/)
@@ -35,3 +33,8 @@ Tests are powered by PHPUnit. You have several options.
 - Install dependencies (requires [Composer](https://getcomposer.org/download)).
   Run `php composer.phar --dev install` or `composer --dev install`. Then `bin/vendor/phpunit` to run version
   installed by Composer. This ensures that you are running a version compatible with the test suite.
+
+
+### License
+
+Apk Parser is [MIT licensed](./LICENSE.md).

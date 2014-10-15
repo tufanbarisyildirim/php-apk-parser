@@ -1,11 +1,15 @@
 <?php
 namespace ApkParser;
+
 /**
- * Customized ZipArchive for .apk files.
- * @author Tufan Baris YILDIRIM
- * @TODO  Add ->getResource('file_name'), or getIcon() directly.
- * @todo Override the // extractTo() method. Rewrite all of XML files converted from Binary Xml to text based XML!
+ * This file is part of the Apk Parser package.
+ *
+ * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 class Archive extends \ZipArchive
 {
     /**

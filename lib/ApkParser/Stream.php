@@ -3,10 +3,16 @@
 namespace ApkParser;
 
 /**
- * @author Tufan Baris YILDIRIM
- * -- descrtiption is coming.
+ * This file is part of the Apk Parser package.
+ *
+ * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-class Stream {
+
+class Stream
+{
     /**
      * file strem, like "fopen"
      *
@@ -18,10 +24,11 @@ class Stream {
      * @param resource $stream File stream.
      * @return \ApkParser\Stream
      */
-    public function __construct($stream) {
-        if(!is_resource($stream))
+    public function __construct($stream)
+    {
+        if (!is_resource($stream))
             // TODO : the resource type must be a regular file stream resource.
-            throw new \Exception( "Invalid stream" );
+            throw new \Exception("Invalid stream");
 
         $this->stream = $stream;
     }
@@ -31,14 +38,16 @@ class Stream {
      *
      * @param mixed $length
      */
-    public function read($length = 1) {
-        return fread($this->stream,$length);
+    public function read($length = 1)
+    {
+        return fread($this->stream, $length);
     }
 
     /**
      * check if end of filestream
      */
-    public function feof() {
+    public function feof()
+    {
         return feof($this->stream);
     }
 
@@ -46,14 +55,16 @@ class Stream {
      * Jump to the index!
      * @param int $offset
      */
-    public function seek($offset) {
-        fseek($this->stream,$offset);
+    public function seek($offset)
+    {
+        fseek($this->stream, $offset);
     }
 
     /**
      * Close the stream
      */
-    public function close() {
+    public function close()
+    {
         fclose($this->stream);
     }
 
@@ -61,7 +72,8 @@ class Stream {
      * Read the next byte
      * @return byte
      */
-    public function readByte() {
+    public function readByte()
+    {
         return ord($this->read());
     }
 
@@ -71,10 +83,11 @@ class Stream {
      * @param mixed $count Byte length.
      * @return array
      */
-    public function getByteArray($count = null) {
+    public function getByteArray($count = null)
+    {
         $bytes = array();
 
-        while(!$this->feof() && ($count === null || count($bytes) < $count))
+        while (!$this->feof() && ($count === null || count($bytes) < $count))
             $bytes[] = $this->readByte();
 
         return $bytes;
@@ -87,7 +100,7 @@ class Stream {
      */
     function write($str)
     {
-        fwrite($this->stream,$str);
+        fwrite($this->stream, $str);
     }
 
     /**
@@ -107,11 +120,11 @@ class Stream {
      */
     public function save($destination)
     {
-        $dest  = new \ApkParser\Stream( is_resource($destination) ? $destination : fopen($destination,'w+') );
-        while(!$this->feof())
+        $dest = new \ApkParser\Stream(is_resource($destination) ? $destination : fopen($destination, 'w+'));
+        while (!$this->feof())
             $dest->write($this->read());
 
-        if(!is_resource($destination)) // close the file if we opened it otwhise dont touch.
+        if (!is_resource($destination)) // close the file if we opened it otwhise dont touch.
             $dest->close();
     }
 }
