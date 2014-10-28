@@ -73,8 +73,9 @@ class Parser
     public function getClasses()
     {
         $dexStream = $this->apk->getClassesDexStream();
+        $apkName = $this->apk->getApkName();
 
-        $cache_folder = $this->config->get('tmp_path');
+        $cache_folder = $this->config->get('tmp_path') . '/' . str_replace('.', '_', $apkName) . '/';
         // No folder means no cached data.
         if (!is_dir($cache_folder))
             mkdir($cache_folder, 0755, true);
@@ -90,8 +91,9 @@ class Parser
         if (!$returns) //TODO : check if it not contains any error. $returns will always contain some output.
             throw new \Exception("Couldn't decompile .dex file");
 
-        $file_list = \ApkParser\Utils::globRecursive($cache_folder . '/*.ddx');
+        $file_list = \ApkParser\Utils::globRecursive($cache_folder . '*.ddx');
 
+     //   var_dump($cache_folder);
         //Make classnames more readable.
         foreach ($file_list as &$file) {
             $file = str_replace($cache_folder, '', $file);
