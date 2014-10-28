@@ -30,8 +30,12 @@ $perm_key_lengths = array_map(function ($perm) {
 }, $perm_keys);
 $max_length = max($perm_key_lengths);
 
-foreach ($permissions as $perm => $description) {
-    echo str_pad($perm, $max_length + 4, ' ') . "=> " . $description . " " . PHP_EOL;
+foreach ($permissions as $perm => $detail) {
+    echo str_pad($perm, $max_length + 4, ' ') . "=> " . $detail['description'] . " " . PHP_EOL;
+    echo str_pad('', $max_length - 5, ' ') . ' cost    =>  ' . ($detail['flags']['cost'] ? 'true' : 'false') . " " . PHP_EOL;
+    echo str_pad('', $max_length - 5, ' ') . ' warning =>  ' . ($detail['flags']['warning'] ? 'true' : 'false') . " " . PHP_EOL;
+    echo str_pad('', $max_length - 5, ' ') . ' danger  =>  ' . ($detail['flags']['danger'] ? 'true' : 'false') . " " . PHP_EOL;
+
 }
 
 

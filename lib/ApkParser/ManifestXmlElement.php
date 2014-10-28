@@ -1,6 +1,5 @@
 <?php
 namespace ApkParser;
-
 /**
  * This file is part of the Apk Parser package.
  *
@@ -24,15 +23,20 @@ class ManifestXmlElement extends \SimpleXMLElement
             $permAttr = get_object_vars($perm);
             $objNotationArray = explode('.', $permAttr['@attributes']['name']);
             $permName = trim(end($objNotationArray));
-            if (isset(Manifest::$permissions[$permName])) {
-                $perms[$permName] = \ApkParser\Manifest::$permissions[$permName];
-            } else {
-                $perms[$permName] = '';
-            }
-        }
+            $perms[$permName] = array('description' => isset(Manifest::$permissions[$permName]) ? Manifest::$permissions[$permName] : null,
 
+                'flags' => isset(Manifest::$permission_flags[$permName]) ?
+                    Manifest::$permission_flags[$permName]
+                    : array(
+                        'cost' => false,
+                        'warning' => false,
+                        'danger' => false,
+                    )
+            );
+        }
         return $perms;
     }
+
 
     public function getApplication()
     {
