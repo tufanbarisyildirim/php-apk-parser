@@ -16,15 +16,13 @@ class Config
 
     public function __construct(array $config = null)
     {
-        if ($config == null) {
-            // set default configs
-            $config = array(
-                'tmp_path' => '/tmp',
-                'jar_path' => dirname(__FILE__) . '/Dex/dedexer.jar'
-            );
-        }
+        if ($config == null)
+            $config = [];
 
-        $this->config = $config;
+        $this->config = array_merge(array(
+            'tmp_path' => '/tmp',
+            'jar_path' => dirname(__FILE__) . '/Dex/dedexer.jar'
+        ), $config);
     }
 
     public function get($key)
