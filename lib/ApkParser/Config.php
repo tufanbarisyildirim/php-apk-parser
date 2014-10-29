@@ -20,8 +20,8 @@ class Config
             $config = [];
 
         $this->config = array_merge(array(
-            'tmp_path' => '/tmp',
-            'jar_path' => dirname(__FILE__) . '/Dex/dedexer.jar'
+            'tmp_path' => sys_get_temp_dir(),
+            'jar_path' => __DIR__ . '/Dex/dedexer.jar'
         ), $config);
     }
 
