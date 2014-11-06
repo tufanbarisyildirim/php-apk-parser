@@ -12,6 +12,11 @@ namespace ApkParser;
 
 class Utils
 {
+    /**
+     * @param $pattern
+     * @param int $flags
+     * @return array
+     */
     public static function globRecursive($pattern, $flags = 0)
     {
         $files = glob($pattern, $flags);

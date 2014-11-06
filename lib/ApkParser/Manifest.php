@@ -16,11 +16,17 @@ class Manifest extends \ApkParser\Xml
     private $xmlParser;
     private $attrs = null;
 
-    public function __construct(\ApkParser\XmlParser $xmlParser)
+    /**
+     * @param XmlParser $xmlParser
+     */
+    public function __construct(XmlParser $xmlParser)
     {
         $this->xmlParser = $xmlParser;
     }
 
+    /**
+     * @return Application
+     */
     public function getApplication()
     {
         return $this->getXmlObject()->getApplication();

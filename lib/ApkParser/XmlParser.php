@@ -30,11 +30,19 @@ class XmlParser
     private $xmlObject = NULL;
 
 
-    public function __construct(\ApkParser\Stream $apkStream)
+    /**
+     * @param Stream $apkStream
+     */
+    public function __construct(Stream $apkStream)
     {
         $this->bytes = $apkStream->getByteArray();
     }
 
+    /**
+     * @param $file
+     * @param null $destination
+     * @throws \Exception
+     */
     public static function decompressFile($file, $destination = NULL)
     {
         if (!is_file($file))
@@ -45,6 +53,9 @@ class XmlParser
         file_put_contents($destination === NULL ? $file : $destination, $parser->getXmlString());
     }
 
+    /**
+     * @throws \Exception
+     */
     public function decompress()
     {
         $numbStrings = $this->littleEndianWord($this->bytes, 4 * 4);

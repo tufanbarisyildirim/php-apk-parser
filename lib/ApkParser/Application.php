@@ -22,12 +22,12 @@ class Application
      */
     private $application;
 
-    public function __construct(\ApkParser\ManifestXmlElement $application)
+    public function __construct(ManifestXmlElement $application)
     {
         $this->application = $application;
 
         foreach ($application->activity as $actXml) {
-            $this->activities[] = new \ApkParser\Activity($actXml);
+            $this->activities[] = new Activity($actXml);
         }
     }
 

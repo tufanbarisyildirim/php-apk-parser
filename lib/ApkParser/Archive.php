@@ -44,7 +44,7 @@ class Archive extends \ZipArchive
     public function getFromName($name, $length = NULL, $flags = NULL)
     {
         if (strtolower(substr($name, -4)) == '.xml') {
-            $xmlParser = new \ApkParser\XmlParser(new Stream($this->getStream($name)));
+            $xmlParser = new XmlParser(new Stream($this->getStream($name)));
             return $xmlParser->getXmlString();
         } else
             return parent::getFromName($name, $length, $flags);
@@ -73,7 +73,7 @@ class Archive extends \ZipArchive
      */
     public function getClassesDexStream()
     {
-        return new \ApkParser\Stream($this->getStream('classes.dex'));
+        return new Stream($this->getStream('classes.dex'));
     }
 
     /**
@@ -107,7 +107,7 @@ class Archive extends \ZipArchive
             foreach ($xmlFiles as $xmlFile) {
                 // TODO : Remove this ifcheck , if ApkXml can parse! amk!
                 if ($xmlFile == ($destination . "/AndroidManifest.xml"))
-                    \ApkParser\XmlParser::decompressFile($xmlFile);
+                    XmlParser::decompressFile($xmlFile);
             }
         }
 

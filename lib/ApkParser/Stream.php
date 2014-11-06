@@ -22,6 +22,7 @@ class Stream
 
     /**
      * @param resource $stream File stream.
+     * @throws \Exception
      * @return \ApkParser\Stream
      */
     public function __construct($stream)
@@ -37,6 +38,7 @@ class Stream
      * Read the next character from stream.
      *
      * @param mixed $length
+     * @return string
      */
     public function read($length = 1)
     {
@@ -120,7 +122,7 @@ class Stream
      */
     public function save($destination)
     {
-        $dest = new \ApkParser\Stream(is_resource($destination) ? $destination : fopen($destination, 'w+'));
+        $dest = new Stream(is_resource($destination) ? $destination : fopen($destination, 'w+'));
         while (!$this->feof())
             $dest->write($this->read());
 

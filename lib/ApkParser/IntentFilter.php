@@ -16,32 +16,35 @@ class IntentFilter
     public $categories;
 
 
-    public function __construct(\ApkParser\ManifestXmlElement $filterXml)
+    /**
+     * @param ManifestXmlElement $filterXml
+     */
+    public function __construct(ManifestXmlElement $filterXml)
     {
-        $filterarray = get_object_vars($filterXml);
+        $filterArray = get_object_vars($filterXml);
 
 
-        if (isset($filterarray['action'])) {
+        if (isset($filterArray['action'])) {
 
-            if (!is_array($filterarray['action'])) {
-                $filterarray['action'] = array($filterarray['action']);
+            if (!is_array($filterArray['action'])) {
+                $filterArray['action'] = array($filterArray['action']);
             }
 
-            foreach ($filterarray['action'] as $act) {
+            foreach ($filterArray['action'] as $act) {
                 $actionElement = get_object_vars($act);
                 $actionNameSections = explode('.', $actionElement['@attributes']['name']);
                 $this->actions[] = end($actionNameSections);
             }
         }
 
-        if (isset($filterarray['category'])) {
+        if (isset($filterArray['category'])) {
 
-            if (!is_array($filterarray['category'])) {
-                $filterarray['category'] = array($filterarray['category']);
+            if (!is_array($filterArray['category'])) {
+                $filterArray['category'] = array($filterArray['category']);
             }
 
 
-            foreach ($filterarray['category'] as $cat) {
+            foreach ($filterArray['category'] as $cat) {
                 $categoryElement = get_object_vars($cat);
                 $categoryNameSections = explode('.', $categoryElement['@attributes']['name']);
                 $this->categories[] = end($categoryNameSections);

@@ -17,6 +17,10 @@ class Parser
     private $resources;
     private $config;
 
+    /**
+     * @param $apkFile
+     * @param array $config
+     */
     public function __construct($apkFile, array $config = null)
     {
         $this->apk = new Archive($apkFile);
