@@ -29,6 +29,9 @@ define('ANRDOID_API_ICE_CREAM_SANDWICH_MR1', 15);
 define('ANRDOID_API_ICE_JELLY_BEAN', 16);
 define('ANRDOID_API_ICE_JELLY_BEAN_MR1', 17);
 define('ANRDOID_API_ICE_JELLY_BEAN_MR2', 18);
+define('ANRDOID_API_KITKAT', 19);
+define('ANRDOID_API_KITKAT_WATCH', 20);
+define('ANRDOID_API_LOLLIPOP', 21);
 
 /**
  *
@@ -63,6 +66,9 @@ class AndroidPlatform
         ANRDOID_API_ICE_JELLY_BEAN => array('versions' => array('4.1', '4.1.1'), 'url' => 'http://developer.android.com/about/versions/android-4.1.html'),
         ANRDOID_API_ICE_JELLY_BEAN_MR1 => array('versions' => array('4.2', '4.2.2'), 'url' => 'http://developer.android.com/about/versions/android-4.2.html'),
         ANRDOID_API_ICE_JELLY_BEAN_MR2 => array('versions' => array('4.3'), 'url' => 'http://developer.android.com/about/versions/android-4.3.html'),
+        ANRDOID_API_KITKAT => array('versions' => array('4.4'), 'url' => 'http://developer.android.com/about/versions/android-4.4.html'),
+        ANRDOID_API_KITKAT_WATCH => array('versions' => array('4.4W'), 'url' => 'http://developer.android.com/training/building-wearables.html'),
+        ANRDOID_API_LOLLIPOP => array('versions' => array('5.0'), 'url' => 'http://developer.android.com/about/versions/android-5.0.html'),
     );
 
     public $level = null;
@@ -71,6 +77,7 @@ class AndroidPlatform
      * use a constant with ANDROID_API prefix like ANDROID_API_JELLY_BEAN
      *
      * @param mixed $apiLevel
+     * @throws \Exception
      * @return \ApkParser\AndroidPlatform
      */
 
