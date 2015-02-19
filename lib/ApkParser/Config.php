@@ -17,7 +17,7 @@ class Config
     public function __construct(array $config = null)
     {
         if ($config == null)
-            $config = [];
+            $config = array();
 
         $this->config = array_merge(array(
             'tmp_path' => sys_get_temp_dir(),
