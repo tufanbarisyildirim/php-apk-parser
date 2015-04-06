@@ -1,14 +1,14 @@
 <?php
 namespace ApkParser;
 
-/**
- * This file is part of the Apk Parser package.
- *
- * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+    /**
+     * This file is part of the Apk Parser package.
+     *
+     * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
+     *
+     * For the full copyright and license information, please view the LICENSE
+     * file that was distributed with this source code.
+     */
 
 // Android Api Version Codes
 define('ANRDOID_API_BASE', 1);
@@ -85,10 +85,11 @@ class AndroidPlatform
 
     public function __construct($apiLevel)
     {
-        if (!isset(self::$platforms[$apiLevel]))
+        if (!isset(self::$platforms[$apiLevel])) {
             throw new \Exception("Unknown Api Level: " . $apiLevel);
+        }
 
-        $this->level = $apiLevel;
+        $this->setLevel($apiLevel);
     }
 
     public function __get($var)
@@ -101,5 +102,21 @@ class AndroidPlatform
                 return self::$platforms[$this->level][$var];
                 break;
         }
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param mixed|null $level
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
     }
 }

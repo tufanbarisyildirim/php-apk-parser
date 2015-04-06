@@ -27,9 +27,10 @@ class Stream
      */
     public function __construct($stream)
     {
-        if (!is_resource($stream))
+        if (!is_resource($stream)) {
             // TODO : the resource type must be a regular file stream resource.
             throw new \Exception("Invalid stream");
+        }
 
         $this->stream = $stream;
     }
@@ -89,8 +90,9 @@ class Stream
     {
         $bytes = array();
 
-        while (!$this->feof() && ($count === null || count($bytes) < $count))
+        while (!$this->feof() && ($count === null || count($bytes) < $count)) {
             $bytes[] = $this->readByte();
+        }
 
         return $bytes;
     }
@@ -123,10 +125,12 @@ class Stream
     public function save($destination)
     {
         $dest = new Stream(is_resource($destination) ? $destination : fopen($destination, 'w+'));
-        while (!$this->feof())
+        while (!$this->feof()) {
             $dest->write($this->read());
+        }
 
-        if (!is_resource($destination)) // close the file if we opened it otwhise dont touch.
+        if (!is_resource($destination)) { // close the file if we opened it otwhise dont touch.
             $dest->close();
+        }
     }
 }

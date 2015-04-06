@@ -168,7 +168,6 @@ class SeekableStream
 
     /**
      * Returns the current machine endian order.
-     *
      * @return integer
      */
     private static function getEndianess()
@@ -181,7 +180,6 @@ class SeekableStream
 
     /**
      * Returns whether the current machine endian order is big endian.
-     *
      * @return boolean
      */
     private static function isBigEndian()
@@ -189,6 +187,11 @@ class SeekableStream
         return self::getEndianess() == self::BIG_ENDIAN_ORDER;
     }
 
+    /**
+     * @param $stream
+     * @param int $length
+     * @return resource
+     */
     private static function toMemoryStream($stream, $length = 0)
     {
         $size = 0;

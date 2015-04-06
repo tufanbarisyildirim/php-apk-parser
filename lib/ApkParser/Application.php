@@ -31,22 +31,35 @@ class Application
         }
     }
 
+    /**
+     * @return string
+     */
     public function getIcon()
     {
         return $this->getAttr('icon');
     }
 
+    /**
+     * @return string
+     */
     public function getLabel()
     {
         return $this->getAttr('label');
     }
 
+    /**
+     * @param $attrName
+     * @return string
+     */
     public function getAttr($attrName)
     {
         $attr = get_object_vars($this->application);
         return (string)$attr['@attributes'][$attrName];
     }
 
+    /**
+     * @return array
+     */
     public function getActivityNameList()
     {
         $names = array();
@@ -58,6 +71,9 @@ class Application
         return $names;
     }
 
+    /**
+     * @return string
+     */
     public function getActivityHash()
     {
         return md5(implode('', $this->getActivityNameList()));

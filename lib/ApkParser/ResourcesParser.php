@@ -35,17 +35,28 @@ class ResourcesParser
     private $packageId = 0;
     private $resources = array();
 
+    /**
+     * @param SeekableStream $stream
+     * @throws \Exception
+     */
     public function __construct(SeekableStream $stream)
     {
         $this->stream = $stream;
         $this->decompress();
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function getResources($key)
     {
         return $this->resources[strtolower($key)];
     }
 
+    /**
+     * @throws \Exception
+     */
     private function decompress()
     {
         $type = $this->stream->readInt16LE();
@@ -95,6 +106,10 @@ class ResourcesParser
         }
     }
 
+    /**
+     * @param SeekableStream $data
+     * @throws \Exception
+     */
     private function processPackage(SeekableStream $data)
     {
         $data->readInt16LE(); // type
@@ -150,6 +165,10 @@ class ResourcesParser
         }
     }
 
+    /**
+     * @param SeekableStream $data
+     * @return array
+     */
     private function processStringPool(SeekableStream $data)
     {
         $data->readInt16LE(); // type
@@ -204,6 +223,9 @@ class ResourcesParser
         return $strings;
     }
 
+    /**
+     * @param SeekableStream $data
+     */
     private function processTypeSpec(SeekableStream $data)
     {
         $data->readInt16LE(); // type
@@ -221,6 +243,10 @@ class ResourcesParser
         }
     }
 
+    /**
+     * @param SeekableStream $data
+     * @throws \Exception
+     */
     private function processType(SeekableStream $data)
     {
         $data->readInt16LE(); // type
@@ -299,6 +325,10 @@ class ResourcesParser
         }
     }
 
+    /**
+     * @param $resourceId
+     * @param $value
+     */
     private function putResource($resourceId, $value)
     {
         $key = strtolower($resourceId);
@@ -308,6 +338,10 @@ class ResourcesParser
         $this->resources[$key][] = $value;
     }
 
+    /**
+     * @param $resourceId
+     * @param $valueData
+     */
     private function putReferenceResource($resourceId, $valueData)
     {
         $key = strtolower($resourceId);

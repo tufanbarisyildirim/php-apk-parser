@@ -9,7 +9,6 @@ namespace ApkParser;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class XmlParser
 {
     const END_DOC_TAG = 0x00100101;
@@ -45,10 +44,11 @@ class XmlParser
      */
     public static function decompressFile($file, $destination = NULL)
     {
-        if (!is_file($file))
+        if (!is_file($file)) {
             throw new \Exception("{$file} is not a regular file");
+        }
 
-        $parser = new \ApkParser\XmlParser(new \ApkParser\Stream(fopen($file, 'rd')));
+        $parser = new self(new Stream(fopen($file, 'rd')));
         //TODO : write a method in this class, ->saveToFile();
         file_put_contents($destination === NULL ? $file : $destination, $parser->getXmlString());
     }
@@ -158,6 +158,13 @@ class XmlParser
         }
     }
 
+    /**
+     * @param $xml
+     * @param $sitOff
+     * @param $stOff
+     * @param $str_index
+     * @return null|string
+     */
     public function compXmlString($xml, $sitOff, $stOff, $str_index)
     {
         if ($str_index < 0)
@@ -167,37 +174,62 @@ class XmlParser
         return $this->compXmlStringAt($xml, $strOff);
     }
 
+    /**
+     * @param $indent
+     * @param $str
+     */
     public function appendXmlIndent($indent, $str)
     {
         $this->appendXml(substr(self::$indent_spaces, 0, min($indent * 2, strlen(self::$indent_spaces))) . $str);
     }
 
+    /**
+     * @param $str
+     */
     public function appendXml($str)
     {
         $this->xml .= $str . "\r\n";
     }
 
+    /**
+     * @param $arr
+     * @param $string_offset
+     * @return string
+     */
     public function compXmlStringAt($arr, $string_offset)
     {
         $strlen = $arr[$string_offset + 1] << 8 & 0xff00 | $arr[$string_offset] & 0xff;
         $string = "";
 
-        for ($i = 0; $i < $strlen; $i++)
+        for ($i = 0; $i < $strlen; $i++) {
             $string .= chr($arr[$string_offset + 2 + $i * 2]);
+        }
 
         return $string;
     }
 
+    /**
+     * @param $arr
+     * @param $off
+     * @return int
+     */
     public function littleEndianWord($arr, $off)
     {
         return $arr[$off + 3] << 24 & 0xff000000 | $arr[$off + 2] << 16 & 0xff0000 | $arr[$off + 1] << 8 & 0xff00 | $arr[$off] & 0xFF;
     }
 
+    /**
+     * Print XML content
+     */
     public function output()
     {
         echo $this->getXmlString();
     }
 
+    /**
+     * @return mixed|string
+     * @throws \Exception
+     */
     public function getXmlString()
     {
         if (!$this->ready)
@@ -207,6 +239,10 @@ class XmlParser
         return $xml;
     }
 
+    /**
+     * @param string $className
+     * @return \SimpleXMLElement
+     */
     public function getXmlObject($className = '\SimpleXmlElement')
     {
         if ($this->xmlObject === NULL || !$this->xmlObject instanceof $className)

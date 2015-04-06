@@ -1,5 +1,6 @@
 <?php
 namespace ApkParser;
+use ApkParser\AndroidPlatform;
 
 /**
  * This file is part of the Apk Parser package.
@@ -112,11 +113,11 @@ class Manifest extends \ApkParser\Xml
 
     /**
      * More Information About The minimum API Level required for the application to run.
-     * @return \ApkParser\AndroidPlatform
+     * @return AndroidPlatform
      */
     public function getMinSdk()
     {
-        return new \ApkParser\AndroidPlatform($this->getMinSdkLevel());
+        return new AndroidPlatform($this->getMinSdkLevel());
     }
 
     /**

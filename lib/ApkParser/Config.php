@@ -14,17 +14,21 @@ class Config
 {
     private $config;
 
-    public function __construct(array $config = null)
+    /**
+     * @param array $config
+     */
+    public function __construct(array $config = array())
     {
-        if ($config == null)
-            $config = array();
-
         $this->config = array_merge(array(
             'tmp_path' => sys_get_temp_dir(),
             'jar_path' => __DIR__ . '/Dex/dedexer.jar'
         ), $config);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function get($key)
     {
         return $this->config[$key];

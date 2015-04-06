@@ -23,13 +23,18 @@ class Archive extends \ZipArchive
     private $fileName;
 
 
+    /**
+     * @param bool $file
+     * @throws \Exception
+     */
     public function __construct($file = false)
     {
         if ($file && is_file($file)) {
             $this->open($file);
             $this->fileName = basename($this->filePath = $file);
-        } else
+        } else {
             throw new \Exception($file . " not a regular file");
+        }
 
     }
 
@@ -46,8 +51,9 @@ class Archive extends \ZipArchive
         if (strtolower(substr($name, -4)) == '.xml') {
             $xmlParser = new XmlParser(new Stream($this->getStream($name)));
             return $xmlParser->getXmlString();
-        } else
+        } else {
             return parent::getFromName($name, $length, $flags);
+        }
     }
 
     /**
@@ -98,16 +104,13 @@ class Archive extends \ZipArchive
     public function extractTo($destination, $entries = NULL)
     {
         if ($extResult = parent::extractTo($destination, $entries)) {
-            //TODO: ApkXmlParser can not parse the main.xml and others! only AndroidManifest.xml
-            //return $extResult;
 
             $xmlFiles = Utils::globRecursive($destination . '/*.xml');
 
-
             foreach ($xmlFiles as $xmlFile) {
-                // TODO : Remove this ifcheck , if ApkXml can parse! amk!
-                if ($xmlFile == ($destination . "/AndroidManifest.xml"))
+                if ($xmlFile == ($destination . "/AndroidManifest.xml")) {
                     XmlParser::decompressFile($xmlFile);
+                }
             }
         }
 
