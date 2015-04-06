@@ -44,9 +44,9 @@ Fork the repo, make your changes, add your name to developers, and create a pull
 ##Supporters
 [MiKandi](https://www.mikandi.com)  Team supports/develops Apk parser
 
-![Php Storm](https://www.jetbrains.com/phpstorm/documentation/docs/logo_phpstorm.png)
+[![Php Storm](https://www.jetbrains.com/phpstorm/documentation/docs/logo_phpstorm.png)](https://www.jetbrains.com/phpstorm)
 
-[Jetbrains](https://www.jetbrains.com) provides opensource license to Apk Parser's core developers.
+[JetBrains](https://www.jetbrains.com) provides opensource license to Apk Parser's core developers.
 
 ** Add your name here if you want to support/donate apk-parser
 
