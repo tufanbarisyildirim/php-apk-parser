@@ -33,7 +33,25 @@ Tests are powered by PHPUnit. You have several options.
 - Install dependencies (requires [Composer](https://getcomposer.org/download)).
   Run `php composer.phar --dev install` or `composer --dev install`. Then `bin/vendor/phpunit` to run version
   installed by Composer. This ensures that you are running a version compatible with the test suite.
+  
+  
+##Contributing
+Fork the repo, make your changes, add your name to developers, and create a pull request with a comment that describe your changes. That's all!
+  
+##Developers
+[Tufan Barış Yıldırım](http://github.com/tufanbarisyildirim)
 
+##Supporters
+[MiKandi](https://www.mikandi.com) MiKandi Team supports/develops Apk parser
+
+[Jetbrains](https://www.jetbrains.com) provides opensource license to Apk Parser's core developers.
+
+** Add your name here if you want to support/donate apk-parser
+
+## Who Uses Apk Parser
+[World #1 Adult App Store MiKandi](http://www.mikandi.com) uses Apk Parser on their app store
+
+** Add your name here if you use apk-parser on your any project.
 
 ### License
 
