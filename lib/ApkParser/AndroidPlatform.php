@@ -32,6 +32,7 @@ define('ANRDOID_API_ICE_JELLY_BEAN_MR2', 18);
 define('ANRDOID_API_KITKAT', 19);
 define('ANRDOID_API_KITKAT_WATCH', 20);
 define('ANRDOID_API_LOLLIPOP', 21);
+define('ANDROID_API_LOLLIPOP_MR1', 22);
 
 /**
  *
@@ -69,6 +70,7 @@ class AndroidPlatform
         ANRDOID_API_KITKAT => array('versions' => array('4.4'), 'url' => 'http://developer.android.com/about/versions/android-4.4.html'),
         ANRDOID_API_KITKAT_WATCH => array('versions' => array('4.4W'), 'url' => 'http://developer.android.com/training/building-wearables.html'),
         ANRDOID_API_LOLLIPOP => array('versions' => array('5.0'), 'url' => 'http://developer.android.com/about/versions/android-5.0.html'),
+        ANDROID_API_LOLLIPOP_MR1 => array('versions' => array('5.1'), 'url' => 'http://developer.android.com/about/versions/android-5.1.html'),
     );
 
     public $level = null;
