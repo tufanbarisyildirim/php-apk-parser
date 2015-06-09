@@ -21,7 +21,7 @@ class Parser
      * @param $apkFile
      * @param array $config
      */
-    public function __construct($apkFile, array $config = null)
+    public function __construct($apkFile, array $config = array())
     {
         $this->apk = new Archive($apkFile);
         $this->manifest = new Manifest(new XmlParser($this->apk->getManifestStream()));
