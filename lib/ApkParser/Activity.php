@@ -46,7 +46,9 @@ class Activity
         }
 
         foreach ($this->filters as $filter) {
-            if (in_array('MAIN', $filter->actions) && in_array('LAUNCHER', $filter->categories)) {
+            if (($filter->actions != null && in_array('MAIN', $filter->actions)) &&
+                ($filter->categories != null && in_array('LAUNCHER', $filter->categories))
+            ) {
                 $this->isLauncher = true;
             }
         }
