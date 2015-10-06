@@ -12,8 +12,8 @@ namespace ApkParser;
 
 class IntentFilter
 {
-    public $actions;
-    public $categories;
+    public $actions = array();
+    public $categories = array();
 
 
     /**
