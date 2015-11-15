@@ -88,11 +88,7 @@ class Stream
      */
     public function getByteArray($count = null)
     {
-        $bytes = array();
-
-        while (!$this->feof() && ($count === null || count($bytes) < $count)) {
-            $bytes[] = $this->readByte();
-        }
+        $bytes = unpack('C*', $this->read($count));
 
         return $bytes;
     }
