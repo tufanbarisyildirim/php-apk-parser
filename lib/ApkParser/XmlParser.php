@@ -100,7 +100,9 @@ class XmlParser
 
                         $attrName = $this->compXmlString($this->bytes, $sitOff, $stOff, $attrNameSi);
 
-                        if ($attrValueSi != 0xffffffff) {
+                        //-1 for 32bit PHP
+                        //maybe will be better "if (dechex($attrValueSi) != 'ffffffff') {" ?
+                        if ($attrValueSi != 0xffffffff) && ($attrValueSi != -1) {
                             $attrValue = $this->compXmlString($this->bytes, $sitOff, $stOff, $attrValueSi);
                         } else {
                             $attrValue = "0x" . dechex($attrResId);
