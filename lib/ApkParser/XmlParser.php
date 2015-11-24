@@ -31,7 +31,7 @@ class XmlParser
      * @var \SimpleXmlElement
      */
     private $xmlObject = NULL;
-
+    
 
     /**
      * @param Stream $apkStream
@@ -228,14 +228,25 @@ class XmlParser
      */
     public function compXmlStringAt($arr, $string_offset)
     {
-        // This function seems to ignore utf-8 chars
         $strlen = $arr[$string_offset + 1] << 8 & 0xff00 | $arr[$string_offset] & 0xff;
+        $string_offset += 2;
         $string = "";
 
-        for ($i = 0; $i < $strlen; $i++) {
-            $string .= chr($arr[$string_offset + 2 + $i * 2]);
+        // We are dealing with Unicode strings, so each char is 2 bytes
+        $strEnd = $string_offset + ($strlen * 2);
+        if (function_exists("mb_convert_encoding"))
+        {
+            for ($i = $string_offset; $i < $strEnd; $i++) {
+                $string .= chr($arr[$i]);
+            }
+            $string = mb_convert_encoding ($string , "UTF-8", "UTF-16LE");
         }
-
+        else  // sonvert as ascii, skipping every second char
+        {
+            for ($i = $string_offset; $i < $strEnd; $i+=2) {
+                $string .= chr($arr[$i]);
+            }
+        }
         return $string;
     }
 
@@ -1245,7 +1256,7 @@ class XmlParser
             case 0x10103b1: $resName="textAlignment"; break;
             case 0x10103b2: $resName="layoutDirection"; break;
             case 0x10103b3: $resName="paddingStart"; break;
-            case 0x10103b4: $resName="paddingEnd"; break;
+            case 0x10103b4: $resName="paddingEnd"; break;                                              
             case 0x10103b5: $resName="layout_marginStart"; break;
             case 0x10103b6: $resName="layout_marginEnd"; break;
             case 0x10103b7: $resName="layout_toStartOf"; break;
