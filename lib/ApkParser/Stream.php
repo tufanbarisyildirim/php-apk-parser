@@ -73,7 +73,7 @@ class Stream
 
     /**
      * Read the next byte
-     * @return byte
+     * @return int
      */
     public function readByte()
     {
@@ -88,7 +88,11 @@ class Stream
      */
     public function getByteArray($count = null)
     {
-        $bytes = unpack('C*', $this->read($count));
+        $bytes = array();
+
+        while (!$this->feof() && ($count === null || count($bytes) < $count)) {
+            $bytes[] = $this->readByte();
+        }
 
         return $bytes;
     }
@@ -120,13 +124,13 @@ class Stream
      */
     public function save($destination)
     {
-        $dest = new Stream(is_resource($destination) ? $destination : fopen($destination, 'w+'));
+        $destination = new Stream(is_resource($destination) ? $destination : fopen($destination, 'w+'));
         while (!$this->feof()) {
-            $dest->write($this->read());
+            $destination->write($this->read());
         }
 
         if (!is_resource($destination)) { // close the file if we opened it otwhise dont touch.
-            $dest->close();
+            $destination->close();
         }
     }
 }
