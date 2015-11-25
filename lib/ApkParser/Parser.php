@@ -25,7 +25,10 @@ class Parser
     {
         $this->apk = new Archive($apkFile);
         $this->manifest = new Manifest(new XmlParser($this->apk->getManifestStream()));
-        $this->resources = new ResourcesParser($this->apk->getResourcesStream());
+        if (empty($config["manifest_only"]))
+            $this->resources = new ResourcesParser($this->apk->getResourcesStream());
+        else
+            $this->resources = NULL;
         $this->config = new Config($config);
     }
 
@@ -54,7 +57,7 @@ class Parser
 
     public function getResources($key)
     {
-        return $this->resources->getResources($key);
+        return is_null($this->resources) ? FALSE : $this->resources->getResources($key);
     }
 
     public function getStream($name)
