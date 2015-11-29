@@ -33,6 +33,7 @@ define('ANRDOID_API_KITKAT', 19);
 define('ANRDOID_API_KITKAT_WATCH', 20);
 define('ANRDOID_API_LOLLIPOP', 21);
 define('ANDROID_API_LOLLIPOP_MR1', 22);
+define('ANDROID_API_M', 23);
 
 /**
  *
@@ -71,6 +72,7 @@ class AndroidPlatform
         ANRDOID_API_KITKAT_WATCH => array('versions' => array('4.4W'), 'url' => 'http://developer.android.com/training/building-wearables.html'),
         ANRDOID_API_LOLLIPOP => array('versions' => array('5.0'), 'url' => 'http://developer.android.com/about/versions/android-5.0.html'),
         ANDROID_API_LOLLIPOP_MR1 => array('versions' => array('5.1'), 'url' => 'http://developer.android.com/about/versions/android-5.1.html'),
+        ANDROID_API_M => array('versions' => array('6.0'), 'url' => 'http://developer.android.com/sdk/api_diff/23/changes.html'),
     );
 
     public $level = null;
