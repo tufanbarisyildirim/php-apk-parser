@@ -37,6 +37,7 @@ Tests are powered by PHPUnit. You have several options.
   
 ##Contributing
 Fork the repo, make your changes, add your name to developers, and create a pull request with a comment that describe your changes. That's all!
+[Thanks to all contributers](https://github.com/tufanbarisyildirim/php-apk-parser/graphs/contributors)
   
 ##Developers
 [Tufan Barış Yıldırım](http://github.com/tufanbarisyildirim)
