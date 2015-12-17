@@ -53,6 +53,7 @@ Fork the repo, make your changes, add your name to developers, and create a pull
 
 ## Who Uses Apk Parser
 [World #1 Adult App Store MiKandi](http://www.mikandi.com) uses Apk Parser on their app store
+[RoidBay Android APK Market](https://www.roidbay.com) uses Apk Parser on their app store
 
 [Add your name here](./BEMENTIONED.md) if you use apk-parser on your any project.
 
