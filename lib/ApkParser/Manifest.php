@@ -16,6 +16,7 @@ class Manifest extends \ApkParser\Xml
 
     private $xmlParser;
     private $attrs = null;
+    private $meta = null;
 
     /**
      * @param XmlParser $xmlParser
@@ -109,6 +110,26 @@ class Manifest extends \ApkParser\Xml
             throw new \Exception("Attribute not found : " . $attributeName);
 
         return $this->attrs[$attributeName];
+    }
+
+    public function getMetaData($name)
+    {
+        if ($this->meta === null) {
+            $xmlObj = $this->getXmlObject();
+            $nodes = $xmlObj->xpath('//meta-data');
+            $this->meta = array();
+
+            foreach ($nodes as $node) {
+                $nodeAttrs = get_object_vars($node->attributes());
+                $nodeName = $nodeAttrs['@attributes']['name'];
+                if (array_key_exists('value', $nodeAttrs['@attributes'])) {
+                    $this->meta[$nodeName] = $nodeAttrs['@attributes']['value'];
+                } elseif (array_key_exists('resource', $nodeAttrs['@attributes'])) {
+                    $this->meta[$nodeName] = $nodeAttrs['@attributes']['resource'];
+                }
+            }
+        }
+        return $this->meta[$name];
     }
 
     /**
