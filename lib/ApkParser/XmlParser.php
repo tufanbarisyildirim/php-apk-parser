@@ -1,6 +1,8 @@
 <?php
 namespace ApkParser;
 
+use ApkParser\Exceptions\XmlParserException;
+
 /**
  * This file is part of the Apk Parser package.
  *
@@ -299,11 +301,19 @@ class XmlParser
     /**
      * @param string $className
      * @return \SimpleXMLElement
+     * @throws XmlParserException
      */
     public function getXmlObject($className = '\SimpleXmlElement')
     {
-        if ($this->xmlObject === NULL || !$this->xmlObject instanceof $className)
-            $this->xmlObject = simplexml_load_string($this->getXmlString(), $className);
+        if ($this->xmlObject === NULL || !$this->xmlObject instanceof $className) {
+            $prev = libxml_use_internal_errors(true);
+            $xml = $this->getXmlString();
+            $this->xmlObject = simplexml_load_string($xml, $className);
+            if ($this->xmlObject === false) {
+                throw new XmlParserException($xml);
+            }
+            libxml_use_internal_errors($prev);
+        }
 
         return $this->xmlObject;
     }
