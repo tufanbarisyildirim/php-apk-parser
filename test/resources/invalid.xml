@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest versionCode="0x4" versionName="1.7.0-debug" package="com.kidslox.app" platformBuildVersionCode="23" platformBuildVersionName="6.0-2438415">
+    <uses-sdk minSdkVersion="0xe" targetSdkVersion="0x17">
+    </uses-sdk>
+    <uses-permission name="android.permission.INTERNET">
+    </uses-permission>
+    <uses-permission name="android.permission.ACCESS_NETWORK_STATE">
+    </uses-permission>
+    <uses-permission name="android.permission.ACCESS_WIFI_STATE">
+    </uses-permission>
+    <uses-permission name="com.google.android.c2dm.permission.RECEIVE">
+    </uses-permission>
+    <uses-permission name="android.permission.VIBRATE">
+    </uses-permission>
+    <uses-permission name="android.permission.WRITE_EXTERNAL_STORAGE">
+    </uses-permission>
+    <permission name="com.kidslox.app.permission.RECEIVE_ADM_MESSAGE" protectionLevel="0x2">
+    </permission>
+    <uses-permission name="com.kidslox.app.permission.RECEIVE_ADM_MESSAGE">
+    </uses-permission>
+    <uses-permission name="com.amazon.device.messaging.permission.RECEIVE">
+    </uses-permission>
+    <uses-permission name="android.permission.WAKE_LOCK">
+    </uses-permission>
+    <application theme="0x7f0b0041" label="0x7f080082" icon="0x7f030000" name="com.android.tools.fd.runtime.BootstrapApplication" debuggable="0xffffffffffffffff" allowBackup="0x0" name="com.kidslox.app.applications.KidsloxApp">
+        <activity theme="0x7f0b0042" label="0x7f080082" name="com.kidslox.app.activities.SplashActivity" screenOrientation="0x4">
+            <intent-filter>
+                <action name="android.intent.action.MAIN">
+                </action>
+                <category name="android.intent.category.LAUNCHER">
+                </category>
+            </intent-filter>
+        </activity>
+        <activity theme="0x7f0b008f" name="com.kidslox.app.activities.SignInActivity" screenOrientation="0x4">
+        </activity>
+        <activity theme="0x7f0b008f" name="com.kidslox.app.activities.SignUpActivity" screenOrientation="0x4">
+        </activity>
+        <activity theme="0x7f0b008f" name="com.kidslox.app.activities.RegistrationCompleteActivity" screenOrientation="0x4">
+        </activity>
+        <activity theme="0x7f0b008f" name="com.kidslox.app.activities.ForgotPassActivity" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.MainActivity" screenOrientation="0x4" configChanges="0x4a0">
+        </activity>
+        <activity name="com.kidslox.app.activities.FaqActivity" screenOrientation="0x4">
+        </activity>
+        <activity theme="0x7f0b0042" name="com.kidslox.app.activities.TutorialActivity" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.MyDetailsActivity" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.ChangePasswordActivity" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.PasscodeActivity" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.DeviceDetailsActivity" screenOrientation="0x4" configChanges="0x4a0">
+        </activity>
+        <activity name="com.kidslox.app.activities.AddSchedulePresetActivity" screenOrientation="0x4" configChanges="0x4a0">
+        </activity>
+        <activity name="com.kidslox.app.activities.EditScheduleActivity" screenOrientation="0x4" configChanges="0x4a0">
+        </activity>
+        <activity theme="0x7f0b0042" name="com.kidslox.app.dialogs.CopyScheduleDialog" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.AddEditScheduleActivity" screenOrientation="0x4" configChanges="0x4a0">
+        </activity>
+        <activity name="com.kidslox.app.activities.ValidatePasscodeActivity" exported="0xffffffffffffffff" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.DeviceSettingsActivity" screenOrientation="0x4" configChanges="0x4a0">
+        </activity>
+        <activity name="com.kidslox.app.activities.AddDeviceActivity" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.AccessibilityHelpActivity" screenOrientation="0x4">
+        </activity>
+        <activity name="com.kidslox.app.activities.SetupDeviceSettingsActivity" screenOrientation="0x4">
+        </activity>
+        <activity theme="0x1030011" name="com.kidslox.app.activities.ApptentivePushActivity">
+        </activity>
+        <activity name="com.kidslox.app.activities.LockScreen" exported="0xffffffffffffffff" launchMode="0x3" screenOrientation="0x4">
+        </activity>
+        <activity theme="0x1030007" name="com.kidslox.app.activities.EmptyActivity" exported="0xffffffffffffffff" launchMode="0x3">
+        </activity>
+        <activity name="com.kidslox.app.activities.AddScheduleActivity" screenOrientation="0x4">
+        </activity>
+        <receiver name="com.kidslox.app.services.DevicePolicyReceiver" permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data name="android.app.device_admin" resource="0x7f060001">
+            </meta-data>
+            <intent-filter>
+                <action name="android.app.action.DEVICE_ADMIN_ENABLED">
+                </action>
+            </intent-filter>
+        </receiver>
+        <receiver name="com.kidslox.app.services.gcm.GcmBroadcastReceiver" permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action name="com.google.android.c2dm.intent.RECEIVE">
+                </action>
+                <category name="com.kidslox.app">
+                </category>
+            </intent-filter>
+        </receiver>
+        <service name="com.kidslox.app.services.gcm.GcmIntentService">
+        </service>
+        <service name="com.kidslox.app.services.gcm.ApptentiveGCMIntentService">
+        </service>
+        <service name="com.kidslox.app.services.DataService">
+        </service>
+        <meta-data name="com.google.android.gms.version" value="0x7f0c0012">
+        </meta-data>
+        <service name="com.kidslox.app.services.WindowChangeService" permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action name="android.accessibilityservice.AccessibilityService">
+                </action>
+            </intent-filter>
+            <meta-data name="android.accessibilityservice" resource="0x7f060000">
+            </meta-data>
+        </service>
+        <meta-data name="apptentive_api_key" value="0x7f080084">
+        </meta-data>
+        <activity theme="0x7f0b00a9" name="com.apptentive.android.sdk.ViewActivity">
+        </activity>
+        <meta-data name="com.crashlytics.ApiKey" value="7662068fa31557f59c2fef70e047d2412c74b161">
+        </meta-data>
+        <receiver name="com.kidslox.app.services.gcm.DeviceBootRegGCMReceiver" enabled="0x0">
+            <intent-filter>
+                <action name="android.intent.action.BOOT_COMPLETED">
+                </action>
+            </intent-filter>
+        </receiver>
+        <receiver name="com.kidslox.app.services.gcm.RegGCMReceiver">
+        </receiver>
+        <receiver name="com.kidslox.app.services.adm.RegADMReceiver">
+        </receiver>
+        <meta-data name="apptentive_log_level" value="VERBOSE">
+        </meta-data>
+        <meta-data name="com.facebook.sdk.ApplicationId" value="0x7f0800a0">
+        </meta-data>
+        <enable-feature name="com.amazon.device.messaging" required="0x0">
+        </enable-feature>
+        <service name="com.kidslox.app.services.adm.ADMMessageHandler" exported="0x0">
+        </service>
+        <receiver name="com.kidslox.app.services.adm.ADMMessageHandler$Receiver" permission="com.amazon.device.messaging.permission.SEND">
+            <intent-filter>
+                <action name="com.amazon.device.messaging.intent.REGISTRATION">
+                </action>
+                <action name="com.amazon.device.messaging.intent.RECEIVE">
+                </action>
+                <category name="com.kidslox.app">
+                </category>
+            </intent-filter>
+        </receiver>
+        <provider name="com.google.android.gms.measurement.AppMeasurementContentProvider" exported="0x0" authorities="com.kidslox.app.google_measurement_service">
+        </provider>
+        <receiver name="com.google.android.gms.measurement.AppMeasurementReceiver" enabled="0xffffffffffffffff">
+            <intent-filter>
+                <action name="com.google.android.gms.measurement.UPLOAD">
+                </action>
+            </intent-filter>
+        </receiver>
+        <service name="com.google.android.gms.measurement.AppMeasurementService" enabled="0xffffffffffffffff" exported="0x0">
+        </service>
+    </application>
+</manifest>
