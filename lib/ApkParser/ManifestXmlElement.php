@@ -29,8 +29,8 @@ class ManifestXmlElement extends \SimpleXMLElement
             $permName = trim(end($objNotationArray));
             $perms[$permName] = array('description' => isset($permissions[$permName]) ? $permissions[$permName]['desc'] : null,
 
-                'flags' => isset($permission_flags[$permName]) ?
-                    $permission_flags[$permName]
+                'flags' => isset($permissions[$permName]) ?
+                    $permissions[$permName]['flags']
                     : array(
                         'cost' => false,
                         'warning' => false,
