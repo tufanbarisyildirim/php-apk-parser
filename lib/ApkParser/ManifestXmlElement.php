@@ -15,22 +15,22 @@ class ManifestXmlElement extends \SimpleXMLElement
     /**
      * @return array
      */
-    public function getPermissions()
+    public function getPermissions($lang = 'en')
     {
         /**
          * @var \ApkParser\ManifestXmlElement
          */
         $permsArray = $this->{'uses-permission'};
-
+        $permissions = json_decode(file_get_contents(__DIR__ . "/lang/{$lang}.permissions.json"), true);
         $perms = array();
         foreach ($permsArray as $perm) {
             $permAttr = get_object_vars($perm);
             $objNotationArray = explode('.', $permAttr['@attributes']['name']);
             $permName = trim(end($objNotationArray));
-            $perms[$permName] = array('description' => isset(Manifest::$permissions[$permName]) ? Manifest::$permissions[$permName] : null,
+            $perms[$permName] = array('description' => isset($permissions[$permName]) ? $permissions[$permName]['desc'] : null,
 
-                'flags' => isset(Manifest::$permission_flags[$permName]) ?
-                    Manifest::$permission_flags[$permName]
+                'flags' => isset($permission_flags[$permName]) ?
+                    $permission_flags[$permName]
                     : array(
                         'cost' => false,
                         'warning' => false,
