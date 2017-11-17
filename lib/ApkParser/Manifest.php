@@ -296,6 +296,7 @@ class Manifest extends \ApkParser\Xml
         'UNINSTALL_SHORTCUT' => 'Allows an application to uninstall a shortcut in Launcher',
         'UPDATE_DEVICE_STATS' => 'Allows an application to update device statistics.',
         'USE_CREDENTIALS' => 'Allows an application to request authtokens from the AccountManager',
+        'USE_FINGERPRINT' => 'Allows an app to use fingerprint hardware',
         'USE_SIP' => 'Allows an application to use SIP service',
         'VIBRATE' => 'Allows access to the vibrator',
         'WAKE_LOCK' => 'Allows using PowerManager WakeLocks to keep processor from sleeping or screen from dimming',
@@ -1079,6 +1080,12 @@ class Manifest extends \ApkParser\Xml
                 'danger' => false,
             ),
         'USE_CREDENTIALS' =>
+            array(
+                'cost' => false,
+                'warning' => false,
+                'danger' => false,
+            ),
+        'USE_FINGERPRINT' =>
             array(
                 'cost' => false,
                 'warning' => false,
