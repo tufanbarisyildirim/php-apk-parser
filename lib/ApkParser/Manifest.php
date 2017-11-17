@@ -183,17 +183,21 @@ class Manifest extends \ApkParser\Xml
         'BIND_ACCESSIBILITY_SERVICE' => 'Must be required by an AccessibilityService,to ensure that only the system can bind to it.',
         'BIND_APPWIDGET' => 'Allows an application to tell the AppWidget service which application can access AppWidget\'s data.',
         'BIND_DEVICE_ADMIN' => 'Must be required by device administration receiver, to ensure that only the system can interact with it.',
+        'BIND_DREAM_SERVICE' => 'Must be required by an DreamService, to ensure that only the system can bind to it.',
         'BIND_INPUT_METHOD' => 'Must be required by an InputMethodService, to ensure that only the system can bind to it.',
         'BIND_NFC_SERVICE' => 'Must be required by a HostApduService or OffHostApduService to ensure that only the system can bind to it.',
         'BIND_NOTIFICATION_LISTENER_SERVICE' => 'Must be required by an NotificationListenerService, to ensure that only the system can bind to it.',
         'BIND_PRINT_SERVICE' => 'Must be required by a PrintService, to ensure that only the system can bind to it.',
         'BIND_REMOTEVIEWS' => 'Must be required by a RemoteViewsService, to ensure that only the system can bind to it.',
-        'BIND_TEXT_SERVICE' => 'Must be required by a TextService (e.g.',
+        'BIND_TEXT_SERVICE' => 'Must be required by a TextService (e.g. SpellCheckerService) to ensure that only the system can bind to it.',
+        'BIND_TV_INPUT' => 'Must be required by a TvInputService to ensure that only the system can bind to it.',
+        'BIND_VOICE_INTERACTION' => 'Must be required by a VoiceInteractionService, to ensure that only the system can bind to it.',
         'BIND_VPN_SERVICE' => 'Must be required by a VpnService, to ensure that only the system can bind to it.',
         'BIND_WALLPAPER' => 'Must be required by a WallpaperService, to ensure that only the system can bind to it.',
         'BLUETOOTH' => 'Allows applications to connect to paired bluetooth devices',
         'BLUETOOTH_ADMIN' => 'Allows applications to discover and pair bluetooth devices ',
         'BLUETOOTH_PRIVILEGED' => 'Allows applications to pair bluetooth devices without user interaction.',
+        'BODY_SENSORS' => 'Allows an application to access data from sensors that the user uses to measure what is happening inside his/her body, such as heart rate',
         'BRICK' => 'Required to be able to disable the device (very dangerous!).',
         'BROADCAST_PACKAGE_REMOVED' => 'Allows an application to broadcast a notification that an application package has been removed.',
         'BROADCAST_SMS' => 'Allows an application to broadcast an SMS receipt notification.',
@@ -264,6 +268,7 @@ class Manifest extends \ApkParser\Xml
         'READ_SYNC_SETTINGS' => 'Allows applications to read the sync settings',
         'READ_SYNC_STATS' => 'Allows applications to read the sync stats',
         'READ_USER_DICTIONARY' => 'Allows an application to read the user dictionary.',
+        'READ_VOICEMAIL' => 'Allows an application to read voicemails in the system.',
         'REBOOT' => 'Required to be able to reboot the device.',
         'RECEIVE_BOOT_COMPLETED' => 'Allows an application to receive the ACTION_BOOT_COMPLETED that is broadcast after the system finishes booting.',
         'RECEIVE_MMS' => 'Allows an application to monitor incoming MMS messages, to record or perform processing on them.',
@@ -313,7 +318,8 @@ class Manifest extends \ApkParser\Xml
         'WRITE_SMS' => 'Allows an application to write SMS messages.',
         'WRITE_SOCIAL_STREAM' => 'Allows an application to write (but not read) the user\'s social stream data.',
         'WRITE_SYNC_SETTINGS' => 'Allows applications to write the sync settings',
-        'WRITE_USER_DICTIONARY' => 'Allows an application to write to the user dictionary.'
+        'WRITE_USER_DICTIONARY' => 'Allows an application to write to the user dictionary.',
+        'WRITE_VOICEMAIL' => 'Allows an application to modify and remove existing voicemails in the system.'
     );
 
     public static $permission_flags = array(
@@ -407,6 +413,12 @@ class Manifest extends \ApkParser\Xml
                 'warning' => false,
                 'danger' => false,
             ),
+        'BIND_DREAM_SERVICE' =>
+            array(
+                'cost' => false,
+                'warning' => false,
+                'danger' => false,
+            ),
         'BIND_INPUT_METHOD' =>
             array(
                 'cost' => false,
@@ -443,6 +455,18 @@ class Manifest extends \ApkParser\Xml
                 'warning' => false,
                 'danger' => false,
             ),
+        'BIND_TV_INPUT' =>
+            array(
+                'cost' => false,
+                'warning' => false,
+                'danger' => false,
+            ),
+        'BIND_VOICE_INTERACTION' =>
+            array(
+                'cost' => false,
+                'warning' => false,
+                'danger' => false,
+            ),
         'BIND_VPN_SERVICE' =>
             array(
                 'cost' => false,
@@ -472,6 +496,12 @@ class Manifest extends \ApkParser\Xml
                 'cost' => false,
                 'warning' => true,
                 'danger' => false,
+            ),
+        'BODY_SENSORS' =>
+            array(
+                'cost' => false,
+                'warning' => true,
+                'danger' => true,
             ),
         'BRICK' =>
             array(
@@ -893,6 +923,12 @@ class Manifest extends \ApkParser\Xml
                 'warning' => false,
                 'danger' => false,
             ),
+        'READ_VOICEMAIL' =>
+            array(
+                'cost' => false,
+                'warning' => false,
+                'danger' => false,
+            ),
         'REBOOT' =>
             array(
                 'cost' => false,
@@ -1188,6 +1224,12 @@ class Manifest extends \ApkParser\Xml
                 'danger' => false,
             ),
         'WRITE_USER_DICTIONARY' =>
+            array(
+                'cost' => false,
+                'warning' => false,
+                'danger' => false,
+            ),
+        'WRITE_VOICEMAIL' =>
             array(
                 'cost' => false,
                 'warning' => false,
