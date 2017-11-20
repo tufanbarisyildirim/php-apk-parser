@@ -1,5 +1,6 @@
 <?php
 namespace ApkParser;
+
 use ApkParser\AndroidPlatform;
 
 /**
@@ -10,7 +11,6 @@ use ApkParser\AndroidPlatform;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class Manifest extends \ApkParser\Xml
 {
 
@@ -47,11 +47,15 @@ class Manifest extends \ApkParser\Xml
      * Get Application Permissions
      * @return array
      */
-    public function getPermissions()
+    public function getPermissions($lang = 'en')
     {
-        return $this->getXmlObject()->getPermissions();
+        return $this->getXmlObject()->getPermissions($lang);
     }
 
+//    public function getPermission($permName)
+//    {
+//
+//    }
     /**
      * Android Package Name
      * @return string
@@ -1248,3 +1252,4 @@ class Manifest extends \ApkParser\Xml
             ),
     );
 }
+
