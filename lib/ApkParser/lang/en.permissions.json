@@ -1,0 +1,1162 @@
+{
+  "ACCESS_CHECKIN_PROPERTIES":{
+    "desc":"Allows read\/write access to the \"properties\" table in the checkin database, to change values that get uploaded.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "ACCESS_COARSE_LOCATION":{
+    "desc":"Allows an app to access approximate location derived from network location sources such as cell towers and Wi-Fi.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "ACCESS_FINE_LOCATION":{
+    "desc":"Allows an app to access precise location from location sources such as GPS, cell towers, and Wi-Fi.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "ACCESS_LOCATION_EXTRA_COMMANDS":{
+    "desc":"Allows an application to access extra location provider commands",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "ACCESS_MOCK_LOCATION":{
+    "desc":"Allows an application to create mock location providers for testing",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "ACCESS_NETWORK_STATE":{
+    "desc":"Allows applications to access information about networks",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "ACCESS_SURFACE_FLINGER":{
+    "desc":"Allows an application to use SurfaceFlinger's low level features.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "ACCESS_WIFI_STATE":{
+    "desc":"Allows applications to access information about Wi-Fi networks",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "ACCOUNT_MANAGER":{
+    "desc":"Allows applications to call into AccountAuthenticators.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "ADD_VOICEMAIL":{
+    "desc":"Allows an application to add voicemails into the system.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "AUTHENTICATE_ACCOUNTS":{
+    "desc":"Allows an application to act as an AccountAuthenticator for the AccountManager",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "BATTERY_STATS":{
+    "desc":"Allows an application to collect battery statistics",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_ACCESSIBILITY_SERVICE":{
+    "desc":"Must be required by an AccessibilityService,to ensure that only the system can bind to it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_APPWIDGET":{
+    "desc":"Allows an application to tell the AppWidget service which application can access AppWidget's data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_DEVICE_ADMIN":{
+    "desc":"Must be required by device administration receiver, to ensure that only the system can interact with it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_INPUT_METHOD":{
+    "desc":"Must be required by an InputMethodService, to ensure that only the system can bind to it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_NFC_SERVICE":{
+    "desc":"Must be required by a HostApduService or OffHostApduService to ensure that only the system can bind to it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_NOTIFICATION_LISTENER_SERVICE":{
+    "desc":"Must be required by an NotificationListenerService, to ensure that only the system can bind to it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_PRINT_SERVICE":{
+    "desc":"Must be required by a PrintService, to ensure that only the system can bind to it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_REMOTEVIEWS":{
+    "desc":"Must be required by a RemoteViewsService, to ensure that only the system can bind to it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_TEXT_SERVICE":{
+    "desc":"Must be required by a TextService (e.g.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_VPN_SERVICE":{
+    "desc":"Must be required by a VpnService, to ensure that only the system can bind to it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BIND_WALLPAPER":{
+    "desc":"Must be required by a WallpaperService, to ensure that only the system can bind to it.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BLUETOOTH":{
+    "desc":"Allows applications to connect to paired bluetooth devices",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "BLUETOOTH_ADMIN":{
+    "desc":"Allows applications to discover and pair bluetooth devices ",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "BLUETOOTH_PRIVILEGED":{
+    "desc":"Allows applications to pair bluetooth devices without user interaction.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "BRICK":{
+    "desc":"Required to be able to disable the device (very dangerous!).",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "BROADCAST_PACKAGE_REMOVED":{
+    "desc":"Allows an application to broadcast a notification that an application package has been removed.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BROADCAST_SMS":{
+    "desc":"Allows an application to broadcast an SMS receipt notification.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BROADCAST_STICKY":{
+    "desc":"Allows an application to broadcast sticky intents.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "BROADCAST_WAP_PUSH":{
+    "desc":"Allows an application to broadcast a WAP PUSH receipt notification.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CALL_PHONE":{
+    "desc":"Allows an application to initiate a phone call without going through the Dialer user interface for the user to confirm the call being placed.",
+    "flags":{
+      "cost":true,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "CALL_PRIVILEGED":{
+    "desc":"Allows an application to call any phone number, including emergency numbers, without going through the Dialer user interface for the user to confirm the call being placed.",
+    "flags":{
+      "cost":true,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "CAMERA":{
+    "desc":"Required to be able to access the camera device.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CAPTURE_AUDIO_OUTPUT":{
+    "desc":"Allows an application to capture audio output.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CAPTURE_SECURE_VIDEO_OUTPUT":{
+    "desc":"Allows an application to capture secure video output.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CAPTURE_VIDEO_OUTPUT":{
+    "desc":"Allows an application to capture video output.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CHANGE_COMPONENT_ENABLED_STATE":{
+    "desc":"Allows an application to change whether an application component (other than its own) is enabled or not.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CHANGE_CONFIGURATION":{
+    "desc":"Allows an application to modify the current configuration, such as locale.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CHANGE_NETWORK_STATE":{
+    "desc":"Allows applications to change network connectivity state",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CHANGE_WIFI_MULTICAST_STATE":{
+    "desc":"Allows applications to enter Wi-Fi Multicast mode",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CHANGE_WIFI_STATE":{
+    "desc":"Allows applications to change Wi-Fi connectivity state",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CLEAR_APP_CACHE":{
+    "desc":"Allows an application to clear the caches of all installed applications on the device.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CLEAR_APP_USER_DATA":{
+    "desc":"Allows an application to clear user data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "CONTROL_LOCATION_UPDATES":{
+    "desc":"Allows enabling\/disabling location update notifications from the radio.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "DELETE_CACHE_FILES":{
+    "desc":"Allows an application to delete cache files.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "DELETE_PACKAGES":{
+    "desc":"Allows an application to delete packages.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "DEVICE_POWER":{
+    "desc":"Allows low-level access to power management.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "DIAGNOSTIC":{
+    "desc":"Allows applications to RW to diagnostic resources.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "DISABLE_KEYGUARD":{
+    "desc":"Allows applications to disable the keyguard",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "DUMP":{
+    "desc":"Allows an application to retrieve state dump information from system services.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "EXPAND_STATUS_BAR":{
+    "desc":"Allows an application to expand or collapse the status bar.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "FACTORY_TEST":{
+    "desc":"Run as a manufacturer test application, running as the root user.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "FLASHLIGHT":{
+    "desc":"Allows access to the flashlight",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "FORCE_BACK":{
+    "desc":"Allows an application to force a BACK operation on whatever is the top activity.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "GET_ACCOUNTS":{
+    "desc":"Allows access to the list of accounts in the Accounts Service",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "GET_PACKAGE_SIZE":{
+    "desc":"Allows an application to find out the space used by any package.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "GET_TASKS":{
+    "desc":"Allows an application to get information about the currently or recently running tasks.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "GET_TOP_ACTIVITY_INFO":{
+    "desc":"Allows an application to retrieve private information about the current top activity, such as any assist context it can provide.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "GLOBAL_SEARCH":{
+    "desc":"This permission can be used on content providers to allow the global search system to access their data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "HARDWARE_TEST":{
+    "desc":"Allows access to hardware peripherals.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "INJECT_EVENTS":{
+    "desc":"Allows an application to inject user events (keys, touch, trackball) into the event stream and deliver them to ANY window.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "INSTALL_LOCATION_PROVIDER":{
+    "desc":"Allows an application to install a location provider into the Location Manager.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "INSTALL_PACKAGES":{
+    "desc":"Allows an application to install packages.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "INSTALL_SHORTCUT":{
+    "desc":"Allows an application to install a shortcut in Launcher",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "INTERNAL_SYSTEM_WINDOW":{
+    "desc":"Allows an application to open windows that are for use by parts of the system user interface.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "INTERNET":{
+    "desc":"Allows applications to open network sockets.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "KILL_BACKGROUND_PROCESSES":{
+    "desc":"Allows an application to call killBackgroundProcesses(String).",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "LOCATION_HARDWARE":{
+    "desc":"Allows an application to use location features in hardware, such as the geofencing api.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "MANAGE_ACCOUNTS":{
+    "desc":"Allows an application to manage the list of accounts in the AccountManager",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "MANAGE_APP_TOKENS":{
+    "desc":"Allows an application to manage (create, destroy, Z-order) application tokens in the window manager.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "MANAGE_DOCUMENTS":{
+    "desc":"Allows an application to manage access to documents, usually as part of a document picker.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "MASTER_CLEAR":{
+    "desc":"Not for use by third-party applications.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "MEDIA_CONTENT_CONTROL":{
+    "desc":"Allows an application to know what content is playing and control its playback.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "MODIFY_AUDIO_SETTINGS":{
+    "desc":"Allows an application to modify global audio settings",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "MODIFY_PHONE_STATE":{
+    "desc":"Allows modification of the telephony state - power on, mmi, etc.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "MOUNT_FORMAT_FILESYSTEMS":{
+    "desc":"Allows formatting file systems for removable storage.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "MOUNT_UNMOUNT_FILESYSTEMS":{
+    "desc":"Allows mounting and unmounting file systems for removable storage.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "NFC":{
+    "desc":"Allows applications to perform I\/O operations over NFC",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "PERSISTENT_ACTIVITY":{
+    "desc":"This constant was deprecated in API level 9. This functionality will be removed in the future; please do not use. Allow an application to make its activities persistent.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "PROCESS_OUTGOING_CALLS":{
+    "desc":"Allows an application to monitor, modify, or abort outgoing calls.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_CALENDAR":{
+    "desc":"Allows an application to read the user's calendar data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_CALL_LOG":{
+    "desc":"Allows an application to read the user's call log.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_CONTACTS":{
+    "desc":"Allows an application to read the user's contacts data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_EXTERNAL_STORAGE":{
+    "desc":"Allows an application to read from external storage.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_FRAME_BUFFER":{
+    "desc":"Allows an application to take screen shots and more generally get access to the frame buffer data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_HISTORY_BOOKMARKS":{
+    "desc":"Allows an application to read (but not write) the user's browsing history and bookmarks.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_INPUT_STATE":{
+    "desc":"This constant was deprecated in API level 16. The API that used this permission has been removed.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "READ_LOGS":{
+    "desc":"Allows an application to read the low-level system log files.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_PHONE_STATE":{
+    "desc":"Allows read only access to phone state.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_PROFILE":{
+    "desc":"Allows an application to read the user's personal profile data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_SMS":{
+    "desc":"Allows an application to read SMS messages.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_SOCIAL_STREAM":{
+    "desc":"Allows an application to read from the user's social stream.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_SYNC_SETTINGS":{
+    "desc":"Allows applications to read the sync settings",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_SYNC_STATS":{
+    "desc":"Allows applications to read the sync stats",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "READ_USER_DICTIONARY":{
+    "desc":"Allows an application to read the user dictionary.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "REBOOT":{
+    "desc":"Required to be able to reboot the device.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "RECEIVE_BOOT_COMPLETED":{
+    "desc":"Allows an application to receive the ACTION_BOOT_COMPLETED that is broadcast after the system finishes booting.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "RECEIVE_MMS":{
+    "desc":"Allows an application to monitor incoming MMS messages, to record or perform processing on them.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "RECEIVE_SMS":{
+    "desc":"Allows an application to monitor incoming SMS messages, to record or perform processing on them.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "RECEIVE_WAP_PUSH":{
+    "desc":"Allows an application to monitor incoming WAP push messages.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "RECORD_AUDIO":{
+    "desc":"Allows an application to record audio",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "REORDER_TASKS":{
+    "desc":"Allows an application to change the Z-order of tasks",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "RESTART_PACKAGES":{
+    "desc":"This constant was deprecated in API level 8. The restartPackage(String) API is no longer supported.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "SEND_RESPOND_VIA_MESSAGE":{
+    "desc":"Allows an application (Phone) to send a request to other applications to handle the respond-via-message action during incoming calls.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "SEND_SMS":{
+    "desc":"Allows an application to send SMS messages.",
+    "flags":{
+      "cost":true,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "SET_ACTIVITY_WATCHER":{
+    "desc":"Allows an application to watch and control how activities are started globally in the system.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "SET_ALARM":{
+    "desc":"Allows an application to broadcast an Intent to set an alarm for the user.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "SET_ALWAYS_FINISH":{
+    "desc":"Allows an application to control whether activities are immediately finished when put in the background.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "SET_ANIMATION_SCALE":{
+    "desc":"Modify the global animation scaling factor.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "SET_DEBUG_APP":{
+    "desc":"Configure an application for debugging.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "SET_ORIENTATION":{
+    "desc":"Allows low-level access to setting the orientation (actually rotation) of the screen.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "SET_POINTER_SPEED":{
+    "desc":"Allows low-level access to setting the pointer speed.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":true
+    }
+  },
+  "SET_PREFERRED_APPLICATIONS":{
+    "desc":"This constant was deprecated in API level 7. No longer useful, see addPackageToPreferred(String) for details.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "SET_PROCESS_LIMIT":{
+    "desc":"Allows an application to set the maximum number of (not needed) application processes that can be running.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "SET_TIME":{
+    "desc":"Allows applications to set the system time.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "SET_TIME_ZONE":{
+    "desc":"Allows applications to set the system time zone ",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "SET_WALLPAPER":{
+    "desc":"Allows applications to set the wallpaper",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "SET_WALLPAPER_HINTS":{
+    "desc":"Allows applications to set the wallpaper hints",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "SIGNAL_PERSISTENT_PROCESSES":{
+    "desc":"Allow an application to request that a signal be sent to all persistent processes.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "STATUS_BAR":{
+    "desc":"Allows an application to open, close, or disable the status bar and its icons.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "SUBSCRIBED_FEEDS_READ":{
+    "desc":"Allows an application to allow access the subscribed feeds ContentProvider.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "SUBSCRIBED_FEEDS_WRITE":{
+    "desc":"",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "SYSTEM_ALERT_WINDOW":{
+    "desc":"Allows an application to open windows using the type TYPE_SYSTEM_ALERT, shown on top of all other applications.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "TRANSMIT_IR":{
+    "desc":"Allows using the device's IR transmitter, if available",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "UNINSTALL_SHORTCUT":{
+    "desc":"Allows an application to uninstall a shortcut in Launcher",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "UPDATE_DEVICE_STATS":{
+    "desc":"Allows an application to update device statistics.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "USE_CREDENTIALS":{
+    "desc":"Allows an application to request authtokens from the AccountManager",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "USE_SIP":{
+    "desc":"Allows an application to use SIP service",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "VIBRATE":{
+    "desc":"Allows access to the vibrator",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "WAKE_LOCK":{
+    "desc":"Allows using PowerManager WakeLocks to keep processor from sleeping or screen from dimming",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "WRITE_APN_SETTINGS":{
+    "desc":"Allows applications to write the apn settings.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "WRITE_CALENDAR":{
+    "desc":"Allows an application to write (but not read) the user's calendar data.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "WRITE_CALL_LOG":{
+    "desc":"Allows an application to write (but not read) the user's contacts data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "WRITE_CONTACTS":{
+    "desc":"Allows an application to write (but not read) the user's contacts data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "WRITE_EXTERNAL_STORAGE":{
+    "desc":"Allows an application to write to external storage.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "WRITE_GSERVICES":{
+    "desc":"Allows an application to modify the Google service map.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "WRITE_HISTORY_BOOKMARKS":{
+    "desc":"Allows an application to write (but not read) the user's browsing history and bookmarks.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "WRITE_PROFILE":{
+    "desc":"Allows an application to write (but not read) the user's personal profile data.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":true
+    }
+  },
+  "WRITE_SECURE_SETTINGS":{
+    "desc":"Allows an application to read or write the secure system settings.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "WRITE_SETTINGS":{
+    "desc":"Allows an application to read or write the system settings.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "WRITE_SMS":{
+    "desc":"Allows an application to write SMS messages.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "WRITE_SOCIAL_STREAM":{
+    "desc":"Allows an application to write (but not read) the user's social stream data.",
+    "flags":{
+      "cost":false,
+      "warning":true,
+      "danger":false
+    }
+  },
+  "WRITE_SYNC_SETTINGS":{
+    "desc":"Allows applications to write the sync settings",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  },
+  "WRITE_USER_DICTIONARY":{
+    "desc":"Allows an application to write to the user dictionary.",
+    "flags":{
+      "cost":false,
+      "warning":false,
+      "danger":false
+    }
+  }
+}
