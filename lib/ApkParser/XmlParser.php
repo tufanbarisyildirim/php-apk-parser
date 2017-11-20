@@ -22,9 +22,12 @@ class XmlParser
     const RES_XML_START_ELEMENT_TYPE = 0x0102;
     const RES_XML_RESOURCE_MAP_TYPE = 0x0180;
 
+    const UTF8_FLAG = 0x00000100;
+
     private $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
     private $bytes = array();
     private $ready = false;
+    private $isUTF8 = false;
 
     public static $indent_spaces = "                                             ";
 
@@ -82,6 +85,8 @@ class XmlParser
             if ($chunkType == self::RES_STRING_POOL_TYPE)
             {
                 $numbStrings = $this->littleEndianWord($this->bytes, $off + 8);
+                $flags = $this->littleEndianWord($this->bytes, $off + 8 * 2);
+                $this->isUTF8 = ($flags & self::UTF8_FLAG) != 0;
                 $sitOff = $off + $chunkHeaderSize;
                 $stOff = $sitOff + $numbStrings * 4;
             }
@@ -205,7 +210,7 @@ class XmlParser
             return null;
 
         $strOff = $stOff + $this->littleEndianWord($xml, $sitOff + $str_index * 4);
-        return $this->compXmlStringAt($xml, $strOff);
+        return $this->isUTF8 ? $this->compXmlUTF8StringAt($xml, $strOff) : $this->compXmlUTF16StringAt($xml, $strOff);
     }
 
     /**
@@ -230,7 +235,7 @@ class XmlParser
      * @param $string_offset
      * @return string
      */
-    public function compXmlStringAt($arr, $string_offset)
+    public function compXmlUTF16StringAt($arr, $string_offset)
     {
         $strlen = $arr[$string_offset + 1] << 8 & 0xff00 | $arr[$string_offset] & 0xff;
         $string_offset += 2;
@@ -251,6 +256,36 @@ class XmlParser
                 $string .= chr($arr[$i]);
             }
         }
+        return $string;
+    }
+
+    /**
+     * @param $arr
+     * @param $string_offset
+     * @return string
+     */
+    public function compXmlUTF8StringAt($arr, $string_offset)
+    {
+        $val = $arr[$string_offset];
+        // We skip the utf16 length of the string
+        $string_offset +=  ($val & 0x80) != 0 ? 2 : 1;
+        // And we read only the utf-8 encoded length of the string
+        $val = $arr[$string_offset];
+        $string_offset += 1;
+        if (($val & 0x80) != 0) {
+            $low = ($arr[$string_offset] & 0xFF);
+            $length = (($val & 0x7F) << 8) + $low;
+            $string_offset += 1;
+        } else {
+            $length = $val;
+        }
+
+        $strEnd = $string_offset + ($length);
+        $string = "";
+        for ($i = $string_offset; $i < $strEnd; $i++) {
+            $string .= chr($arr[$i]);
+        }
+
         return $string;
     }
 
