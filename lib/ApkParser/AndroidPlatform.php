@@ -1,14 +1,15 @@
 <?php
+
 namespace ApkParser;
 
-    /**
-     * This file is part of the Apk Parser package.
-     *
-     * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
-     *
-     * For the full copyright and license information, please view the LICENSE
-     * file that was distributed with this source code.
-     */
+/**
+ * This file is part of the Apk Parser package.
+ *
+ * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 // Android Api Version Codes
 define('ANRDOID_API_BASE', 1);
@@ -34,6 +35,10 @@ define('ANRDOID_API_KITKAT_WATCH', 20);
 define('ANRDOID_API_LOLLIPOP', 21);
 define('ANDROID_API_LOLLIPOP_MR1', 22);
 define('ANDROID_API_M', 23);
+define('ANDROID_API_NOUGAT', 24);
+define('ANDROID_API_NOUGAT_MR1', 25);
+define('ANDROID_API_OREO', 26);
+define('ANDROID_API_OREO_MR1', 27);
 
 /**
  *
@@ -73,6 +78,10 @@ class AndroidPlatform
         ANRDOID_API_LOLLIPOP => array('versions' => array('5.0'), 'url' => 'http://developer.android.com/about/versions/android-5.0.html'),
         ANDROID_API_LOLLIPOP_MR1 => array('versions' => array('5.1'), 'url' => 'http://developer.android.com/about/versions/android-5.1.html'),
         ANDROID_API_M => array('versions' => array('6.0'), 'url' => 'http://developer.android.com/sdk/api_diff/23/changes.html'),
+        ANDROID_API_NOUGAT => array('versions' => array('7.0'), 'url' => 'https://developer.android.com/about/versions/nougat/android-7.0'),
+        ANDROID_API_NOUGAT_MR1 => array('versions' => array('7.1'), 'url' => 'https://developer.android.com/about/versions/nougat/android-7.1'),
+        ANDROID_API_OREO => array('versions' => array('8.0'), 'url' => 'https://developer.android.com/about/versions/oreo/android-8.0'),
+        ANDROID_API_OREO_MR1 => array('versions' => array('8.1'), 'url' => 'https://developer.android.com/about/versions/oreo/android-8.1')
     );
 
     public $level = null;
