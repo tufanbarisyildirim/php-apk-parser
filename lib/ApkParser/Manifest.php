@@ -1,4 +1,5 @@
 <?php
+
 namespace ApkParser;
 
 use ApkParser\AndroidPlatform;
@@ -102,6 +103,18 @@ class Manifest extends \ApkParser\Xml
         return hexdec($usesSdk['@attributes']['minSdkVersion']);
     }
 
+    /**
+     * The target API Level required for the application to run.
+     * @return float|int
+     */
+    public function getTargetSdkLevel()
+    {
+        $xmlObj = $this->getXmlObject();
+        $usesSdk = get_object_vars($xmlObj->{'uses-sdk'});
+        if (hexdec($usesSdk['@attributes']['targetSdkVersion'])) return hexdec($usesSdk['@attributes']['targetSdkVersion']);
+        return null;
+    }
+
     private function getAttribute($attributeName)
     {
         if ($this->attrs === NULL) {
@@ -143,6 +156,16 @@ class Manifest extends \ApkParser\Xml
     public function getMinSdk()
     {
         return new AndroidPlatform($this->getMinSdkLevel());
+    }
+
+    /**
+     * More Information About The target API Level required for the application to run.
+     * @return AndroidPlatform
+     */
+    public function getTargetSdk()
+    {
+        if ($this->getTargetSdkLevel()) return new AndroidPlatform($this->getTargetSdkLevel());
+        return null;
     }
 
     /**
@@ -1252,4 +1275,3 @@ class Manifest extends \ApkParser\Xml
             ),
     );
 }
-
