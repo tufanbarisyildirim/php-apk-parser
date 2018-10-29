@@ -56,6 +56,8 @@ Fork the repo, make your changes, add your name to developers, and create a pull
 
 [RoidBay Android APK Market](https://www.roidbay.com) uses Apk Parser on their app store
 
+[ApkFiles.com](https://www.apkfiles.com) uses Apk Parser to help users fill the form fields when uploading an apk file.
+
 [Add your name here](./BEMENTIONED.md) if you use apk-parser on your any project.
 
 ### License
