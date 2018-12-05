@@ -1,4 +1,5 @@
 <?php
+
 namespace ApkParser;
 
 /**
@@ -9,7 +10,6 @@ namespace ApkParser;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class SeekableStream
 {
     const LITTLE_ENDIAN_ORDER = 1;
@@ -62,10 +62,12 @@ class SeekableStream
         if ($length < 0) {
             throw new \RuntimeException('Length cannot be negative');
         }
-        if ($length == 0) return '';
+        if ($length == 0) {
+            return '';
+        }
 
         $bytes = fread($this->stream, $length);
-        if (FALSE === $bytes || strlen($bytes) != $length) {
+        if (false === $bytes || strlen($bytes) != $length) {
             throw new \RuntimeException('Failed to read ' . $length . ' bytes');
         }
         return $bytes;

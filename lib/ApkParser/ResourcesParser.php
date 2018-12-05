@@ -1,4 +1,5 @@
 <?php
+
 namespace ApkParser;
 
 /**
@@ -9,7 +10,6 @@ namespace ApkParser;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class ResourcesParser
 {
     const RES_STRING_POOL_TYPE = 0x0001;
@@ -85,12 +85,14 @@ class ResourcesParser
                     $this->valueStringPool = $this->processStringPool($this->stream->copyBytes($chunkSize));
                 }
                 $realStringsCount++;
-            } else if ($chunkType == self::RES_TABLE_PACKAGE_TYPE) {
-                $this->stream->seek($pos);
-                $this->processPackage($this->stream->copyBytes($chunkSize));
-                $realPackagesCount++;
             } else {
-                throw new \Exception('Unsupported Type');
+                if ($chunkType == self::RES_TABLE_PACKAGE_TYPE) {
+                    $this->stream->seek($pos);
+                    $this->processPackage($this->stream->copyBytes($chunkSize));
+                    $realPackagesCount++;
+                } else {
+                    throw new \Exception('Unsupported Type');
+                }
             }
 
             $this->stream->seek($pos + $chunkSize);
@@ -153,9 +155,11 @@ class ResourcesParser
             if ($chunkType == self::RES_TABLE_TYPE_SPEC_TYPE) {
                 $data->seek($pos);
                 $this->processTypeSpec($data->copyBytes($chunkSize));
-            } else if ($chunkType == self::RES_TABLE_TYPE_TYPE) {
-                $data->seek($pos);
-                $this->processType($data->copyBytes($chunkSize));
+            } else {
+                if ($chunkType == self::RES_TABLE_TYPE_TYPE) {
+                    $data->seek($pos);
+                    $this->processType($data->copyBytes($chunkSize));
+                }
             }
 
             $data->seek($pos + $chunkSize);
@@ -301,13 +305,15 @@ class ResourcesParser
                     $value = $this->valueStringPool[$valueData];
                     $this->putResource($resourceIdString, $value);
                     // echo ', data: ' . $value;
-                } else if ($valueDataType == self::TYPE_REFERENCE) {
-                    $referenceIdString = '0x' . dechex($valueData);
-                    $this->putReferenceResource($resourceIdString, $referenceIdString);
-                    // echo ', reference: ' . $referenceIdString;
                 } else {
-                    $this->putResource($resourceIdString, $valueData);
-                    // echo ', data: ' . $valueData;
+                    if ($valueDataType == self::TYPE_REFERENCE) {
+                        $referenceIdString = '0x' . dechex($valueData);
+                        $this->putReferenceResource($resourceIdString, $referenceIdString);
+                        // echo ', reference: ' . $referenceIdString;
+                    } else {
+                        $this->putResource($resourceIdString, $valueData);
+                        // echo ', data: ' . $valueData;
+                    }
                 }
                 // echo PHP_EOL;
             } else {

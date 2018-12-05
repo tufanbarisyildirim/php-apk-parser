@@ -1,12 +1,16 @@
 <?php
-/**
- * Created by mcfedr on 1/15/16 12:04
- */
 
 namespace ApkParser\Exceptions;
 
-use Exception;
 
+/**
+ * This file is part of the Apk Parser package.
+ *
+ * (c) Tufan Baris Yildirim <tufanbarisyildirim@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 class XmlParserException extends ApkException
 {
     /**
@@ -14,6 +18,10 @@ class XmlParserException extends ApkException
      */
     private $xmlErrors;
 
+    /**
+     * XmlParserException constructor.
+     * @param $xmlstr
+     */
     public function __construct($xmlstr)
     {
         $this->xmlErrors = libxml_get_errors();
@@ -37,7 +45,7 @@ class XmlParserException extends ApkException
      */
     private function display_xml_error(\LibXMLError $error, $xml)
     {
-        $return  = $xml[$error->line - 1] . "\n";
+        $return = $xml[$error->line - 1] . "\n";
         $return .= str_repeat('-', $error->column) . "^\n";
 
         switch ($error->level) {

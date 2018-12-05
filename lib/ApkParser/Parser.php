@@ -1,4 +1,5 @@
 <?php
+
 namespace ApkParser;
 
 /**
@@ -9,7 +10,6 @@ namespace ApkParser;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class Parser
 {
     private $apk;
@@ -23,6 +23,7 @@ class Parser
     /**
      * @param $apkFile
      * @param array $config
+     * @throws \Exception
      */
     public function __construct($apkFile, array $config = array())
     {
@@ -30,10 +31,11 @@ class Parser
         $this->apk = new Archive($apkFile);
         $this->manifest = new Manifest(new XmlParser($this->apk->getManifestStream()));
 
-        if (!$this->config->manifest_only)
+        if (!$this->config->manifest_only) {
             $this->resources = new ResourcesParser($this->apk->getResourcesStream());
-        else
-            $this->resources = NULL;
+        } else {
+            $this->resources = null;
+        }
 
     }
 
@@ -60,11 +62,19 @@ class Parser
         return $this->apk;
     }
 
+    /**
+     * @param $key
+     * @return bool|mixed
+     */
     public function getResources($key)
     {
-        return is_null($this->resources) ? FALSE : $this->resources->getResources($key);
+        return is_null($this->resources) ? false : $this->resources->getResources($key);
     }
 
+    /**
+     * @param $name
+     * @return resource
+     */
     public function getStream($name)
     {
         return $this->apk->getStream($name);
@@ -77,11 +87,15 @@ class Parser
      * @param array $entries
      * @return bool
      */
-    public function extractTo($destination, $entries = NULL)
+    public function extractTo($destination, $entries = null)
     {
         return $this->apk->extractTo($destination, $entries);
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function getClasses()
     {
         $dexStream = $this->apk->getClassesDexStream();
@@ -90,8 +104,9 @@ class Parser
         $cache_folder = $this->config->tmp_path . '/' . str_replace('.', '_', $apkName) . '/';
 
         // No folder means no cached data.
-        if (!is_dir($cache_folder))
+        if (!is_dir($cache_folder)) {
             mkdir($cache_folder, 0755, true);
+        }
 
         $dex_file = $cache_folder . '/classes.dex';
         $dexStream->save($dex_file);
@@ -102,7 +117,9 @@ class Parser
         $returns = shell_exec($command);
 
         if (!$returns) //TODO : check if it not contains any error. $returns will always contain some output.
+        {
             throw new \Exception("Couldn't decompile .dex file");
+        }
 
         $file_list = Utils::globRecursive($cache_folder . '*.ddx');
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace ApkParser;
 
 /**
@@ -9,7 +10,6 @@ namespace ApkParser;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class Application
 {
     /**
@@ -54,7 +54,7 @@ class Application
     public function getAttr($attrName)
     {
         $attr = get_object_vars($this->application);
-        return (string)$attr['@attributes'][$attrName];
+        return isset($attr['@attributes']) && isset($attr['@attributes'][$attrName]) ? (string)$attr['@attributes'][$attrName] : null;
     }
 
     /**

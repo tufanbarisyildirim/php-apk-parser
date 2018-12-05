@@ -10,7 +10,6 @@ namespace ApkParser;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class Stream
 {
     /**
@@ -121,6 +120,7 @@ class Stream
      * Write the stream to the given destionation directly without using extra memory like storing in an array etc.
      *
      * @param mixed $destination file path.
+     * @throws \Exception
      */
     public function save($destination)
     {

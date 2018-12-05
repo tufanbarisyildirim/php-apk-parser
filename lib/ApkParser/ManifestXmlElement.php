@@ -1,5 +1,7 @@
 <?php
+
 namespace ApkParser;
+
 /**
  * This file is part of the Apk Parser package.
  *
@@ -9,7 +11,6 @@ namespace ApkParser;
  * file that was distributed with this source code.
  * @property mixed application
  */
-
 class ManifestXmlElement extends \SimpleXMLElement
 {
     /**
@@ -27,14 +28,15 @@ class ManifestXmlElement extends \SimpleXMLElement
             $permAttr = get_object_vars($perm);
             $objNotationArray = explode('.', $permAttr['@attributes']['name']);
             $permName = trim(end($objNotationArray));
-            $perms[$permName] = array('description' => isset($permissions[$permName]) ? $permissions[$permName]['desc'] : null,
+            $perms[$permName] = array(
+                'description' => isset($permissions[$permName]) ? $permissions[$permName]['desc'] : null,
 
                 'flags' => isset($permissions[$permName]) ?
                     $permissions[$permName]['flags']
                     : array(
-                        'cost' => false,
+                        'cost'    => false,
                         'warning' => false,
-                        'danger' => false,
+                        'danger'  => false,
                     )
             );
         }
