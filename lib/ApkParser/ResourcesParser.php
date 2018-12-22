@@ -342,23 +342,29 @@ class ResourcesParser
      */
     private function processConfig($bytes)
     {
+        $size = $bytes->size();
+
+        // 12
         $config['size'] = $bytes->readInt32LE();
         $config['mcc'] = $bytes->readInt16LE();
         $config['mnc'] = $bytes->readInt16LE();
         $bytes->backSeek(-4);
         $config['imsi'] = $bytes->readInt32LE();
 
+        // 8
         $config['language'] = $bytes->read(2);
         $config['country'] = $bytes->read(2);
         $bytes->backSeek(-4);
         $config['locale'] = $bytes->read(4);
 
+        // 8
         $config['orientation'] = $bytes->readByte();
         $config['touchscreen'] = $bytes->readByte();
         $config['density'] = $bytes->readInt16LE();
         $bytes->backSeek(-4);
         $config['screenType'] = $bytes->readInt32LE();
 
+        // 8
         $config['keyboard'] = $bytes->readByte();
         $config['navigation'] = $bytes->readByte();
         $config['inputFlags'] = $bytes->readByte();
@@ -366,30 +372,38 @@ class ResourcesParser
         $bytes->backSeek(-4);
         $config['input'] = $bytes->readInt32LE();
 
-        $config['screenWidth'] = $bytes->readInt16LE();
-        $config['screenHeight'] = $bytes->readInt16LE();
-        $bytes->backSeek(-4);
-        $config['screenSize'] = $bytes->readInt32LE();
+        if($size > 36) {
+            // 8
+            $config['screenWidth'] = $bytes->readInt16LE();
+            $config['screenHeight'] = $bytes->readInt16LE();
+            $bytes->backSeek(-4);
+            $config['screenSize'] = $bytes->readInt32LE();
 
-        $config['sdVersion'] = $bytes->readInt16LE();
-        $config['minorVersion'] = $bytes->readInt16LE();
-        $bytes->backSeek(-4);
-        $config['version'] = $bytes->readInt32LE();
+            // 8
+            $config['sdVersion'] = $bytes->readInt16LE();
+            $config['minorVersion'] = $bytes->readInt16LE();
+            $bytes->backSeek(-4);
+            $config['version'] = $bytes->readInt32LE();
 
-        $config['screenLayout'] = $bytes->readByte();
-        $config['uiMode'] = $bytes->readByte();
-        $config['smallestScreenWidthDp'] = $bytes->readInt16LE();
-        $bytes->backSeek(-4);
-        $config['screenConfig'] = $bytes->readInt32LE();
+            // 8
+            $config['screenLayout'] = $bytes->readByte();
+            $config['uiMode'] = $bytes->readByte();
+            $config['smallestScreenWidthDp'] = $bytes->readInt16LE();
+            $bytes->backSeek(-4);
+            $config['screenConfig'] = $bytes->readInt32LE();
 
-        $config['screenWidthDp'] = $bytes->readByte();
-        $config['screenHeightDp'] = $bytes->readByte();
-        $bytes->backSeek(-4);
-        $config['screenSizeDp'] = $bytes->readInt32LE();
+            // 10
+            $config['screenWidthDp'] = $bytes->readByte();
+            $config['screenHeightDp'] = $bytes->readByte();
+            $bytes->backSeek(-4);
+            $config['screenSizeDp'] = $bytes->readInt32LE();
 
-        $config['localeScript'] = $bytes->readInt32LE();
+            // 4
+            $config['localeScript'] = $bytes->readInt32LE();
 
-        $config['localeVariant'] = $bytes->read(8);
+            // 8
+            $config['localeVariant'] = $bytes->read(8);
+        }
 
         return $config;
     }
