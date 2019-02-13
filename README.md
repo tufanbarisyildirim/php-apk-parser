@@ -7,7 +7,7 @@ The class can also extract the whole files contained in the APK file to a given 
 
 ### Requirements
 
-PHP 5.3+
+PHP 5.6+
 
 ### Installation
 
@@ -18,7 +18,7 @@ PHP 5.3+
 {
     ...
     "require": {
-        "tufanbarisyildirim/php-apk-parser":"dev-master"
+        "tufanbarisyildirim/php-apk-parser":"2.0.1"
     }
 }
 ```
@@ -44,8 +44,6 @@ Fork the repo, make your changes, add your name to developers, and create a pull
 
 ##Supporters
 [MiKandi](https://www.mikandi.com)  Team supports/develops Apk parser
-
-[![Php Storm](https://www.jetbrains.com/phpstorm/documentation/docs/logo_phpstorm.png)](https://www.jetbrains.com/phpstorm)
 
 [JetBrains](https://www.jetbrains.com) provides opensource license to Apk Parser's core developers.
 
