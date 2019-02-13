@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
-spl_autoload_register(function ($className) {
+// Test purpose
+require_once __DIR__.'/../vendor/autoload.php';
+
+//spl_autoload_register(function ($className) {
     // Fix for OSX and *nix
-    $className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
-    include(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $className . ".php");
-});
+//    $className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+//    include(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $className . ".php");
+//});
