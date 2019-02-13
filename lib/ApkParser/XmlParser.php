@@ -14,12 +14,18 @@ use ApkParser\Exceptions\XmlParserException;
  */
 class XmlParser
 {
-    const END_DOC_TAG = 0x0101;
-    const START_TAG = 0x0102;
-    const END_TAG = 0x0103;
-    const TEXT_TAG = 0x0104;
 
-    const RES_STRING_POOL_TYPE = 0x0001;
+    const RES_NULL_TYPE               = 0x0000;
+    const RES_STRING_POOL_TYPE        = 0x0001;
+    const RES_TABLE_TYPE              = 0x0002;
+    const RES_XML_TYPE                = 0x0003;
+
+    const TAG_DOC_END = 0x0101;
+    const TAG_START = 0x0102;
+    const TAG_END = 0x0103;
+    const TAG_TEXT = 0x0104;
+
+
     const RES_XML_START_ELEMENT_TYPE = 0x0102;
     const RES_XML_RESOURCE_MAP_TYPE = 0x0180;
 
@@ -83,21 +89,27 @@ class XmlParser
             if ($off + $chunkSize > $dataSize) {
                 break;
             }           // not a chunk
-            if ($chunkType == self::RES_STRING_POOL_TYPE) {
-                $numbStrings = $this->littleEndianWord($this->bytes, $off + 8);
-                $flags = $this->littleEndianWord($this->bytes, $off + 8 * 2);
-                $this->isUTF8 = ($flags & self::UTF8_FLAG) != 0;
-                $sitOff = $off + $chunkHeaderSize;
-                $stOff = $sitOff + $numbStrings * 4;
-            } else {
-                if ($chunkType == self::RES_XML_RESOURCE_MAP_TYPE) {
+
+            switch ($chunkType){
+                case self::RES_STRING_POOL_TYPE;
+                    $numbStrings = $this->littleEndianWord($this->bytes, $off + 8);
+                    $flags = $this->littleEndianWord($this->bytes, $off + 8 * 2);
+                    $this->isUTF8 = ($flags & self::UTF8_FLAG) != 0;
+                    $sitOff = $off + $chunkHeaderSize;
+                    $stOff = $sitOff + $numbStrings * 4;
+                break;
+                case  self::RES_XML_RESOURCE_MAP_TYPE:
                     $resIdsOffset = $off + $chunkHeaderSize;
                     $resIdsCount = ($chunkSize - $chunkHeaderSize) / 4;
-                } else {
-                    if ($chunkType == self::RES_XML_START_ELEMENT_TYPE) {
-                        break;  // Let the next loop take care of it, though we can really move the code to this loop.
-                    }
-                }
+                    break;
+                case self::RES_XML_START_ELEMENT_TYPE:
+                     // xml starts here.
+                    break 2;
+                    break;
+
+                case self::RES_NULL_TYPE:
+                    // read null header.
+                    break;
             }
 
             $off += $chunkSize;
@@ -107,13 +119,14 @@ class XmlParser
         $startTagLineNo = -2;
 
         while ($off < count($this->bytes)) {
-            $currentTag = $this->littleEndianShort($this->bytes, $off);
-            $lineNo = $this->littleEndianWord($this->bytes, $off + 2 * 4);
-            $nameNsSi = $this->littleEndianWord($this->bytes, $off + 4 * 4);
-            $nameSi = $this->littleEndianWord($this->bytes, $off + 5 * 4);
+
+            $currentTag = $this->littleEndianShort($this->bytes, $off); // begin
+            $lineNo = $this->littleEndianWord($this->bytes, $off + 2 * 4); // itemtype
+            $nameNsSi = $this->littleEndianWord($this->bytes, $off + 4 * 4); //headersize
+            $nameSi = $this->littleEndianWord($this->bytes, $off + 5 * 4); //itembodysize
 
             switch ($currentTag) {
-                case self::START_TAG:
+                case self::TAG_START:
                     {
                         $tagSix = $this->littleEndianWord($this->bytes, $off + 6 * 4);
                         $numbAttrs = $this->littleEndianWord($this->bytes, $off + 7 * 4);
@@ -154,7 +167,7 @@ class XmlParser
                     }
                     break;
 
-                case self::END_TAG:
+                case self::TAG_END:
                     {
                         $indentCount--;
                         $off += 6 * 4;
@@ -163,14 +176,14 @@ class XmlParser
                     }
                     break;
 
-                case self::END_DOC_TAG:
+                case self::TAG_DOC_END:
                     {
                         $this->ready = true;
                         break 2;
                     }
                     break;
 
-                case self::TEXT_TAG:
+                case self::TAG_TEXT:
                     {
                         // The text tag appears to be used when Android references an id value that is not
                         // a string literal
