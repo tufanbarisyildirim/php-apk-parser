@@ -3,7 +3,7 @@
 /**
  * Created by mcfedr on 1/15/16 12:14
  */
-class XmlParserTest extends PHPUnit_Framework_TestCase
+class XmlParserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @expectedException ApkParser\Exceptions\XmlParserException

@@ -10,7 +10,7 @@
  */
 
 include 'autoload.php';
-$apk = new \ApkParser\Parser('KateMobile.apk');
+$apk = new \ApkParser\Parser('EBHS.apk');
 
 $manifest = $apk->getManifest();
 $permissions = $manifest->getPermissions();

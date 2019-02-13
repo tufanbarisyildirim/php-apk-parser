@@ -3,9 +3,15 @@
 /**
  * Created by mcfedr on 1/15/16 12:43
  */
-class ManifestTest extends PHPUnit_Framework_TestCase
+class ManifestTest extends \PHPUnit\Framework\TestCase
 {
 
+    /**
+     * @throws \ApkParser\Exceptions\XmlParserException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\MockObject\RuntimeException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testMetaData()
     {
         $mock = $this->getMockBuilder('ApkParser\XmlParser')

@@ -10,7 +10,7 @@
  */
 
 include 'autoload.php';
-$apk = new \ApkParser\Parser('EBHS.apk');
+$apk = new \ApkParser\Parser('vitrinova.apk');
 $resourceId = $apk->getManifest()->getApplication()->getIcon();
 $resources = $apk->getResources($resourceId);
 

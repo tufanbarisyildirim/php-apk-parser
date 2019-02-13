@@ -10,24 +10,36 @@
 
 use ApkParser\Parser;
 
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ApkParser\Parser
      */
     private $subject;
 
+    /**
+     * @throws Exception
+     */
     public function setUp()
     {
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'EBHS.apk';
         $this->subject = new Parser($file);
     }
 
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testSanity()
     {
         $this->assertTrue(true);
     }
 
+    /**
+     * @throws \ApkParser\Exceptions\XmlParserException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testPermissions()
     {
         $permissions = $this->subject->getManifest()->getPermissions();
@@ -39,6 +51,11 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('BLUETOOTH_ADMIN', $permissions, "BLUETOOTH_ADMIN permission not found!");
     }
 
+    /**
+     * @throws \ApkParser\Exceptions\XmlParserException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testApplication()
     {
         $application = $this->subject->getManifest()->getApplication();
@@ -48,6 +65,11 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($application->getLabel(), '0x7f050001');
     }
 
+    /**
+     * @throws \ApkParser\Exceptions\XmlParserException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testIconResources()
     {
         $application = $this->subject->getManifest()->getApplication();
@@ -57,6 +79,10 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($resources, $expected);
     }
 
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testIconStream()
     {
         $stream = $this->subject->getStream('res/drawable-hdpi/ebhs.png');
@@ -68,6 +94,11 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(base64_encode($icon), base64_encode($expected));
     }
 
+    /**
+     * @throws \ApkParser\Exceptions\XmlParserException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testLabelResources()
     {
         $application = $this->subject->getManifest()->getApplication();
