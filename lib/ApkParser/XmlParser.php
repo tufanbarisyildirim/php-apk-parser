@@ -348,9 +348,8 @@ class XmlParser
         if (!$this->ready) {
             $this->decompress();
         }
-        $xml = utf8_encode($this->xml);
-        $xml = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $xml);
-        return $xml;
+
+        return preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $this->xml);
     }
 
     /**
