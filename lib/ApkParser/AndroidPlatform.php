@@ -40,6 +40,7 @@ define('ANDROID_API_NOUGAT_MR1', 25);
 define('ANDROID_API_OREO', 26);
 define('ANDROID_API_OREO_MR1', 27);
 define('ANDROID_API_PIE', 28);
+define('ANDROID_API_Q', 29);
 
 /**
  *
@@ -83,7 +84,8 @@ class AndroidPlatform
         ANDROID_API_NOUGAT_MR1 => array('versions' => array('7.1'), 'url' => 'https://developer.android.com/about/versions/nougat/android-7.1'),
         ANDROID_API_OREO => array('versions' => array('8.0'), 'url' => 'https://developer.android.com/about/versions/oreo/android-8.0'),
         ANDROID_API_OREO_MR1 => array('versions' => array('8.1'), 'url' => 'https://developer.android.com/about/versions/oreo/android-8.1'),
-        ANDROID_API_PIE => array('versions' => array('9.0'), 'url' => 'https://developer.android.com/about/versions/pie/android-9.0')
+        ANDROID_API_PIE => array('versions' => array('9.0'), 'url' => 'https://developer.android.com/about/versions/pie/android-9.0'),
+        ANDROID_API_Q => array('versions' => array('10.0'), 'url' => 'https://developer.android.com/about/versions/10/features')
     );
 
     public $level = null;
