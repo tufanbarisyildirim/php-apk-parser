@@ -12,18 +12,7 @@ PHP 5.6+
 ### Installation
 
 - Install [composer](http://getcomposer.org/download/)
-- Create a composer.json into your project like the following sample:
-
-```json
-{
-    ...
-    "require": {
-        "tufanbarisyildirim/php-apk-parser":"2.0.1"
-    }
-}
-```
-
-- Then from your `composer.json` folder: `php composer.phar install` or `composer install`
+- Run the following command in the folder where `composer.json` is: `composer install tufanbarisyildirim/php-apk-parser`
 
 ## Testing
 
