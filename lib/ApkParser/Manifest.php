@@ -61,7 +61,7 @@ class Manifest extends Xml
      * @return array
      * @throws Exceptions\XmlParserException
      */
-    public function getPermissions()
+    public function getPermissionsRaw()
     {
         return $this->getXmlObject()->getPermissionsRaw();
     }
