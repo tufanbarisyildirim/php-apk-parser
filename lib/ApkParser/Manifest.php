@@ -57,6 +57,16 @@ class Manifest extends Xml
     }
 
     /**
+     * Get Application Permissions
+     * @return array
+     * @throws Exceptions\XmlParserException
+     */
+    public function getPermissionsRaw()
+    {
+        return $this->getXmlObject()->getPermissionsRaw();
+    }
+
+    /**
      * Android Package Name
      * @return string
      * @throws \Exception
