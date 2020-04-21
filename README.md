@@ -12,7 +12,7 @@ PHP 5.6+
 ### Installation
 
 - Install [composer](http://getcomposer.org/download/)
-- Run the following command in the folder where `composer.json` is: `composer install tufanbarisyildirim/php-apk-parser`
+- Run the following command in the folder where `composer.json` is: `composer require tufanbarisyildirim/php-apk-parser`
 
 ## Testing
 
