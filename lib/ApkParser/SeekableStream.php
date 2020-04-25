@@ -202,13 +202,23 @@ class SeekableStream
     private static function toMemoryStream($stream, $length = 0)
     {
         $size = 0;
-        $memoryStream = fopen('php://memory', 'wb+');
-        while (!feof($stream)) {
-            fputs($memoryStream, fread($stream, 1));
-            $size++;
+        $memoryStream = \fopen('php://memory', 'wb+');
+
+        while (!\feof($stream)) {
+            $buf = \fread($stream, 128);
+            $bufSize = \strlen($buf);
+            $size += $bufSize;
+
             if ($length > 0 && $size >= $length) {
+                $over = $size - $length;
+                \fputs($memoryStream, \substr($buf, 0, $bufSize - $over));
+
+                if ($over > 0) {
+                    \fseek($stream, -$over, SEEK_CUR);
+                }
                 break;
             }
+            \fputs($memoryStream, $buf);
         }
         return $memoryStream;
     }
