@@ -3,7 +3,7 @@ The MIT License (MIT)
 For PHP Apk Parser
 https://github.com/tufanbarisyildirim/php-apk-parser
 
-Copyright (c) 2012 - 2014 Tufan Baris Yildirim  <tufanbarisyildirim@gmail.com>
+Copyright (c) 2012 - 2020 Tufan Baris Yildirim  <tufanbarisyildirim@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

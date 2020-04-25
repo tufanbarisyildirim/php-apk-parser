@@ -314,7 +314,7 @@ class XmlParser
      */
     public function littleEndianWord($arr, $off)
     {
-        $signShifAmount = (PHP_INT_SIZE - 4) << 3; // the anount of bits to shift back and forth, so that we get the correct signage
+        $signShifAmount = (PHP_INT_SIZE - 4) << 3; // the amount of bits to shift back and forth, so that we get the correct signage
         return (($arr[$off + 3] << 24 & 0xff000000 | $arr[$off + 2] << 16 & 0xff0000 | $arr[$off + 1] << 8 & 0xff00 | $arr[$off] & 0xFF) << $signShifAmount) >> $signShifAmount;
     }
 
@@ -325,7 +325,7 @@ class XmlParser
      */
     public function littleEndianShort($arr, $off)
     {
-        $signShifAmount = (PHP_INT_SIZE - 2) << 3; // the anount of bits to shift back and forth, so that we get the correct signage
+        $signShifAmount = (PHP_INT_SIZE - 2) << 3; // the amount of bits to shift back and forth, so that we get the correct signage
         return (($arr[$off + 1] << 8 & 0xff00 | $arr[$off] & 0xFF) << $signShifAmount) >> $signShifAmount;
     }
 

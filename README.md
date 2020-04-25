@@ -7,7 +7,7 @@ The class can also extract the whole files contained in the APK file to a given 
 
 ### Requirements
 
-PHP 5.6+
+PHP 7.0+
 
 ### Installation
 
@@ -33,8 +33,6 @@ Fork the repo, make your changes, add your name to developers, and create a pull
 
 ##Supporters
 [MiKandi](https://www.mikandi.com)  Team supports/develops Apk parser
-
-[JetBrains](https://www.jetbrains.com) provides opensource license to Apk Parser's core developers.
 
 ** Add your name here if you want to support/donate apk-parser
 
