@@ -20,6 +20,7 @@ class XmlParser
     const RES_TABLE_TYPE              = 0x0002;
     const RES_XML_TYPE                = 0x0003;
 
+    const TAG_NULL = 0x0000;
     const TAG_DOC_END = 0x0101;
     const TAG_START = 0x0102;
     const TAG_END = 0x0103;
@@ -126,6 +127,10 @@ class XmlParser
             $nameSi = $this->littleEndianWord($this->bytes, $off + 5 * 4); //itembodysize
 
             switch ($currentTag) {
+                case self::TAG_NULL:
+                    $off += 4;
+                    break;
+
                 case self::TAG_START:
                     {
                         $tagSix = $this->littleEndianWord($this->bytes, $off + 6 * 4);
