@@ -25,25 +25,10 @@ Tests are powered by PHPUnit. You have several options.
   
   
 ##Contributing
+
 Fork the repo, make your changes, add your name to developers, and create a pull request with a comment that describe your changes. That's all!
 [Thanks to all contributers](https://github.com/tufanbarisyildirim/php-apk-parser/graphs/contributors)
   
-##Developers
-[Tufan Barış Yıldırım](http://github.com/tufanbarisyildirim)
-
-##Supporters
-[MiKandi](https://www.mikandi.com)  Team supports/develops Apk parser
-
-** Add your name here if you want to support/donate apk-parser
-
-## Who Uses Apk Parser
-[World #1 Adult App Store MiKandi](http://www.mikandi.com) uses Apk Parser on their app store
-
-[RoidBay Android APK Market](https://www.roidbay.com) uses Apk Parser on their app store
-
-[ApkFiles.com](https://www.apkfiles.com) uses Apk Parser to get data from user apk uploads and fill upload form.
-
-[Add your name here](./BEMENTIONED.md) if you use apk-parser on your any project.
 
 ### License
 
