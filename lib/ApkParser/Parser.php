@@ -70,6 +70,14 @@ class Parser
     {
         return is_null($this->resources) ? false : $this->resources->getResources($key);
     }
+    
+    /**
+     Get all resources as an array
+     */
+    public function getAllResources()
+    {
+        return is_null($this->resources) ? [ ] : $this->resources->getAllResources();
+    }
 
     /**
      * @param $name
