@@ -195,7 +195,7 @@ class XmlParser
                             $this->ready = true;
                             break 2;
                         }
-                        $this->ns --;
+                        $this->nsNum --;
                         $off += 6 * 4;
                     }
                     break;
