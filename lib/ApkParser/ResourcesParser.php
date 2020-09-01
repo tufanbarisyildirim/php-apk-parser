@@ -313,7 +313,7 @@ class ResourcesParser
                 } else {
                     if ($valueDataType == self::TYPE_REFERENCE) {
                         $referenceIdString = '0x' . dechex($valueData);
-                        $this->putReferenceResource($resourceIdString, $referenceIdString);
+                        $this->putReferenceResource($referenceIdString, $resourceIdString);
                         // echo ', reference: ' . $referenceIdString;
                     } else {
                         $this->putResource($resourceIdString, $valueData);
