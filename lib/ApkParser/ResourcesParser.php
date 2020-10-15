@@ -53,6 +53,14 @@ class ResourcesParser
     {
         return $this->resources[strtolower($key)];
     }
+    
+    /**
+     All resources
+     */
+    public function getAllResources()
+    {
+        return $this->resources;
+    }
 
     /**
      * @throws \Exception
