@@ -25,7 +25,7 @@ class Parser
      * @param array $config
      * @throws \Exception
      */
-    public function __construct($apkFile, array $config = array())
+    public function __construct($apkFile, array $config = [])
     {
         $this->config = new Config($config);
         $this->apk = new Archive($apkFile);
@@ -70,7 +70,7 @@ class Parser
     {
         return is_null($this->resources) ? false : $this->resources->getResources($key);
     }
-    
+
     /**
      Get all resources as an array
      */

@@ -20,10 +20,10 @@ class ParserTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws Exception
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'EBHS.apk';
-        $this->subject = new Parser($file);
+        $this->subject = new Parser($file, ['manifest_only' => false]);
     }
 
     /**
@@ -44,7 +44,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
     {
         $permissions = $this->subject->getManifest()->getPermissions();
 
-        $this->assertEquals(count($permissions), 4);
+        $this->assertCount(4, $permissions);
         $this->assertArrayHasKey('INTERNET', $permissions, "INTERNET permission not found!");
         $this->assertArrayHasKey('CAMERA', $permissions, "CAMERA permission not found!");
         $this->assertArrayHasKey('BLUETOOTH', $permissions, "BLUETOOTH permission not found!");
@@ -75,8 +75,13 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $application = $this->subject->getManifest()->getApplication();
         $resources = $this->subject->getResources($application->getIcon());
 
-        $expected = array('res/drawable-ldpi/ebhs.png', 'res/drawable-mdpi/ebhs.png', 'res/drawable-hdpi/ebhs.png');
+        $expected = ['res/drawable-ldpi/ebhs.png', 'res/drawable-mdpi/ebhs.png', 'res/drawable-hdpi/ebhs.png'];
         $this->assertEquals($resources, $expected);
+    }
+
+    public function testGetMissingResources()
+    {
+        $this->assertFalse($this->subject->getResources('missing'));
     }
 
     /**
@@ -90,7 +95,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'ebhs.png';
         $expected = file_get_contents($file);
 
-        $this->assertTrue(is_resource($stream));
+        $this->assertIsResource($stream);
         $this->assertEquals(base64_encode($icon), base64_encode($expected));
     }
 
@@ -104,7 +109,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $application = $this->subject->getManifest()->getApplication();
         $resources = $this->subject->getResources($application->getLabel());
 
-        $expected = array('EBHS');
+        $expected = ['EBHS'];
         $this->assertEquals($resources, $expected);
     }
 }
