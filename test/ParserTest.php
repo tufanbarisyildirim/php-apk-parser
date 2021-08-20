@@ -79,6 +79,11 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($resources, $expected);
     }
 
+    public function testGetMissingResources()
+    {
+        $this->assertFalse($this->subject->getResources('missing'));
+    }
+
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
