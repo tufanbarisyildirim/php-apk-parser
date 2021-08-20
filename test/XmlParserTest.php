@@ -5,9 +5,6 @@
  */
 class XmlParserTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @expectedException ApkParser\Exceptions\XmlParserException
-     */
     public function testXmlObject()
     {
         $mock = $this->getMockBuilder('ApkParser\XmlParser')
@@ -17,6 +14,8 @@ class XmlParserTest extends \PHPUnit\Framework\TestCase
 
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'invalid.xml';
         $mock->expects($this->once())->method('getXmlString')->will($this->returnValue(file_get_contents($file)));
+
+        $this->expectException(\ApkParser\Exceptions\XmlParserException::class);
 
         $mock->getXmlObject();
     }
