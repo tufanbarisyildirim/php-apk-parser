@@ -42,7 +42,7 @@ define('ANDROID_API_OREO_MR1', 27);
 define('ANDROID_API_PIE', 28);
 define('ANDROID_API_Q', 29);
 define('ANDROID_API_R', 30);
-define('ANDROID_API_S', 30);
+define('ANDROID_API_S', 31);
 
 
 /**
