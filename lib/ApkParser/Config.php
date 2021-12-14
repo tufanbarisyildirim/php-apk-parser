@@ -29,11 +29,14 @@ class Config
      */
     public function __construct(array $config = [])
     {
-        $this->config = array_merge([
-            'tmp_path'      => sys_get_temp_dir(),
-            'jar_path'      => __DIR__ . '/Dex/dedexer.jar',
-            'manifest_only' => true
-        ], $config);
+        $this->config = array_merge(
+            [
+                'tmp_path'      => sys_get_temp_dir(),
+                'jar_path'      => __DIR__ . '/Dex/dedexer.jar',
+                'manifest_only' => true
+            ],
+            $config
+        );
     }
 
     /**

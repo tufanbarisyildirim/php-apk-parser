@@ -25,7 +25,6 @@ class IntentFilter
 
 
         if (isset($filterArray['action'])) {
-
             if (!is_array($filterArray['action'])) {
                 $filterArray['action'] = array($filterArray['action']);
             }
@@ -38,7 +37,6 @@ class IntentFilter
         }
 
         if (isset($filterArray['category'])) {
-
             if (!is_array($filterArray['category'])) {
                 $filterArray['category'] = array($filterArray['category']);
             }
@@ -50,8 +48,6 @@ class IntentFilter
                 $this->categories[] = end($categoryNameSections);
             }
         }
-
-
     }
 
     /**

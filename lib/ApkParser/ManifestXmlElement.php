@@ -42,7 +42,7 @@ class ManifestXmlElement extends \SimpleXMLElement
         }
         return $perms;
     }
-    
+
     /**
      * @return array
      */

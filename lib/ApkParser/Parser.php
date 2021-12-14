@@ -36,7 +36,6 @@ class Parser
         } else {
             $this->resources = null;
         }
-
     }
 
     /**
@@ -72,11 +71,11 @@ class Parser
     }
 
     /**
-     Get all resources as an array
+     * Get all resources as an array
      */
     public function getAllResources()
     {
-        return is_null($this->resources) ? [ ] : $this->resources->getAllResources();
+        return is_null($this->resources) ? [] : $this->resources->getAllResources();
     }
 
     /**
@@ -141,6 +140,5 @@ class Parser
 
 
         return $file_list;
-
     }
 }

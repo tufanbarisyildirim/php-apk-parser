@@ -40,6 +40,16 @@ class Application
     }
 
     /**
+     * @param $attrName
+     * @return string
+     */
+    public function getAttr($attrName)
+    {
+        $attr = get_object_vars($this->application);
+        return isset($attr['@attributes']) && isset($attr['@attributes'][$attrName]) ? (string)$attr['@attributes'][$attrName] : null;
+    }
+
+    /**
      * @return string
      */
     public function getLabel()
@@ -48,13 +58,11 @@ class Application
     }
 
     /**
-     * @param $attrName
      * @return string
      */
-    public function getAttr($attrName)
+    public function getActivityHash()
     {
-        $attr = get_object_vars($this->application);
-        return isset($attr['@attributes']) && isset($attr['@attributes'][$attrName]) ? (string)$attr['@attributes'][$attrName] : null;
+        return md5(implode('', $this->getActivityNameList()));
     }
 
     /**
@@ -69,13 +77,5 @@ class Application
         }
 
         return $names;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActivityHash()
-    {
-        return md5(implode('', $this->getActivityNameList()));
     }
 }

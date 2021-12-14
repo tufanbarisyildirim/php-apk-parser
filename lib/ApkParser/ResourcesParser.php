@@ -46,28 +46,6 @@ class ResourcesParser
     }
 
     /**
-     * @param $key
-     * @return mixed
-     */
-    public function getResources($key)
-    {
-        $key = strtolower($key);
-        if (array_key_exists($key, $this->resources)) {
-            return $this->resources[$key];
-        }
-
-        return false;
-    }
-
-    /**
-     All resources
-     */
-    public function getAllResources()
-    {
-        return $this->resources;
-    }
-
-    /**
      * @throws \Exception
      */
     private function decompress()
@@ -119,6 +97,64 @@ class ResourcesParser
         if ($realPackagesCount != $packagesCount) {
             throw new \Exception('Real package count not equals the declared count.');
         }
+    }
+
+    /**
+     * @param SeekableStream $data
+     * @return array
+     */
+    private function processStringPool(SeekableStream $data)
+    {
+        $data->readInt16LE(); // type
+        $data->readInt16LE(); // headerSize
+        $data->readInt32LE(); // size
+        $stringsCount = $data->readInt32LE();
+        $data->readInt32LE(); // stylesCount
+        $flags = $data->readInt32LE();
+        $stringsStart = $data->readInt32LE();
+        $data->readInt32LE(); // stylesStart
+
+        $offsets = array();
+        for ($i = 0; $i < $stringsCount; $i++) {
+            $offsets[$i] = $data->readInt32LE();
+        }
+        $isUtf8 = ($flags & 256) != 0;
+
+        $strings = array();
+        for ($i = 0; $i < $stringsCount; $i++) {
+            $lastPosition = $data->position();
+            $pos = $stringsStart + $offsets[$i];
+            $data->seek($pos);
+            $len = $data->position();
+            $data->seek($lastPosition);
+            if ($len < 0) {
+                $data->readInt16LE(); // extendShort
+            }
+            $pos += 2;
+
+            $strings[$i] = '';
+            if ($isUtf8) {
+                $length = 0;
+                $data->seek($pos);
+                while ($data->readByte() != 0) {
+                    $length++;
+                }
+                if ($length > 0) {
+                    $data->seek($pos);
+                    $strings[$i] = $data->read($length);
+                } else {
+                    $strings[$i] = '';
+                }
+            } else {
+                $data->seek($pos);
+                while (($c = $data->read()) != 0) {
+                    $strings[$i] .= $c;
+                    $pos += 2;
+                }
+            }
+            // echo 'Parsed value: ', $strings[$i], PHP_EOL;
+        }
+        return $strings;
     }
 
     /**
@@ -180,64 +216,6 @@ class ResourcesParser
                 break;
             }
         }
-    }
-
-    /**
-     * @param SeekableStream $data
-     * @return array
-     */
-    private function processStringPool(SeekableStream $data)
-    {
-        $data->readInt16LE(); // type
-        $data->readInt16LE(); // headerSize
-        $data->readInt32LE(); // size
-        $stringsCount = $data->readInt32LE();
-        $data->readInt32LE(); // stylesCount
-        $flags = $data->readInt32LE();
-        $stringsStart = $data->readInt32LE();
-        $data->readInt32LE(); // stylesStart
-
-        $offsets = array();
-        for ($i = 0; $i < $stringsCount; $i++) {
-            $offsets[$i] = $data->readInt32LE();
-        }
-        $isUtf8 = ($flags & 256) != 0;
-
-        $strings = array();
-        for ($i = 0; $i < $stringsCount; $i++) {
-            $lastPosition = $data->position();
-            $pos = $stringsStart + $offsets[$i];
-            $data->seek($pos);
-            $len = $data->position();
-            $data->seek($lastPosition);
-            if ($len < 0) {
-                $data->readInt16LE(); // extendShort
-            }
-            $pos += 2;
-
-            $strings[$i] = '';
-            if ($isUtf8) {
-                $length = 0;
-                $data->seek($pos);
-                while ($data->readByte() != 0) {
-                    $length++;
-                }
-                if ($length > 0) {
-                    $data->seek($pos);
-                    $strings[$i] = $data->read($length);
-                } else {
-                    $strings[$i] = '';
-                }
-            } else {
-                $data->seek($pos);
-                while (($c = $data->read()) != 0) {
-                    $strings[$i] .= $c;
-                    $pos += 2;
-                }
-            }
-            // echo 'Parsed value: ', $strings[$i], PHP_EOL;
-        }
-        return $strings;
     }
 
     /**
@@ -385,7 +363,7 @@ class ResourcesParser
         $bytes->backSeek(-4);
         $config['input'] = $bytes->readInt32LE();
 
-        if($size > 36) {
+        if ($size > 36) {
             // 8
             $config['screenWidth'] = $bytes->readInt16LE();
             $config['screenHeight'] = $bytes->readInt16LE();
@@ -447,5 +425,27 @@ class ResourcesParser
                 $this->putResource($valueData, $value);
             }
         }
+    }
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function getResources($key)
+    {
+        $key = strtolower($key);
+        if (array_key_exists($key, $this->resources)) {
+            return $this->resources[$key];
+        }
+
+        return false;
+    }
+
+    /**
+     * All resources
+     */
+    public function getAllResources()
+    {
+        return $this->resources;
     }
 }

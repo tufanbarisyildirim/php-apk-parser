@@ -41,36 +41,41 @@ class SeekableStream
     }
 
     /**
+     * @param $stream
+     * @param int $length
+     * @return resource
+     */
+    private static function toMemoryStream($stream, $length = 0)
+    {
+        $size = 0;
+        $memoryStream = \fopen('php://memory', 'wb+');
+
+        while (!\feof($stream)) {
+            $buf = \fread($stream, 128);
+            $bufSize = \strlen($buf);
+            $size += $bufSize;
+
+            if ($length > 0 && $size >= $length) {
+                $over = $size - $length;
+                \fputs($memoryStream, \substr($buf, 0, $bufSize - $over));
+
+                if ($over > 0) {
+                    \fseek($stream, -$over, SEEK_CUR);
+                }
+                break;
+            }
+            \fputs($memoryStream, $buf);
+        }
+        return $memoryStream;
+    }
+
+    /**
      * @param $length
      * @return SeekableStream
      */
     public function copyBytes($length)
     {
         return new self(self::toMemoryStream($this->stream, $length));
-    }
-
-    /**
-     * Obtain a number of bytes from the string
-     *
-     * @throws \RuntimeException
-     * @param int $length
-     * @return string
-     */
-    public function read($length = 1)
-    {
-        // Protect against 0 byte reads when an EOF
-        if ($length < 0) {
-            throw new \RuntimeException('Length cannot be negative');
-        }
-        if ($length == 0) {
-            return '';
-        }
-
-        $bytes = fread($this->stream, $length);
-        if (false === $bytes || strlen($bytes) != $length) {
-            throw new \RuntimeException('Failed to read ' . $length . ' bytes');
-        }
-        return $bytes;
     }
 
     public function seek($offset)
@@ -120,6 +125,30 @@ class SeekableStream
     }
 
     /**
+     * Obtain a number of bytes from the string
+     *
+     * @param int $length
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function read($length = 1)
+    {
+        // Protect against 0 byte reads when an EOF
+        if ($length < 0) {
+            throw new \RuntimeException('Length cannot be negative');
+        }
+        if ($length == 0) {
+            return '';
+        }
+
+        $bytes = fread($this->stream, $length);
+        if (false === $bytes || strlen($bytes) != $length) {
+            throw new \RuntimeException('Failed to read ' . $length . ' bytes');
+        }
+        return $bytes;
+    }
+
+    /**
      * Reads 2 bytes from the stream and returns little-endian ordered binary
      * data as signed 16-bit integer.
      *
@@ -135,30 +164,26 @@ class SeekableStream
     }
 
     /**
-     * Reads 4 bytes from the stream and returns little-endian ordered binary
-     * data as signed 32-bit integer.
-     *
-     * @return integer
+     * Returns whether the current machine endian order is big endian.
+     * @return boolean
      */
-    public function readInt32LE()
+    private static function isBigEndian()
     {
-        if (self::isBigEndian()) {
-            return self::unpackInt32(strrev($this->read(4)));
-        } else {
-            return self::unpackInt32($this->read(4));
-        }
+        return self::getEndianess() == self::BIG_ENDIAN_ORDER;
     }
 
     /**
-     * Returns machine endian ordered binary data as signed 16-bit integer.
-     *
-     * @param string $value The binary data string.
+     * Returns the current machine endian order.
      * @return integer
      */
-    private static function unpackInt16($value)
+    private static function getEndianess()
     {
-        list(, $int) = unpack('s*', $value);
-        return $int;
+        if (self::$endianess === 0) {
+            self::$endianess = self::unpackInt32(
+                "\x01\x00\x00\x00"
+            ) == 1 ? self::LITTLE_ENDIAN_ORDER : self::BIG_ENDIAN_ORDER;
+        }
+        return self::$endianess;
     }
 
     /**
@@ -174,52 +199,29 @@ class SeekableStream
     }
 
     /**
-     * Returns the current machine endian order.
+     * Returns machine endian ordered binary data as signed 16-bit integer.
+     *
+     * @param string $value The binary data string.
      * @return integer
      */
-    private static function getEndianess()
+    private static function unpackInt16($value)
     {
-        if (self::$endianess === 0) {
-            self::$endianess = self::unpackInt32("\x01\x00\x00\x00") == 1 ? self::LITTLE_ENDIAN_ORDER : self::BIG_ENDIAN_ORDER;
-        }
-        return self::$endianess;
+        list(, $int) = unpack('s*', $value);
+        return $int;
     }
 
     /**
-     * Returns whether the current machine endian order is big endian.
-     * @return boolean
+     * Reads 4 bytes from the stream and returns little-endian ordered binary
+     * data as signed 32-bit integer.
+     *
+     * @return integer
      */
-    private static function isBigEndian()
+    public function readInt32LE()
     {
-        return self::getEndianess() == self::BIG_ENDIAN_ORDER;
-    }
-
-    /**
-     * @param $stream
-     * @param int $length
-     * @return resource
-     */
-    private static function toMemoryStream($stream, $length = 0)
-    {
-        $size = 0;
-        $memoryStream = \fopen('php://memory', 'wb+');
-
-        while (!\feof($stream)) {
-            $buf = \fread($stream, 128);
-            $bufSize = \strlen($buf);
-            $size += $bufSize;
-
-            if ($length > 0 && $size >= $length) {
-                $over = $size - $length;
-                \fputs($memoryStream, \substr($buf, 0, $bufSize - $over));
-
-                if ($over > 0) {
-                    \fseek($stream, -$over, SEEK_CUR);
-                }
-                break;
-            }
-            \fputs($memoryStream, $buf);
+        if (self::isBigEndian()) {
+            return self::unpackInt32(strrev($this->read(4)));
+        } else {
+            return self::unpackInt32($this->read(4));
         }
-        return $memoryStream;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace ApkParser;
 
 /**
@@ -9,7 +10,6 @@ namespace ApkParser;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class Archive extends \ZipArchive
 {
     /**
@@ -35,7 +35,6 @@ class Archive extends \ZipArchive
         } else {
             throw new \Exception($file . " not a regular file");
         }
-
     }
 
     /**
@@ -46,7 +45,7 @@ class Archive extends \ZipArchive
      * @param int $flags
      * @return mixed
      */
-    public function getFromName($name, $length = NULL, $flags = NULL)
+    public function getFromName($name, $length = null, $flags = null)
     {
         if (strtolower(substr($name, -4)) == '.xml') {
             $xmlParser = new XmlParser(new Stream($this->getStream($name)));
@@ -101,10 +100,9 @@ class Archive extends \ZipArchive
     }
 
 
-    public function extractTo($destination, $entries = NULL)
+    public function extractTo($destination, $entries = null)
     {
         if ($extResult = parent::extractTo($destination, $entries)) {
-
             $xmlFiles = Utils::globRecursive($destination . '/*.xml');
 
             foreach ($xmlFiles as $xmlFile) {
@@ -115,7 +113,6 @@ class Archive extends \ZipArchive
         }
 
         return $extResult;
-
     }
 
 }

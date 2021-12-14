@@ -1,4 +1,5 @@
 <?php
+
 namespace ApkParser;
 
 /**
@@ -9,7 +10,6 @@ namespace ApkParser;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class Activity
 {
     public $label;
@@ -29,7 +29,6 @@ class Activity
      */
     public function __construct(ManifestXmlElement $actXml)
     {
-
         $actArray = get_object_vars($actXml);
         $attrs = $actArray['@attributes'];
         $this->setName(isset($attrs['name']) ? $attrs['name'] : null);
@@ -52,7 +51,14 @@ class Activity
                 $this->isLauncher = true;
             }
         }
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**
@@ -66,9 +72,9 @@ class Activity
     /**
      * @return mixed
      */
-    public function getLabel()
+    public function getName()
     {
-        return $this->label;
+        return $this->name;
     }
 
     /**
@@ -80,11 +86,11 @@ class Activity
     }
 
     /**
-     * @return mixed
+     * @return IntentFilter[]
      */
-    public function getName()
+    public function getFilters()
     {
-        return $this->name;
+        return $this->filters; // we may need an intent-filter class
     }
 
     /**
@@ -93,14 +99,6 @@ class Activity
     public function setFilters(array $filters)
     {
         $this->filters = $filters;
-    }
-
-    /**
-     * @return IntentFilter[]
-     */
-    public function getFilters()
-    {
-        return $this->filters; // we may need an intent-filter class
     }
 
     /**

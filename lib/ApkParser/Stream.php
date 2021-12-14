@@ -21,8 +21,8 @@ class Stream
 
     /**
      * @param resource $stream File stream.
-     * @throws \Exception
      * @return \ApkParser\Stream
+     * @throws \Exception
      */
     public function __construct($stream)
     {
@@ -35,48 +35,12 @@ class Stream
     }
 
     /**
-     * Read the next character from stream.
-     *
-     * @param mixed $length
-     * @return string
-     */
-    public function read($length = 1)
-    {
-        return fread($this->stream, $length);
-    }
-
-    /**
-     * check if end of filestream
-     */
-    public function feof()
-    {
-        return feof($this->stream);
-    }
-
-    /**
      * Jump to the index!
      * @param int $offset
      */
     public function seek($offset)
     {
         fseek($this->stream, $offset);
-    }
-
-    /**
-     * Close the stream
-     */
-    public function close()
-    {
-        fclose($this->stream);
-    }
-
-    /**
-     * Read the next byte
-     * @return int
-     */
-    public function readByte()
-    {
-        return ord($this->read());
     }
 
     /**
@@ -97,13 +61,31 @@ class Stream
     }
 
     /**
-     * Write a string to the stream
-     *
-     * @param mixed $str
+     * check if end of filestream
      */
-    function write($str)
+    public function feof()
     {
-        fwrite($this->stream, $str);
+        return feof($this->stream);
+    }
+
+    /**
+     * Read the next byte
+     * @return int
+     */
+    public function readByte()
+    {
+        return ord($this->read());
+    }
+
+    /**
+     * Read the next character from stream.
+     *
+     * @param mixed $length
+     * @return string
+     */
+    public function read($length = 1)
+    {
+        return fread($this->stream, $length);
     }
 
     /**
@@ -114,6 +96,16 @@ class Stream
     function writeByte($byte)
     {
         $this->write(chr($byte));
+    }
+
+    /**
+     * Write a string to the stream
+     *
+     * @param mixed $str
+     */
+    function write($str)
+    {
+        fwrite($this->stream, $str);
     }
 
     /**
@@ -132,5 +124,13 @@ class Stream
         if (!is_resource($destination)) { // close the file if we opened it otwhise dont touch.
             $destination->close();
         }
+    }
+
+    /**
+     * Close the stream
+     */
+    public function close()
+    {
+        fclose($this->stream);
     }
 }

@@ -15,10 +15,10 @@ use ApkParser\Exceptions\XmlParserException;
 class XmlParser
 {
 
-    const RES_NULL_TYPE               = 0x0000;
-    const RES_STRING_POOL_TYPE        = 0x0001;
-    const RES_TABLE_TYPE              = 0x0002;
-    const RES_XML_TYPE                = 0x0003;
+    const RES_NULL_TYPE = 0x0000;
+    const RES_STRING_POOL_TYPE = 0x0001;
+    const RES_TABLE_TYPE = 0x0002;
+    const RES_XML_TYPE = 0x0003;
 
     const TAG_NULL = 0x0000;
     const TAG_DOC_START = 0x0100;
@@ -32,15 +32,12 @@ class XmlParser
     const RES_XML_RESOURCE_MAP_TYPE = 0x0180;
 
     const UTF8_FLAG = 0x00000100;
-
+    public static $indent_spaces = "                                             ";
     private $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
     private $bytes = array();
     private $ready = false;
     private $isUTF8 = false;
     private $nsNum = 0;
-
-    public static $indent_spaces = "                                             ";
-
     /**
      * Store the SimpleXmlElement object
      * @var \SimpleXmlElement
@@ -73,6 +70,19 @@ class XmlParser
     }
 
     /**
+     * @return mixed|string
+     * @throws \Exception
+     */
+    public function getXmlString()
+    {
+        if (!$this->ready) {
+            $this->decompress();
+        }
+
+        return preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $this->xml);
+    }
+
+    /**
      * @throws \Exception
      */
     public function decompress()
@@ -93,20 +103,20 @@ class XmlParser
                 break;
             }           // not a chunk
 
-            switch ($chunkType){
+            switch ($chunkType) {
                 case self::RES_STRING_POOL_TYPE;
                     $numbStrings = $this->littleEndianWord($this->bytes, $off + 8);
                     $flags = $this->littleEndianWord($this->bytes, $off + 8 * 2);
                     $this->isUTF8 = ($flags & self::UTF8_FLAG) != 0;
                     $sitOff = $off + $chunkHeaderSize;
                     $stOff = $sitOff + $numbStrings * 4;
-                break;
+                    break;
                 case  self::RES_XML_RESOURCE_MAP_TYPE:
                     $resIdsOffset = $off + $chunkHeaderSize;
                     $resIdsCount = ($chunkSize - $chunkHeaderSize) / 4;
                     break;
                 case self::RES_XML_START_ELEMENT_TYPE:
-                     // xml starts here.
+                    // xml starts here.
                     break 2;
                     break;
 
@@ -122,7 +132,6 @@ class XmlParser
         $startTagLineNo = -2;
 
         while ($off < count($this->bytes)) {
-
             $currentTag = $this->littleEndianShort($this->bytes, $off); // begin
             $lineNo = $this->littleEndianWord($this->bytes, $off + 2 * 4); // itemtype
             $nameNsSi = $this->littleEndianWord($this->bytes, $off + 4 * 4); //headersize
@@ -166,7 +175,6 @@ class XmlParser
                             }
 
                             $attr_string .= " " . $attrName . "=\"" . $attrValue . "\"";
-
                         }
 
                         $this->appendXmlIndent($indentCount, "<" . $tagName . $attr_string . ">");
@@ -186,7 +194,7 @@ class XmlParser
                 case self::TAG_DOC_START:
                     {
                         $off += 6 * 4;
-                        $this->nsNum ++;
+                        $this->nsNum++;
                     }
                     break;
                 case self::TAG_DOC_END:
@@ -195,7 +203,7 @@ class XmlParser
                             $this->ready = true;
                             break 2;
                         }
-                        $this->nsNum --;
+                        $this->nsNum--;
                         $off += 6 * 4;
                     }
                     break;
@@ -234,6 +242,28 @@ class XmlParser
     }
 
     /**
+     * @param $arr
+     * @param $off
+     * @return int
+     */
+    public function littleEndianShort($arr, $off)
+    {
+        $signShifAmount = (PHP_INT_SIZE - 2) << 3; // the amount of bits to shift back and forth, so that we get the correct signage
+        return (($arr[$off + 1] << 8 & 0xff00 | $arr[$off] & 0xFF) << $signShifAmount) >> $signShifAmount;
+    }
+
+    /**
+     * @param $arr
+     * @param $off
+     * @return int
+     */
+    public function littleEndianWord($arr, $off)
+    {
+        $signShifAmount = (PHP_INT_SIZE - 4) << 3; // the amount of bits to shift back and forth, so that we get the correct signage
+        return (($arr[$off + 3] << 24 & 0xff000000 | $arr[$off + 2] << 16 & 0xff0000 | $arr[$off + 1] << 8 & 0xff00 | $arr[$off] & 0xFF) << $signShifAmount) >> $signShifAmount;
+    }
+
+    /**
      * @param $xml
      * @param $sitOff
      * @param $stOff
@@ -248,50 +278,6 @@ class XmlParser
 
         $strOff = $stOff + $this->littleEndianWord($xml, $sitOff + $str_index * 4);
         return $this->isUTF8 ? $this->compXmlUTF8StringAt($xml, $strOff) : $this->compXmlUTF16StringAt($xml, $strOff);
-    }
-
-    /**
-     * @param $indent
-     * @param $str
-     */
-    public function appendXmlIndent($indent, $str)
-    {
-        $this->appendXml(substr(self::$indent_spaces, 0, min($indent * 2, strlen(self::$indent_spaces))) . $str);
-    }
-
-    /**
-     * @param $str
-     */
-    public function appendXml($str)
-    {
-        $this->xml .= $str . "\r\n";
-    }
-
-    /**
-     * @param $arr
-     * @param $string_offset
-     * @return string
-     */
-    public function compXmlUTF16StringAt($arr, $string_offset)
-    {
-        $strlen = $arr[$string_offset + 1] << 8 & 0xff00 | $arr[$string_offset] & 0xff;
-        $string_offset += 2;
-        $string = "";
-
-        // We are dealing with Unicode strings, so each char is 2 bytes
-        $strEnd = $string_offset + ($strlen * 2);
-        if (function_exists("mb_convert_encoding")) {
-            for ($i = $string_offset; $i < $strEnd; $i++) {
-                $string .= chr($arr[$i]);
-            }
-            $string = mb_convert_encoding($string, "UTF-8", "UTF-16LE");
-        } else  // sonvert as ascii, skipping every second char
-        {
-            for ($i = $string_offset; $i < $strEnd; $i += 2) {
-                $string .= chr($arr[$i]);
-            }
-        }
-        return $string;
     }
 
     /**
@@ -326,68 +312,29 @@ class XmlParser
 
     /**
      * @param $arr
-     * @param $off
-     * @return int
+     * @param $string_offset
+     * @return string
      */
-    public function littleEndianWord($arr, $off)
+    public function compXmlUTF16StringAt($arr, $string_offset)
     {
-        $signShifAmount = (PHP_INT_SIZE - 4) << 3; // the amount of bits to shift back and forth, so that we get the correct signage
-        return (($arr[$off + 3] << 24 & 0xff000000 | $arr[$off + 2] << 16 & 0xff0000 | $arr[$off + 1] << 8 & 0xff00 | $arr[$off] & 0xFF) << $signShifAmount) >> $signShifAmount;
-    }
+        $strlen = $arr[$string_offset + 1] << 8 & 0xff00 | $arr[$string_offset] & 0xff;
+        $string_offset += 2;
+        $string = "";
 
-    /**
-     * @param $arr
-     * @param $off
-     * @return int
-     */
-    public function littleEndianShort($arr, $off)
-    {
-        $signShifAmount = (PHP_INT_SIZE - 2) << 3; // the amount of bits to shift back and forth, so that we get the correct signage
-        return (($arr[$off + 1] << 8 & 0xff00 | $arr[$off] & 0xFF) << $signShifAmount) >> $signShifAmount;
-    }
-
-
-    /**
-     * Print XML content
-     * @throws \Exception
-     */
-    public function output()
-    {
-        echo $this->getXmlString();
-    }
-
-    /**
-     * @return mixed|string
-     * @throws \Exception
-     */
-    public function getXmlString()
-    {
-        if (!$this->ready) {
-            $this->decompress();
-        }
-
-        return preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $this->xml);
-    }
-
-    /**
-     * @param string $className
-     * @return \SimpleXMLElement
-     * @throws XmlParserException
-     * @throws \Exception
-     */
-    public function getXmlObject($className = '\SimpleXmlElement')
-    {
-        if ($this->xmlObject === null || !$this->xmlObject instanceof $className) {
-            $prev = libxml_use_internal_errors(true);
-            $xml = $this->getXmlString();
-            $this->xmlObject = simplexml_load_string($xml, $className);
-            if ($this->xmlObject === false) {
-                throw new XmlParserException($xml);
+        // We are dealing with Unicode strings, so each char is 2 bytes
+        $strEnd = $string_offset + ($strlen * 2);
+        if (function_exists("mb_convert_encoding")) {
+            for ($i = $string_offset; $i < $strEnd; $i++) {
+                $string .= chr($arr[$i]);
             }
-            libxml_use_internal_errors($prev);
+            $string = mb_convert_encoding($string, "UTF-8", "UTF-16LE");
+        } else  // sonvert as ascii, skipping every second char
+        {
+            for ($i = $string_offset; $i < $strEnd; $i += 2) {
+                $string .= chr($arr[$i]);
+            }
         }
-
-        return $this->xmlObject;
+        return $string;
     }
 
     public function getResourceNameFromID($id)
@@ -3305,5 +3252,52 @@ class XmlParser
                 $resName = "0x" . dechex($id);
         }
         return $resName;
+    }
+
+    /**
+     * @param $indent
+     * @param $str
+     */
+    public function appendXmlIndent($indent, $str)
+    {
+        $this->appendXml(substr(self::$indent_spaces, 0, min($indent * 2, strlen(self::$indent_spaces))) . $str);
+    }
+
+    /**
+     * @param $str
+     */
+    public function appendXml($str)
+    {
+        $this->xml .= $str . "\r\n";
+    }
+
+    /**
+     * Print XML content
+     * @throws \Exception
+     */
+    public function output()
+    {
+        echo $this->getXmlString();
+    }
+
+    /**
+     * @param string $className
+     * @return \SimpleXMLElement
+     * @throws XmlParserException
+     * @throws \Exception
+     */
+    public function getXmlObject($className = '\SimpleXmlElement')
+    {
+        if ($this->xmlObject === null || !$this->xmlObject instanceof $className) {
+            $prev = libxml_use_internal_errors(true);
+            $xml = $this->getXmlString();
+            $this->xmlObject = simplexml_load_string($xml, $className);
+            if ($this->xmlObject === false) {
+                throw new XmlParserException($xml);
+            }
+            libxml_use_internal_errors($prev);
+        }
+
+        return $this->xmlObject;
     }
 }

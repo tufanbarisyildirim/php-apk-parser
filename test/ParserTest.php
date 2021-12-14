@@ -18,15 +18,6 @@ class ParserTest extends \PHPUnit\Framework\TestCase
     private $subject;
 
     /**
-     * @throws Exception
-     */
-    protected function setUp(): void
-    {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'EBHS.apk';
-        $this->subject = new Parser($file, ['manifest_only' => false]);
-    }
-
-    /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
@@ -111,5 +102,14 @@ class ParserTest extends \PHPUnit\Framework\TestCase
 
         $expected = ['EBHS'];
         $this->assertEquals($resources, $expected);
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function setUp(): void
+    {
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'EBHS.apk';
+        $this->subject = new Parser($file, ['manifest_only' => false]);
     }
 }
