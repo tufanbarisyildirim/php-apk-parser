@@ -51,9 +51,14 @@ class ResourcesParser
      */
     public function getResources($key)
     {
-        return $this->resources[strtolower($key)];
+        $key = strtolower($key);
+        if (array_key_exists($key, $this->resources)) {
+            return $this->resources[$key];
+        }
+
+        return false;
     }
-    
+
     /**
      All resources
      */

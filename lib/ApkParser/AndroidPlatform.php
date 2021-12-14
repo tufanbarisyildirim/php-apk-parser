@@ -42,6 +42,8 @@ define('ANDROID_API_OREO_MR1', 27);
 define('ANDROID_API_PIE', 28);
 define('ANDROID_API_Q', 29);
 define('ANDROID_API_R', 30);
+define('ANDROID_API_S', 31);
+
 
 /**
  *
@@ -87,7 +89,8 @@ class AndroidPlatform
         ANDROID_API_OREO_MR1 => array('versions' => array('8.1'), 'url' => 'https://developer.android.com/about/versions/oreo/android-8.1'),
         ANDROID_API_PIE => array('versions' => array('9.0'), 'url' => 'https://developer.android.com/about/versions/pie/android-9.0'),
         ANDROID_API_Q => array('versions' => array('10.0'), 'url' => 'https://developer.android.com/about/versions/10/features'),
-        ANDROID_API_R => array('versions' => array('11.0'), 'url' => 'https://developer.android.com/about/versions/11/features')
+        ANDROID_API_R => array('versions' => array('11.0'), 'url' => 'https://developer.android.com/about/versions/11/features'),
+        ANDROID_API_S => array('versions' => array('12.0'), 'url' => 'https://developer.android.com/about/versions/12/features')
     );
 
     public $level = null;
