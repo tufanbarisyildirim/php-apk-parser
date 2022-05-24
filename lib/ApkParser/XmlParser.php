@@ -174,7 +174,7 @@ class XmlParser
                                 $attrValue = "0x" . dechex($attrResId);
                             }
 
-                            $attr_string .= " " . $attrName . "=\"" . $attrValue . "\"";
+                            $attr_string .= " " . $attrName . "=\"" . htmlspecialchars($attrValue) . "\"";
                         }
 
                         $this->appendXmlIndent($indentCount, "<" . $tagName . $attr_string . ">");
