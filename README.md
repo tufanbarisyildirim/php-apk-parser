@@ -7,7 +7,7 @@ files contained in the APK file to a given directory.
 
 ### Requirements
 
-PHP 7.2+
+PHP 7.3+
 
 ### Installation
 
