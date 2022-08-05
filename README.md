@@ -29,6 +29,15 @@ Fork the repo, make your changes, add your name to developers, and create a pull
 your changes. That's all!
 [Thanks to all contributers](https://github.com/tufanbarisyildirim/php-apk-parser/graphs/contributors)
 
+## Thanks
+
+Thanks JetBrains for the free open source license
+
+<a href="https://www.jetbrains.com/?from=tufanbarisyildirim" target="_blank">
+	<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" width = "260" align=center />
+</a>
+
+
 ### License
 
 Apk Parser is [MIT licensed](./LICENSE.md).
