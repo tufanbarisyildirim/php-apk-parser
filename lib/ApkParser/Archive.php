@@ -43,9 +43,9 @@ class Archive extends \ZipArchive
      * @param string $name
      * @param int $length
      * @param int $flags
-     * @return mixed
+     * @return false|string
      */
-    public function getFromName($name, $length = null, $flags = null)
+    public function getFromName($name, $length = null, $flags = null): false|string
     {
         if (strtolower(substr($name, -4)) == '.xml') {
             $xmlParser = new XmlParser(new Stream($this->getStream($name)));
@@ -100,7 +100,7 @@ class Archive extends \ZipArchive
     }
 
 
-    public function extractTo($destination, $entries = null)
+    public function extractTo($destination, $entries = null): bool
     {
         if ($extResult = parent::extractTo($destination, $entries)) {
             $xmlFiles = Utils::globRecursive($destination . '/*.xml');
