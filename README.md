@@ -6,8 +6,8 @@ application name, description, device feature access permission it requires, etc
 files contained in the APK file to a given directory.
 
 ### Requirements
-
-PHP 7.3+
+PHP 8.0+  
+PHP 7.3+ is in [2.x.x](https://github.com/tufanbarisyildirim/php-apk-parser/tree/v2.x.x) branch  
 
 ### Installation
 
@@ -34,7 +34,7 @@ your changes. That's all!
 Thanks JetBrains for the free open source license
 
 <a href="https://www.jetbrains.com/?from=tufanbarisyildirim" target="_blank">
-	<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" width = "260" align=center />
+	<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" width = "260" align=center  alt="Jetbrains"/>
 </a>
 
 
