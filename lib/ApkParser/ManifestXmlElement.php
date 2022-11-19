@@ -34,9 +34,9 @@ class ManifestXmlElement extends \SimpleXMLElement
                 'flags' => isset($permissions[$permName]) ?
                     $permissions[$permName]['flags']
                     : array(
-                        'cost'    => false,
+                        'cost' => false,
                         'warning' => false,
-                        'danger'  => false,
+                        'danger' => false,
                     )
             );
         }
