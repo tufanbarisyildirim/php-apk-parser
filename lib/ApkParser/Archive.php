@@ -24,10 +24,10 @@ class Archive extends \ZipArchive
 
 
     /**
-     * @param bool $file
+     * @param bool|string $file
      * @throws \Exception
      */
-    public function __construct($file = false)
+    public function __construct(string|bool $file = false)
     {
         if ($file && is_file($file)) {
             $this->open($file);
@@ -41,11 +41,12 @@ class Archive extends \ZipArchive
      * Get a file from apk Archive by name.
      *
      * @param string $name
-     * @param int $length
-     * @param int $flags
-     * @return mixed
+     * @param int|null $length
+     * @param int|null $flags
+     * @return string|false
+     * @throws \Exception
      */
-    public function getFromName($name, $length = null, $flags = null)
+    public function getFromName(string $name, int $length = null, int $flags = null): string|false
     {
         if (strtolower(substr($name, -4)) == '.xml') {
             $xmlParser = new XmlParser(new Stream($this->getStream($name)));
@@ -59,7 +60,7 @@ class Archive extends \ZipArchive
      * Returns an ApkStream which contains AndroidManifest.xml
      * @return Stream
      */
-    public function getManifestStream()
+    public function getManifestStream(): Stream
     {
         return new Stream($this->getStream('AndroidManifest.xml'));
     }
@@ -67,25 +68,26 @@ class Archive extends \ZipArchive
     /**
      * @return SeekableStream
      */
-    public function getResourcesStream()
+    public function getResourcesStream(): SeekableStream
     {
         return new SeekableStream($this->getStream('resources.arsc'));
     }
 
     /**
      * Returns an \ApkParser\Stream instance which contains classes.dex file
-     * @returns \ApkParser\Stream
+     * @returns Stream
+     * @throws \Exception
      */
-    public function getClassesDexStream()
+    public function getClassesDexStream(): Stream
     {
         return new Stream($this->getStream('classes.dex'));
     }
 
     /**
      * Apk file path.
-     * @return string
+     * @return bool|string
      */
-    public function getApkPath()
+    public function getApkPath(): bool|string
     {
         return $this->filePath;
     }
@@ -94,19 +96,25 @@ class Archive extends \ZipArchive
      * Apk file name
      * @return string
      */
-    public function getApkName()
+    public function getApkName(): string
     {
         return $this->fileName;
     }
 
 
-    public function extractTo($destination, $entries = null)
+    /**
+     * @param string $pathto
+     * @param array|string|null $files
+     * @return bool
+     * @throws \Exception
+     */
+    public function extractTo(string $pathto, array|string|null $files = null): bool
     {
-        if ($extResult = parent::extractTo($destination, $entries)) {
-            $xmlFiles = Utils::globRecursive($destination . '/*.xml');
+        if ($extResult = parent::extractTo($pathto, $files)) {
+            $xmlFiles = Utils::globRecursive($pathto . '/*.xml');
 
             foreach ($xmlFiles as $xmlFile) {
-                if ($xmlFile == ($destination . "/AndroidManifest.xml")) {
+                if ($xmlFile == ($pathto . "/AndroidManifest.xml")) {
                     XmlParser::decompressFile($xmlFile);
                 }
             }

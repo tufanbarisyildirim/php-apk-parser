@@ -31,8 +31,8 @@ class Config
     {
         $this->config = array_merge(
             [
-                'tmp_path'      => sys_get_temp_dir(),
-                'jar_path'      => __DIR__ . '/Dex/dedexer.jar',
+                'tmp_path' => sys_get_temp_dir(),
+                'jar_path' => __DIR__ . '/Dex/dedexer.jar',
                 'manifest_only' => true
             ],
             $config
