@@ -13,7 +13,7 @@
     {
       "name": "Tufan Baris YILDIRIM",
       "email": "tufanbarisyildirim@gmail.com",
-      "homepage": "http://tufanbarisyildirim.com",
+      "homepage": "https://tufanbarisyildirim.com",
       "role": "Developer"
     }
   ],
@@ -26,7 +26,8 @@
     "ext-zip": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5"
+    "phpunit/phpunit": "^8.5",
+    "friendsofphp/php-cs-fixer": "^3.1"
   },
   "repositories": [
     {
@@ -40,7 +41,8 @@
     }
   },
   "scripts": {
-    "tests": "@php phpunit --configuration=phpunit.xml"
+    "tests": "@php phpunit --configuration=phpunit.xml",
+    "cs": "PHP_CS_FIXER_IGNORE_ENV=true ./vendor/bin/php-cs-fixer fix ."
   },
   "minimum-stability": "dev"
 }

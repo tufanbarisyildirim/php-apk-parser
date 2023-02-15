@@ -12,5 +12,4 @@ namespace ApkParser;
  */
 abstract class Xml
 {
-
 }

@@ -122,5 +122,4 @@ class Archive extends \ZipArchive
 
         return $extResult;
     }
-
 }

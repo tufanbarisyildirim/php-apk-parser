@@ -2,7 +2,6 @@
 
 namespace ApkParser\Exceptions;
 
-
 /**
  * This file is part of the Apk Parser package.
  *
@@ -70,5 +69,4 @@ class XmlParserException extends ApkException
 
         return "$return\n";
     }
-
 }

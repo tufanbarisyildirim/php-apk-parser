@@ -12,8 +12,8 @@ namespace ApkParser;
  */
 class SeekableStream
 {
-    const LITTLE_ENDIAN_ORDER = 1;
-    const BIG_ENDIAN_ORDER = 2;
+    public const LITTLE_ENDIAN_ORDER = 1;
+    public const BIG_ENDIAN_ORDER = 2;
     /**
      * The endianess of the current machine.
      *

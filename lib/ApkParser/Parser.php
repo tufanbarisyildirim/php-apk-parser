@@ -123,8 +123,7 @@ class Parser
         $command = "java -jar {$this->config->jar_path} -d {$cache_folder} {$dex_file}";
         $returns = shell_exec($command);
 
-        if (!$returns) //TODO : check if it not contains any error. $returns will always contain some output.
-        {
+        if (!$returns) { //TODO : check if it not contains any error. $returns will always contain some output.
             throw new \Exception("Couldn't decompile .dex file");
         }
 

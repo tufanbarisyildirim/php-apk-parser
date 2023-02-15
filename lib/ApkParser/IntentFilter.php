@@ -81,5 +81,4 @@ class IntentFilter
     {
         $this->categories = $categories;
     }
-
 }

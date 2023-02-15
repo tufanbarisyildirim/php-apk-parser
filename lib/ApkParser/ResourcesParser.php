@@ -12,16 +12,16 @@ namespace ApkParser;
  */
 class ResourcesParser
 {
-    const RES_STRING_POOL_TYPE = 0x0001;
-    const RES_TABLE_TYPE = 0x0002;
-    const RES_TABLE_PACKAGE_TYPE = 0x0200;
-    const RES_TABLE_TYPE_TYPE = 0x0201;
-    const RES_TABLE_TYPE_SPEC_TYPE = 0x0202;
+    public const RES_STRING_POOL_TYPE = 0x0001;
+    public const RES_TABLE_TYPE = 0x0002;
+    public const RES_TABLE_PACKAGE_TYPE = 0x0200;
+    public const RES_TABLE_TYPE_TYPE = 0x0201;
+    public const RES_TABLE_TYPE_SPEC_TYPE = 0x0202;
     // The 'data' holds a ResTable_ref, a reference to another resource table entry.
-    const TYPE_REFERENCE = 0x01;
+    public const TYPE_REFERENCE = 0x01;
     // The 'data' holds an index into the containing resource table's global value string pool.
-    const TYPE_STRING = 0x03;
-    const FLAG_COMPLEX = 0x0001;
+    public const TYPE_STRING = 0x03;
+    public const FLAG_COMPLEX = 0x0001;
 
     /**
      * @var SeekableStream
@@ -300,18 +300,18 @@ class ResourcesParser
                 if ($valueDataType == self::TYPE_STRING) {
                     $value = $this->valueStringPool[$valueData];
                     $this->putResource($resourceIdString, $value);
-                    // echo ', data: ' . $value;
+                // echo ', data: ' . $value;
                 } else {
                     if ($valueDataType == self::TYPE_REFERENCE) {
                         $referenceIdString = '0x' . dechex($valueData);
                         $this->putReferenceResource($resourceIdString, $referenceIdString);
-                        // echo ', reference: ' . $referenceIdString;
+                    // echo ', reference: ' . $referenceIdString;
                     } else {
                         $this->putResource($resourceIdString, $valueData);
                         // echo ', data: ' . $valueData;
                     }
                 }
-                // echo PHP_EOL;
+            // echo PHP_EOL;
             } else {
                 // echo ', complex value, not printed.', PHP_EOL;
                 $data->readInt32LE(); // entry_parent

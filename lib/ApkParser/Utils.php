@@ -28,5 +28,3 @@ class Utils
         return $files;
     }
 }
-
-

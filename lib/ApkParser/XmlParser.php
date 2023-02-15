@@ -14,24 +14,23 @@ use ApkParser\Exceptions\XmlParserException;
  */
 class XmlParser
 {
+    public const RES_NULL_TYPE = 0x0000;
+    public const RES_STRING_POOL_TYPE = 0x0001;
+    public const RES_TABLE_TYPE = 0x0002;
+    public const RES_XML_TYPE = 0x0003;
 
-    const RES_NULL_TYPE = 0x0000;
-    const RES_STRING_POOL_TYPE = 0x0001;
-    const RES_TABLE_TYPE = 0x0002;
-    const RES_XML_TYPE = 0x0003;
-
-    const TAG_NULL = 0x0000;
-    const TAG_DOC_START = 0x0100;
-    const TAG_DOC_END = 0x0101;
-    const TAG_START = 0x0102;
-    const TAG_END = 0x0103;
-    const TAG_TEXT = 0x0104;
+    public const TAG_NULL = 0x0000;
+    public const TAG_DOC_START = 0x0100;
+    public const TAG_DOC_END = 0x0101;
+    public const TAG_START = 0x0102;
+    public const TAG_END = 0x0103;
+    public const TAG_TEXT = 0x0104;
 
 
-    const RES_XML_START_ELEMENT_TYPE = 0x0102;
-    const RES_XML_RESOURCE_MAP_TYPE = 0x0180;
+    public const RES_XML_START_ELEMENT_TYPE = 0x0102;
+    public const RES_XML_RESOURCE_MAP_TYPE = 0x0180;
 
-    const UTF8_FLAG = 0x00000100;
+    public const UTF8_FLAG = 0x00000100;
     public static $indent_spaces = "                                             ";
     private $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
     private $bytes = array();
@@ -104,13 +103,13 @@ class XmlParser
             }           // not a chunk
 
             switch ($chunkType) {
-                case self::RES_STRING_POOL_TYPE;
-                    $numbStrings = $this->littleEndianWord($this->bytes, $off + 8);
-                    $flags = $this->littleEndianWord($this->bytes, $off + 8 * 2);
-                    $this->isUTF8 = ($flags & self::UTF8_FLAG) != 0;
-                    $sitOff = $off + $chunkHeaderSize;
-                    $stOff = $sitOff + $numbStrings * 4;
-                    break;
+                case self::RES_STRING_POOL_TYPE:
+                $numbStrings = $this->littleEndianWord($this->bytes, $off + 8);
+                $flags = $this->littleEndianWord($this->bytes, $off + 8 * 2);
+                $this->isUTF8 = ($flags & self::UTF8_FLAG) != 0;
+                $sitOff = $off + $chunkHeaderSize;
+                $stOff = $sitOff + $numbStrings * 4;
+                break;
                 case  self::RES_XML_RESOURCE_MAP_TYPE:
                     $resIdsOffset = $off + $chunkHeaderSize;
                     $resIdsCount = ($chunkSize - $chunkHeaderSize) / 4;
@@ -328,8 +327,7 @@ class XmlParser
                 $string .= chr($arr[$i]);
             }
             $string = mb_convert_encoding($string, "UTF-8", "UTF-16LE");
-        } else  // sonvert as ascii, skipping every second char
-        {
+        } else {  // sonvert as ascii, skipping every second char
             for ($i = $string_offset; $i < $strEnd; $i += 2) {
                 $string .= chr($arr[$i]);
             }

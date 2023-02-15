@@ -93,7 +93,7 @@ class Stream
      *
      * @param mixed $byte
      */
-    function writeByte($byte)
+    public function writeByte($byte)
     {
         $this->write(chr($byte));
     }
@@ -103,7 +103,7 @@ class Stream
      *
      * @param mixed $str
      */
-    function write($str)
+    public function write($str)
     {
         fwrite($this->stream, $str);
     }

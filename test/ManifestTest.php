@@ -5,7 +5,6 @@
  */
 class ManifestTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @throws \ApkParser\Exceptions\XmlParserException
      * @throws \PHPUnit\Framework\ExpectationFailedException

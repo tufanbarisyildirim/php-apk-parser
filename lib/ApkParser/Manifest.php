@@ -2,7 +2,6 @@
 
 namespace ApkParser;
 
-
 /**
  * This file is part of the Apk Parser package.
  *
@@ -13,7 +12,6 @@ namespace ApkParser;
  */
 class Manifest extends Xml
 {
-
     /**
      * Android Permissions list
      * @see http://developer.android.com/reference/android/Manifest.permission.html
