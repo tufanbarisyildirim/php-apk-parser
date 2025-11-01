@@ -50,5 +50,5 @@
     "tests": "@php phpunit --configuration=phpunit.xml",
     "cs": "PHP_CS_FIXER_IGNORE_ENV=true ./vendor/bin/php-cs-fixer fix ."
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }
