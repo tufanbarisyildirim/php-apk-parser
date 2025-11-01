@@ -30,8 +30,11 @@ class Parser
         $this->config = new Config($config);
         $this->apk = new Archive($apkFile);
         $this->manifest = new Manifest(new XmlParser($this->apk->getManifestStream()));
+        $is_manifest_only = $this->config->get('manifest_only');
 
         if (!$this->config->manifest_only) {
+            $this->resources = new ResourcesParser($this->apk->getResourcesStream());
+        } else if ($is_manifest_only) {
             $this->resources = new ResourcesParser($this->apk->getResourcesStream());
         } else {
             $this->resources = null;

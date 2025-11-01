@@ -1,5 +1,5 @@
 {
-  "name": "tufanbarisyildirim/php-apk-parser",
+  "name": "camilord/php-apk-parser",
   "type": "library",
   "description": "Read basic info about an application from .apk file.",
   "keywords": [
@@ -14,6 +14,12 @@
       "name": "Tufan Baris YILDIRIM",
       "email": "tufanbarisyildirim@gmail.com",
       "homepage": "https://tufanbarisyildirim.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Camilo Lozano III",
+      "email": "me@camilord.com",
+      "homepage": "https://camilord.com",
       "role": "Developer"
     }
   ],
