@@ -15,6 +15,7 @@ namespace ApkParser;
  * @package ApkParser
  * @property $tmp_path string
  * @property $jar_path string
+ * @property $java_binary string
  * @property $manifest_only boolean
  */
 class Config
@@ -33,6 +34,7 @@ class Config
             [
                 'tmp_path' => sys_get_temp_dir(),
                 'jar_path' => __DIR__ . '/Dex/dedexer.jar',
+                'java_binary' => 'java',
                 'manifest_only' => true
             ],
             $config
@@ -45,7 +47,7 @@ class Config
      */
     public function get($key)
     {
-        return $this->config[$key];
+        return array_key_exists($key, $this->config) ? $this->config[$key] : null;
     }
 
     /**
@@ -54,7 +56,7 @@ class Config
      */
     public function __get($key)
     {
-        return $this->config[$key];
+        return array_key_exists($key, $this->config) ? $this->config[$key] : null;
     }
 
     /**

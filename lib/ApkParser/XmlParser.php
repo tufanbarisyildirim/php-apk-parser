@@ -63,9 +63,21 @@ class XmlParser
             throw new \Exception("{$file} is not a regular file");
         }
 
-        $parser = new self(new Stream(fopen($file, 'rd')));
-        //TODO : write a method in this class, ->saveToFile();
-        file_put_contents($destination === null ? $file : $destination, $parser->getXmlString());
+        $stream = fopen($file, 'rb');
+        if ($stream === false) {
+            throw new \RuntimeException("Unable to open file for reading: {$file}");
+        }
+
+        try {
+            $parser = new self(new Stream($stream));
+            //TODO : write a method in this class, ->saveToFile();
+            $outputFile = $destination === null ? $file : $destination;
+            if (file_put_contents($outputFile, $parser->getXmlString()) === false) {
+                throw new \RuntimeException("Unable to write decompressed XML to {$outputFile}");
+            }
+        } finally {
+            fclose($stream);
+        }
     }
 
     /**
@@ -104,12 +116,12 @@ class XmlParser
 
             switch ($chunkType) {
                 case self::RES_STRING_POOL_TYPE:
-                $numbStrings = $this->littleEndianWord($this->bytes, $off + 8);
-                $flags = $this->littleEndianWord($this->bytes, $off + 8 * 2);
-                $this->isUTF8 = ($flags & self::UTF8_FLAG) != 0;
-                $sitOff = $off + $chunkHeaderSize;
-                $stOff = $sitOff + $numbStrings * 4;
-                break;
+                    $numbStrings = $this->littleEndianWord($this->bytes, $off + 8);
+                    $flags = $this->littleEndianWord($this->bytes, $off + 8 * 2);
+                    $this->isUTF8 = ($flags & self::UTF8_FLAG) != 0;
+                    $sitOff = $off + $chunkHeaderSize;
+                    $stOff = $sitOff + $numbStrings * 4;
+                    break;
                 case  self::RES_XML_RESOURCE_MAP_TYPE:
                     $resIdsOffset = $off + $chunkHeaderSize;
                     $resIdsCount = ($chunkSize - $chunkHeaderSize) / 4;
@@ -3288,12 +3300,15 @@ class XmlParser
     {
         if ($this->xmlObject === null || !$this->xmlObject instanceof $className) {
             $prev = libxml_use_internal_errors(true);
-            $xml = $this->getXmlString();
-            $this->xmlObject = simplexml_load_string($xml, $className);
-            if ($this->xmlObject === false) {
-                throw new XmlParserException($xml);
+            try {
+                $xml = $this->getXmlString();
+                $this->xmlObject = simplexml_load_string($xml, $className);
+                if ($this->xmlObject === false) {
+                    throw new XmlParserException($xml);
+                }
+            } finally {
+                libxml_use_internal_errors($prev);
             }
-            libxml_use_internal_errors($prev);
         }
 
         return $this->xmlObject;

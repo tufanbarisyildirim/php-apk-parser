@@ -116,12 +116,19 @@ class Stream
      */
     public function save($destination)
     {
-        $destination = new Stream(is_resource($destination) ? $destination : fopen($destination, 'w+'));
+        $openedInternally = !is_resource($destination);
+        $destinationStream = $openedInternally ? fopen($destination, 'w+') : $destination;
+
+        if (!is_resource($destinationStream)) {
+            throw new \Exception("Invalid destination stream");
+        }
+
+        $destination = new Stream($destinationStream);
         while (!$this->feof()) {
             $destination->write($this->read());
         }
 
-        if (!is_resource($destination)) { // close the file if we opened it otwhise dont touch.
+        if ($openedInternally) { // Close only streams opened internally.
             $destination->close();
         }
     }
