@@ -1,0 +1,58 @@
+[
+  {
+    "name": "localized_app_name_en_tr",
+    "package_id": 127,
+    "type_id": 1,
+    "type_name": "string",
+    "key_name": "app_name",
+    "value_strings": [
+      "Hello",
+      "Merhaba"
+    ],
+    "entries": [
+      {
+        "language": "en",
+        "country": "US",
+        "value_index": 0
+      },
+      {
+        "language": "tr",
+        "country": "TR",
+        "value_index": 1
+      }
+    ],
+    "expected_resource_id": "0x7f010000",
+    "expected_values": [
+      "Hello",
+      "Merhaba"
+    ]
+  },
+  {
+    "name": "localized_greeting_en_de",
+    "package_id": 127,
+    "type_id": 1,
+    "type_name": "string",
+    "key_name": "greeting",
+    "value_strings": [
+      "Welcome",
+      "Willkommen"
+    ],
+    "entries": [
+      {
+        "language": "en",
+        "country": "US",
+        "value_index": 0
+      },
+      {
+        "language": "de",
+        "country": "DE",
+        "value_index": 1
+      }
+    ],
+    "expected_resource_id": "0x7f010000",
+    "expected_values": [
+      "Welcome",
+      "Willkommen"
+    ]
+  }
+]

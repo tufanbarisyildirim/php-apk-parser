@@ -9,6 +9,7 @@
  */
 
 use ApkParser\Parser;
+use ApkParser\Exceptions\ApkException;
 
 class ParserTest extends \PHPUnit\Framework\TestCase
 {
@@ -76,6 +77,55 @@ class ParserTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @throws \Exception
+     */
+    public function testManifestOnlyFalseLoadsResources()
+    {
+        $parser = new Parser($this->getApkFixturePath(), ['manifest_only' => false]);
+
+        $this->assertNotEmpty($parser->getAllResources());
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testManifestOnlyTrueSkipsResources()
+    {
+        $parser = new Parser($this->getApkFixturePath(), ['manifest_only' => true]);
+
+        $this->assertSame([], $parser->getAllResources());
+        $this->assertFalse($parser->getResources('0x7f020001'));
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testGetClassesThrowsWhenJarPathMissing()
+    {
+        $parser = new Parser($this->getApkFixturePath(), [
+            'manifest_only' => true,
+            'jar_path' => __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'missing-dedexer.jar',
+        ]);
+
+        $this->expectException(ApkException::class);
+        $parser->getClasses();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testGetClassesThrowsWhenJavaBinaryMissing()
+    {
+        $parser = new Parser($this->getApkFixturePath(), [
+            'manifest_only' => true,
+            'java_binary' => 'definitely_missing_java_binary_12345',
+        ]);
+
+        $this->expectException(ApkException::class);
+        $parser->getClasses();
+    }
+
+    /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
@@ -109,7 +159,14 @@ class ParserTest extends \PHPUnit\Framework\TestCase
      */
     protected function setUp(): void
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'EBHS.apk';
-        $this->subject = new Parser($file, ['manifest_only' => false]);
+        $this->subject = new Parser($this->getApkFixturePath(), ['manifest_only' => false]);
+    }
+
+    /**
+     * @return string
+     */
+    private function getApkFixturePath()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'EBHS.apk';
     }
 }
