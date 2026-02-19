@@ -1,0 +1,10 @@
+.git
+.github
+.idea
+vendor
+todo
+*.apk
+*.log
+*.tmp
+*.swp
+.phpunit.result.cache

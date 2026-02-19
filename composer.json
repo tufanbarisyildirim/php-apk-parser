@@ -26,7 +26,7 @@
     "ext-zip": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5",
+    "phpunit/phpunit": "^9.6",
     "friendsofphp/php-cs-fixer": "^3.1"
   },
   "repositories": [
@@ -36,13 +36,15 @@
     }
   ],
   "autoload": {
-    "psr-0": {
-      "ApkParser": "lib"
+    "psr-4": {
+      "ApkParser\\": "lib/ApkParser/"
     }
   },
   "scripts": {
-    "tests": "@php phpunit --configuration=phpunit.xml",
-    "cs": "PHP_CS_FIXER_IGNORE_ENV=true ./vendor/bin/php-cs-fixer fix ."
+    "tests": "./vendor/bin/phpunit --configuration=phpunit.xml",
+    "cs": "PHP_CS_FIXER_IGNORE_ENV=true ./vendor/bin/php-cs-fixer fix .",
+    "cs:check": "PHP_CS_FIXER_IGNORE_ENV=true ./vendor/bin/php-cs-fixer fix . --dry-run --diff",
+    "lint:php": "find lib test -name '*.php' -print0 | xargs -0 -n1 php -l"
   },
   "minimum-stability": "stable"
 }
