@@ -46,7 +46,7 @@ class Archive extends \ZipArchive
      * @return string|false
      * @throws \Exception
      */
-    public function getFromName(string $name, int $length = null, int $flags = null): string|false
+    public function getFromName(string $name, ?int $length = null, ?int $flags = null): string|false
     {
         if (strtolower(substr($name, -4)) == '.xml') {
             $xmlParser = new XmlParser(new Stream($this->getStream($name)));
