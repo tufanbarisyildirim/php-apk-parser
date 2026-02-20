@@ -122,39 +122,49 @@ class ResourcesParser
 
         $strings = array();
         for ($i = 0; $i < $stringsCount; $i++) {
-            $lastPosition = $data->position();
-            $pos = $stringsStart + $offsets[$i];
-            $data->seek($pos);
-            $len = $data->position();
-            $data->seek($lastPosition);
-            if ($len < 0) {
-                $data->readInt16LE(); // extendShort
-            }
-            $pos += 2;
-
-            $strings[$i] = '';
+            $data->seek($stringsStart + $offsets[$i]);
             if ($isUtf8) {
-                $length = 0;
-                $data->seek($pos);
-                while ($data->readByte() != 0) {
-                    $length++;
-                }
-                if ($length > 0) {
-                    $data->seek($pos);
-                    $strings[$i] = $data->read($length);
-                } else {
-                    $strings[$i] = '';
-                }
+                $this->readStringPoolLength8($data); // utf16 length prefix, not required for value extraction.
+                $byteLength = $this->readStringPoolLength8($data);
+                $strings[$i] = $byteLength > 0 ? $data->read($byteLength) : '';
+                $data->readByte(); // Null terminator.
             } else {
-                $data->seek($pos);
-                while (($c = $data->read()) != 0) {
-                    $strings[$i] .= $c;
-                    $pos += 2;
-                }
+                $charLength = $this->readStringPoolLength16($data);
+                $raw = $charLength > 0 ? $data->read($charLength * 2) : '';
+                $data->readInt16LE(); // Null terminator.
+                $strings[$i] = $charLength > 0 ? mb_convert_encoding($raw, 'UTF-8', 'UTF-16LE') : '';
             }
-            // echo 'Parsed value: ', $strings[$i], PHP_EOL;
         }
         return $strings;
+    }
+
+    /**
+     * @param SeekableStream $data
+     * @return int
+     */
+    private function readStringPoolLength8(SeekableStream $data)
+    {
+        $length = $data->readByte();
+        if (($length & 0x80) != 0) {
+            $length = (($length & 0x7f) << 8) | $data->readByte();
+        }
+
+        return $length;
+    }
+
+    /**
+     * @param SeekableStream $data
+     * @return int
+     */
+    private function readStringPoolLength16(SeekableStream $data)
+    {
+        $firstLength = ($data->readByte() | ($data->readByte() << 8));
+        if (($firstLength & 0x8000) == 0) {
+            return $firstLength;
+        }
+
+        $secondLength = ($data->readByte() | ($data->readByte() << 8));
+        return (($firstLength & 0x7fff) << 16) | $secondLength;
     }
 
     /**
@@ -383,9 +393,9 @@ class ResourcesParser
             $bytes->backSeek(-4);
             $config['screenConfig'] = $bytes->readInt32LE();
 
-            // 10
-            $config['screenWidthDp'] = $bytes->readByte();
-            $config['screenHeightDp'] = $bytes->readByte();
+            // 4
+            $config['screenWidthDp'] = $bytes->readInt16LE();
+            $config['screenHeightDp'] = $bytes->readInt16LE();
             $bytes->backSeek(-4);
             $config['screenSizeDp'] = $bytes->readInt32LE();
 

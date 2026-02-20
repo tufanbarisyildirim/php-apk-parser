@@ -22,7 +22,7 @@ class ManifestXmlElement extends \SimpleXMLElement
          * @var \ApkParser\ManifestXmlElement
          */
         $permsArray = $this->{'uses-permission'};
-        $permissions = json_decode(file_get_contents(__DIR__ . "/lang/{$lang}.permissions.json"), true);
+        $permissions = $this->loadPermissionMap($lang);
         $perms = array();
         foreach ($permsArray as $perm) {
             $permAttr = get_object_vars($perm);
@@ -41,6 +41,34 @@ class ManifestXmlElement extends \SimpleXMLElement
             );
         }
         return $perms;
+    }
+
+    /**
+     * @param string $lang
+     * @return array
+     */
+    private function loadPermissionMap($lang)
+    {
+        $paths = array(__DIR__ . "/lang/{$lang}.permissions.json");
+        if ($lang !== 'en') {
+            $paths[] = __DIR__ . "/lang/en.permissions.json";
+        }
+
+        foreach ($paths as $path) {
+            if (!is_file($path) || !is_readable($path)) {
+                continue;
+            }
+            $json = file_get_contents($path);
+            if ($json === false) {
+                continue;
+            }
+            $permissions = json_decode($json, true);
+            if (is_array($permissions)) {
+                return $permissions;
+            }
+        }
+
+        return array();
     }
 
     /**

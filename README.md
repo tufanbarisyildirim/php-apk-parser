@@ -17,12 +17,21 @@ PHP 7.3+ is in [2.x.x](https://github.com/tufanbarisyildirim/php-apk-parser/tree
 
 ## Testing
 
-Tests are powered by PHPUnit. You have several options.
+Tests are powered by PHPUnit and can be run fully in Docker.
 
-- Run `phpunit` if PHPUnit is installed globally.
-- Install dependencies (requires [Composer](https://getcomposer.org/download)). Run `php composer.phar --dev install`
-  or `composer --dev install`. Then `bin/vendor/phpunit` to run version installed by Composer. This ensures that you are
-  running a version compatible with the test suite.
+- Build the PHP test image: `make docker-build`
+- Install dependencies in Docker: `make docker-install`
+- Run tests in Docker: `make docker-test`
+- Run code style checks in Docker (non-mutating): `make docker-lint`
+- Run code style auto-fix in Docker: `make docker-format`
+- Run PHP syntax/static checks in Docker: `make docker-static`
+- Run the full verification pipeline in Docker: `make docker-check`
+- Existing aliases are still available: `make test`, `make lint`
+
+## Dependency Lockfile Policy
+
+`composer.lock` is committed in this repository to keep local and CI dependency resolution deterministic.
+CI also validates compatibility across dependency ranges (highest and lowest sets).
 
 ## Contributing
 

@@ -1,38 +1,81 @@
 name: tests
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        php-version:
-          - '8.0'
-          - '8.1'
-
+  tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php-version: '8.0'
+            dependency-version: highest
+          - php-version: '8.1'
+            dependency-version: highest
+          - php-version: '8.2'
+            dependency-version: highest
+          - php-version: '8.2'
+            dependency-version: lowest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: "Setup PHP"
-        uses: "shivammathur/setup-php@v2"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: "${{ matrix.php-version }}"
 
       - name: Get composer cache directory
         id: composer-cache
-        run: |
-          echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
       - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-${{ matrix.php-version }}-${{ matrix.dependency-version }}-composer-${{ hashFiles('composer.json', 'composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.php-version }}-composer-
+            ${{ runner.os }}-${{ matrix.php-version }}-${{ matrix.dependency-version }}-composer-
 
-      - name: Install dependencies
-        run: composer install
+      - name: Install highest dependencies
+        if: matrix.dependency-version == 'highest'
+        run: composer install --no-interaction
+
+      - name: Install lowest dependencies
+        if: matrix.dependency-version == 'lowest'
+        run: composer update --prefer-lowest --prefer-stable --no-interaction
 
       - name: Run tests
         run: composer tests
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install dependencies
+        run: composer install --no-interaction
+
+      - name: Run code style checks
+        run: composer cs:check
+
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install dependencies
+        run: composer install --no-interaction
+
+      - name: Lint PHP files
+        run: composer lint:php
