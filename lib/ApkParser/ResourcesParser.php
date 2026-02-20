@@ -34,6 +34,7 @@ class ResourcesParser
 
     private $packageId = 0;
     private $resources = array();
+    private $resourcesByName = array();
 
     /**
      * @param SeekableStream $stream
@@ -295,7 +296,16 @@ class ResourcesParser
             $entryKey = $data->readInt32LE();
 
             $resourceIdString = '0x' . dechex($resourceId);
-            $entryKeyString = $this->keyStringPool[$entryKey];
+            $entryKeyString = array_key_exists($entryKey, $this->keyStringPool)
+                ? $this->keyStringPool[$entryKey]
+                : null;
+            $typeName = array_key_exists($id - 1, $this->typeStringPool)
+                ? $this->typeStringPool[$id - 1]
+                : null;
+
+            if (is_string($typeName) && is_string($entryKeyString) && $entryKeyString !== '') {
+                $this->putNamedResource($typeName, $entryKeyString, $resourceIdString);
+            }
             // echo 'Entry ' . $resourceIdString . ', key: ' . $entryKeyString;
 
             // Get the value (simple) or map (complex)
@@ -438,14 +448,61 @@ class ResourcesParser
     }
 
     /**
+     * @param string $typeName
+     * @param string $entryKey
+     * @param string $resourceId
+     */
+    private function putNamedResource($typeName, $entryKey, $resourceId)
+    {
+        $normalizedTypeName = strtolower(trim($typeName));
+        $normalizedEntryKey = strtolower(trim($entryKey));
+        if ($normalizedTypeName === '' || $normalizedEntryKey === '') {
+            return;
+        }
+
+        $resourceId = strtolower($resourceId);
+        $normalizedKeys = array(
+            $normalizedTypeName . '/' . $normalizedEntryKey,
+            '@' . $normalizedTypeName . '/' . $normalizedEntryKey,
+        );
+
+        foreach ($normalizedKeys as $normalizedKey) {
+            if (array_key_exists($normalizedKey, $this->resourcesByName) === false) {
+                $this->resourcesByName[$normalizedKey] = array();
+            }
+
+            if (in_array($resourceId, $this->resourcesByName[$normalizedKey], true) === false) {
+                $this->resourcesByName[$normalizedKey][] = $resourceId;
+            }
+        }
+    }
+
+    /**
      * @param $key
      * @return mixed
      */
     public function getResources($key)
     {
-        $key = strtolower($key);
-        if (array_key_exists($key, $this->resources)) {
-            return $this->resources[$key];
+        $normalizedKey = strtolower(trim((string)$key));
+        if (array_key_exists($normalizedKey, $this->resources)) {
+            return $this->resources[$normalizedKey];
+        }
+
+        if (array_key_exists($normalizedKey, $this->resourcesByName)) {
+            $values = array();
+            $resourceIds = $this->resourcesByName[$normalizedKey];
+
+            foreach ($resourceIds as $resourceId) {
+                if (array_key_exists($resourceId, $this->resources) === false) {
+                    continue;
+                }
+
+                foreach ($this->resources[$resourceId] as $value) {
+                    $values[] = $value;
+                }
+            }
+
+            return count($values) > 0 ? $values : false;
         }
 
         return false;

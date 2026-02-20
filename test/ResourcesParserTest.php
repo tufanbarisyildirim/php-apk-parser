@@ -77,6 +77,14 @@ class ResourcesParserTest extends \PHPUnit\Framework\TestCase
                 $fixture['expected_values'],
                 $resourcesParser->getResources($fixture['expected_resource_id'])
             );
+            $this->assertSame(
+                $fixture['expected_values'],
+                $resourcesParser->getResources('@' . $fixture['type_name'] . '/' . $fixture['key_name'])
+            );
+            $this->assertSame(
+                $fixture['expected_values'],
+                $resourcesParser->getResources($fixture['type_name'] . '/' . $fixture['key_name'])
+            );
         } finally {
             if ($archive instanceof Archive) {
                 $archive->close();
